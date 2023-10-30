@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgba(66, 83, 97, 1);
+}
+.danger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative;
+  max-height: 80vh;
+  overflow: auto;
+}
+.danger__table-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.danger__text {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.danger__table-text {
+  font-size: 16px;
+}
+.danger__table-value {
+  background-color: rgba(243, 244, 246, 1);
+  border-radius: 4px;
+  font-size: 14px;
+}
+.danger__table-value.id {
+  width: 44px;
+  text-align: center;
+  line-height: 44px;
+}
+.danger__table-value.group {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  padding: 5px;
+  width: 450px;
+  min-height: 44px;
+  max-height: fit-content;
+}
+.button-delete {
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  border: none;
+  background-color: rgba(254, 63, 87, 1);
+  background-image: url(../../../img/trash-bin-icon.svg);
+  /* крестик
+  background-image: url(../../../img/white_icon-close.svg);*/
+  background-repeat: no-repeat;
+  background-position: center;
+}

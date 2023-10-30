@@ -1,0 +1,401 @@
+/********форма*********/
+.form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-width: 710px;
+}
+
+.label-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.react-select-container {
+  background-color: rgba(243, 244, 246, 1) !important;
+}
+
+/*инпут*/
+.react-select__control {
+  border: 1px solid var(--main-color) !important;
+  background-color: rgba(243, 244, 246, 1) !important;
+  box-shadow: none !important;
+}
+.react-select__control:hover {
+  background-color: rgb(222, 228, 239) !important;
+}
+.react-select__control--is-focused {
+  box-shadow: 0px 0px 0px 1px var(--main-color) !important;
+}
+
+/*плейсхолдер*/
+.react-select__placeholder {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+}
+/*выпадающее меню*/
+/*.custom-error-message{
+  padding: 10px 5px !important;
+  color: rgba(66, 83, 97, 1) !important;
+  font-weight: 500 !important;
+}*/
+.react-select__menu {
+  border: 1px solid var(--main-color) !important;
+  background-color: rgba(243, 244, 246, 1) !important;
+}
+.react-select__menu-list {
+  font-size: 16px;
+}
+.react-select__option {
+  background-color: rgba(243, 244, 246, 1) !important;
+  color: var(--main-color) !important;
+  font-weight: 400;
+  transition: background-color 0.3s ease-in-out;
+}
+.react-select__option--is-focused {
+  background-color: rgb(222, 228, 239) !important;
+  color: rgb(55, 70, 82) !important;
+}
+.react-select__single-value {
+  color: var(--main-color) !important;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/*индикатор*/
+.react-select__indicator {
+  color: var(--main-color) !important;
+}
+.react-select__indicator:hover {
+  color: rgba(66, 83, 97, 0.6) !important;
+}
+/*индикатор-разделитель*/
+.react-select__indicator-separator {
+  display: none;
+}
+.form__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5px;
+}
+
+.form__input {
+  box-sizing: border-box;
+  width: 100px;
+  height: 38px;
+  padding: 2px 8px;
+  border: 1px solid var(--main-color);
+  border-radius: 4px;
+  outline: none;
+  width: 170px;
+  font-family: inherit;
+  font-size: 16px;
+  background-color: rgba(243, 244, 246, 1);
+}
+.form__input:hover {
+  background-color: rgb(222, 228, 239);
+}
+.form__input:focus {
+  box-shadow: 0px 0px 0px 1px var(--main-color);
+}
+
+.form__input.standart {
+  width: 350px;
+}
+.submit {
+  margin-top: 20px;
+}
+.label {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+}
+.label.profession {
+  align-items: center;
+}
+.label.box {
+  flex-direction: row;
+  gap: 10px;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.input__test {
+  margin-top: 10px;
+  width: 200px;
+  min-height: 25px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.wrapper_text {
+  color: rgba(66, 83, 97, 1);
+  padding-bottom: 6px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(66, 83, 97, 0.2);
+  font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+}
+.buttons_wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.button {
+  width: 350px;
+  height: 38px;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 500;
+}
+.button:hover {
+  text-decoration: underline 1px;
+}
+.button.send {
+  background-color: var(--accent-green);
+}
+
+.button.reset {
+  background-color: var(--accent-red);
+}
+.button.button-cancel {
+  background: transparent;
+  color: var(--accent-red);
+  font-size: 16px;
+  height: 20px;
+}
+.button__table {
+  width: 350px;
+  margin-top: 16px;
+  padding: 7px 35px;
+  background-color: var(--accent-dark-blue);
+  position: relative;
+}
+.button__table:before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 45px;
+  size: 20px;
+  width: 23px;
+  height: 27px;
+  background-image: url('../../../img/excel_icon.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/*******контейнер с приказом********/
+
+.input-order__wrapper {
+  box-sizing: border-box;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(66, 83, 97, 0.24);
+  border-radius: 4px;
+  width: 350px;
+  /*можно сделать одинаковые по высоте карточки, если убрать height*/
+  height: max-content;
+  gap: 10px;
+}
+
+.input-order__title {
+  font-size: 20px;
+  /*новые стили*/
+  font-family: inherit;
+  font-weight: 700;
+  border: none;
+  text-align: start;
+  padding: 0;
+
+  background-color: transparent;
+}
+.react-select-container.order {
+  width: calc(100% - 20px);
+}
+
+/********чекбокс*********/
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.checkbox__label {
+  width: max-content;
+  cursor: pointer;
+}
+
+.form__pseudo-checkbox {
+  background-color: rgba(243, 244, 246, 1);
+  border: 1px solid rgba(66, 83, 97, 1);
+  border-radius: 4px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  vertical-align: sub;
+  position: relative;
+}
+
+.form__pseudo-checkbox::before {
+  content: '';
+  /*рисунок*/
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url('../../../img/icon__yes.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  /*выравнивание рисунка*/
+  position: absolute;
+  background-position: center;
+  left: 1px;
+  top: 1px;
+  opacity: 0;
+}
+/*checked*/
+.form__checkbox:checked + span {
+  background-color: rgba(66, 83, 97, 1);
+}
+.form__checkbox:checked + .form__pseudo-checkbox::before {
+  opacity: 1;
+}
+.checkbox__label-text {
+  font-size: 15px;
+  font-weight: 400;
+}
+.checkbox__label.disabled > span {
+  color: rgba(66, 83, 97, 0.6);
+  border-color: rgba(66, 83, 97, 0.6);
+}
+
+.label__checkbox {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+/*.additional-means:disabled {
+  background-color: rgba(192, 23, 17, 0.5);
+}
+.SIZ__lable {
+  display: flex;
+  /*flex-direction: row-reverse;
+  justify-content: flex-end;
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+  width: max-content;
+}
+.SIZ__lable-hiden {
+  opacity: 0;
+}*/
+
+.label.profs {
+  width: 90%;
+  padding: 0 5%;
+}
+@media screen and (max-width: 767px) {
+  .label,
+  .input-order__wrapper {
+    width: 100%;
+  }
+  .form__input.standart {
+    width: 100%;
+  }
+  .label.box {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+  }
+  .react-select-container.order {
+    width: 100%;
+  }
+  .buttons_wrapper {
+    align-items: center;
+    column-gap: 5px;
+  }
+  .button.send,
+  .button.reset {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 400px) {
+  /*новые стили для выпадающего меню*/
+  .input-order__title {
+    background-image: url(../../../img/check-mark.svg);
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+  }
+
+  .dropdown-child_close {
+    display: none;
+  }
+  .dropdown-child_open {
+    display: block;
+  }
+  /******/
+  .label.box {
+    align-items: flex-start;
+  }
+  .buttons_wrapper {
+    max-width: fit-content;
+    column-gap: 5px;
+  }
+  .button.send,
+  .button.reset {
+    width: 170px;
+  }
+  .button.button__table {
+    align-self: center;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .main {
+    margin: 20px 10px;
+  }
+  .buttons_wrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .button.send,
+  .button.reset {
+    width: 300px;
+  }
+  .button.button__table {
+    width: 300px;
+    margin-top: 10px;
+  }
+  .button.button__table:before {
+    top: 8px;
+    left: 15px;
+    size: 20px;
+    width: 20px;
+    height: 24px;
+  }
+}

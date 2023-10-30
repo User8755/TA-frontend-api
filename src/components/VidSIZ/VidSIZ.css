@@ -1,0 +1,17 @@
+.form-siz {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative;
+  max-height: 80vh;
+  overflow: auto;
+  width: 625px;
+}
+
+.form-siz__lable {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5px;
+}
+

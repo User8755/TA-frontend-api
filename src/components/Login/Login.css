@@ -1,0 +1,92 @@
+.entry__container {
+  color: inherit;
+  font-family: inherit;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 4px 23px 3px rgba(0, 0, 0, 0.11);
+  /*display:flex;
+  flex-direction: column;*/
+  padding: 20px;
+  min-width: 320px;
+}
+.entry__title {
+  text-align: center;
+  font-size: 24px;
+  font-family: 'Segoe UI';
+  font-weight: 700;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(66, 83, 97, 0.2);
+}
+.entry__form {
+  margin-block-start: 30px;
+  display: flex;
+  flex-direction: column;
+}
+.entry__form_lable {
+  margin-block-end: 6px;
+  font-size: 16px;
+}
+.entry__form_lable:not(:first-of-type) {
+  margin-block-start: 0px;
+}
+.entry__form_input {
+  width: 100%;
+  height: 38px;
+  border: none;
+  background-color: #f3f4f6;
+  border-radius: 4px;
+  padding: 5px 15px;
+  transition: background-color 0.3s ease-in-out;
+}
+::placeholder {
+  color: #8e98a0;
+  font-size: 16px;
+  font-family: Segoe UI;
+}
+.entry__form_input:focus-visible {
+  outline: 2px solid var(--main-color);
+}
+.entry__form_input:hover {
+  background-color: rgb(222, 228, 239);
+}
+.entry__button {
+  margin-block-start: 20px;
+  margin-block-end: 10px;
+  background-color: var(--accent-green);
+  width: 100%;
+}
+.profile__button {
+  background-color: var(--accent-dark-blue);
+}
+.question__container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+.question__text {
+  color: rgba(65.96, 83.24, 96.89, 0.54);
+  font-size: 16px;
+  font-family: Segoe UI;
+  font-weight: 400;
+}
+.question__button {
+  color: var(--accent-dark-blue);
+  font-size: 16px;
+  font-family: Segoe UI;
+  font-weight: 600;
+  background-color: transparent;
+}
+.question__button.registration {
+  color: var(--accent-green);
+}
+.question__button:hover {
+  text-decoration: underline;
+}
+.question__button.profile {
+  color: var(--accent-red);
+}
+.input-error {
+  visibility: hidden;
+  /*color: var(--accent-red);
+  font-size: 13px;*/
+}
