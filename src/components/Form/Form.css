@@ -313,7 +313,8 @@
   width: 90%;
   padding: 0 5%;
 }
-@media screen and (max-width: 767px) {
+
+@media screen and (width <= 767px) {
   .label,
   .input-order__wrapper {
     width: 100%;
@@ -337,37 +338,39 @@
   .button.reset {
     width: calc((100vw - 40px - 10px) / 2);
   }
+  .modal__window .button.send {
+    width: 350px;
+  }
+  /*новые стили для выпадающего меню*/
+  .input-order__title {
+    background-image: url(../../../img/check-mark.svg);
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+  }
+  .dropdown-child_close {
+    display: none;
+  }
+  .dropdown-child_open {
+    display: block;
+  }
+  /******/
+  .label.box {
+    align-items: flex-start;
+  }
+  .buttons_wrapper {
+    max-width: fit-content;
+  }
+
+  .button.button__table {
+    align-self: center;
+  }
+  .label,
+  .input-order__title {
+    font-size: 18px;
+  }
 }
 
-/*новые стили для выпадающего меню*/
-.input-order__title {
-  background-image: url(../../../img/check-mark.svg);
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 12px;
-}
-
-.dropdown-child_close {
-  display: none;
-}
-.dropdown-child_open {
-  display: block;
-}
-/******/
-.label.box {
-  align-items: flex-start;
-}
-.buttons_wrapper {
-  max-width: fit-content;
-}
-
-.button.button__table {
-  align-self: center;
-}
-.label,
-.input-order__title {
-  font-size: 18px;
-}
 @media (width <=400px) {
   .button.send,
   .button.reset {
