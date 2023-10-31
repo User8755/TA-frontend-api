@@ -1,8 +1,9 @@
 .header {
-  padding: 20px 30px;
-  height: 60px;
+  padding: 20px 10%;
+  height: min-content;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+
   align-items: center;
   column-gap: 10px;
   border-bottom: 1px solid rgba(66, 83, 97, 0.6);
@@ -23,4 +24,14 @@
   display: flex;
   gap: 10px;
   margin-left: auto;
+}
+
+@media (width <= 685px) {
+  .header {
+    font-size: 16px;
+    justify-content: center;
+  }
+  .profile__wrapper {
+    margin-left: 0;
+  }
 }

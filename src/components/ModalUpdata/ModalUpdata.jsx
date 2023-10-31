@@ -245,7 +245,7 @@ function ModalUpdata({
           className='button_close'
           onClick={() => setModal(false)}
         ></button>
-        {modalChild}
+        {handleChild()}
       </div>
     </div>
   );

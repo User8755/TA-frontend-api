@@ -478,12 +478,12 @@ function Form({ setModal, setModalChild, job, setJob, listJob }) {
             </label>
           </div>
           <div className='input-order__wrapper'>
-            <button
+            <span
               className='input-order__title'
               onClick={() => setIsOpenOrder776(!isOpenOrder776)}
             >
               Приказ №776
-            </button>
+            </span>
             <div
               className={
                 isOpenOrder776 ? 'dropdown-child_open' : 'dropdown-child_close'
@@ -526,12 +526,12 @@ function Form({ setModal, setModalChild, job, setJob, listJob }) {
             </div>
           </div>
           <div className='input-order__wrapper'>
-            <button
+            <span
               className='input-order__title'
               onClick={() => setIsOpenOrder767(!isOpenOrder767)}
             >
               Приказ №767
-            </button>
+            </span>
             <div
               className={
                 isOpenOrder767 ? 'dropdown-child_open' : 'dropdown-child_close'
