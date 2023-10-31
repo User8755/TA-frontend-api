@@ -20,7 +20,7 @@ function Header() {
       </NavLink>
       <div className='profile__wrapper'>
         <NavLink
-          to='/login'
+          to='/'
           className={active ? 'header__text active' : 'header__text'}
         >
           Логин
