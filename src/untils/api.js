@@ -96,7 +96,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'http://77.222.53.197',
+  baseUrl: 'https://api.tafontend.online/',
   headers: {
     'Content-Type': 'application/json',
   },
