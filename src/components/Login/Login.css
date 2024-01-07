@@ -1,32 +1,45 @@
+.p {
+  width: 500px;
+  margin: auto;
+}
+.section.entry.login {
+  grid-column: 2 span;
+}
 .entry__container {
+  margin: 0 auto;
+  margin-top: 30px;
   color: inherit;
   font-family: inherit;
   border: none;
   border-radius: 5px;
   box-shadow: 0px 4px 23px 3px rgba(0, 0, 0, 0.11);
-  /*display:flex;
-  flex-direction: column;*/
+  display: flex;
+  flex-direction: column;
   padding: 20px;
-  min-width: 320px;
+  max-width: 400px;
+  text-align: start;
 }
 .entry__title {
   text-align: center;
   font-size: 24px;
-  font-family: 'Segoe UI';
+  font-family: var(--font-family);
   font-weight: 700;
+  color: var(--accent-dark-blue);
   padding-bottom: 15px;
   border-bottom: 1px solid rgba(66, 83, 97, 0.2);
 }
 .entry__form {
+  font-family: var(--font-family);
   margin-block-start: 30px;
   display: flex;
   flex-direction: column;
 }
-.entry__form_lable {
+.entry__form_label {
+  color: var(--accent-dark-blue);
   margin-block-end: 6px;
   font-size: 16px;
 }
-.entry__form_lable:not(:first-of-type) {
+.entry__form_label:not(:first-of-type) {
   margin-block-start: 0px;
 }
 .entry__form_input {
@@ -41,7 +54,7 @@
 ::placeholder {
   color: #8e98a0;
   font-size: 16px;
-  font-family: Segoe UI;
+  font-family: var(--font-family);
 }
 .entry__form_input:focus-visible {
   outline: 2px solid var(--main-color);
@@ -54,6 +67,12 @@
   margin-block-end: 10px;
   background-color: var(--accent-green);
   width: 100%;
+  height: 40px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 18px;
+  color: #fff;
+  border-radius: var(--radius);
 }
 .profile__button {
   background-color: var(--accent-dark-blue);
@@ -79,6 +98,7 @@
 .question__button.registration {
   color: var(--accent-green);
 }
+.entry__button:hover,
 .question__button:hover {
   text-decoration: underline;
 }
@@ -87,6 +107,6 @@
 }
 .input-error {
   visibility: hidden;
-  /*color: var(--accent-red);
-  font-size: 13px;*/
+  /* color: var(--accent-red); */
+  /* font-size: 10px; */
 }

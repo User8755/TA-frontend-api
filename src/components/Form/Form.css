@@ -1,18 +1,271 @@
 /********форма*********/
 .form {
+  display: grid;
+  /* height: 100vh; */
+  width: 100%;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: min-content fit-content 1fr 2fr;
+  gap: 10px 8px;
+}
+
+/*-----заголовки секций-----*/
+
+.form__header {
+  background-color: var(--accent-light-color);
+  height: 70px;
+  box-shadow: var(--heavy-shadow);
+  border-bottom-left-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+}
+.form__header-title {
+  font-size: 26px;
+  font-weight: 700;
+}
+.left {
+  grid-column: 1 / span 1;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  max-width: 710px;
+}
+.center {
+  grid-column: 2 / span 2;
+}
+.right {
+  grid-column: 4 / span 2;
+}
+
+/*-----секция Профессия-----*/
+
+.section {
+  box-shadow: var(--light-shadow);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: fit-content;
+}
+.section.profess {
+  grid-column: 1 / span 1;
+  grid-row: 2/ 4;
+  margin-left: 20px;
+  max-width: 410px;
+  gap: 10px;
 }
 
 .label-wrapper {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 10px;
+  flex-direction: column;
+  align-items: center;
 }
 
+.button.copy {
+  background-color: var(--accent-green);
+  margin-top: 10px;
+  width: 100%;
+}
+.spoiler-wrapper {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.line {
+  border-left: 1px solid var(--line-color);
+  height: 100%;
+}
+
+/*-----секция Приказы ОПР-----*/
+.section.orders {
+  grid-row: 2 / 4;
+}
+.section.orders.opr {
+  grid-column: 2 / span 2;
+  height: 470px;
+  justify-content: space-between;
+}
+
+/*-----секция Приказы Меры-----*/
+
+.section.orders.measures {
+  height: 260px;
+  grid-column: 4 / span 2;
+  grid-row: 2/3;
+  margin-right: 20px;
+}
+
+/*-----секция Кнопки-----*/
+.section.buttons {
+  grid-column: 1/2;
+  grid-row: 4/5;
+  margin-left: 20px;
+  gap: 10px;
+}
+
+.total {
+  margin-top: 10px;
+  text-transform: uppercase;
+  align-self: flex-start;
+}
+.line-horiz {
+  border-top: 1px solid var(--line-color);
+  width: 350px;
+}
+
+.buttons_wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  height: var(--button-height);
+  border-radius: var(--radius);
+  border: none;
+  color: white;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.button__table {
+  background-color: var(--accent-dark-blue);
+  width: 100%;
+  position: relative;
+}
+
+.button:hover {
+  text-decoration: underline 1px;
+}
+.button.send {
+  background-color: var(--accent-green);
+  width: 100%;
+}
+.button.reset {
+  background-color: var(--accent-red);
+  width: 100%;
+}
+.button.button-cancel {
+  background: transparent;
+  color: var(--accent-red);
+  font-size: 16px;
+  height: 20px;
+}
+/* ---иконка---
+.button__table:before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 45px;
+  size: 20px;
+  width: 23px;
+  height: 27px;
+  background-image: url('../../../img/excel_icon.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}*/
+
+/*-----секция Риски-----*/
+
+.risk,
+.label.box {
+  display: flex;
+  flex-direction: column;
+}
+.label.box.comments {
+  width: 100%;
+  grid-column: 1 / span 3;
+}
+.risk {
+  width: 600px;
+  justify-self: center;
+  box-sizing: border-box;
+  height: fit-content;
+  padding: 20px;
+}
+.risk-opr {
+  grid-column: 2 / span 2;
+  height: 100%;
+}
+.risk-measures {
+  grid-column: 4/-1;
+  grid-row: 3;
+}
+
+.risk__labels {
+  display: grid;
+  grid-template-columns: repeat(3, 180px);
+  gap: 10px;
+}
+
+.label.box {
+  align-items: center;
+}
+.label.risk__attitude {
+  font-size: 16px;
+}
+
+.risk__attitude-text {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  font-size: 16px;
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 23.83px;
+  grid-column: 2 / span 2;
+  border: 1px solid #f3f4f6;
+  border-radius: var(--radius);
+  resize: none;
+  outline: none;
+  text-align: left;
+  padding: 0 6px;
+}
+
+.buttons_wrapper {
+  margin-top: auto;
+}
+
+/*----секция План-----*/
+
+.plan {
+  grid-column: 4/-1;
+  grid-row: 4;
+  background-color: var(--accent-light-color);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 50px;
+  margin-right: 20px;
+}
+.plan__container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 18px;
+}
+.form__input.plan-input {
+  width: 100%;
+  background-color: #fff;
+  border: none;
+}
+.form__input.input {
+  text-align: left;
+}
+.input {
+  text-align: center;
+}
+.form__input.input.ipr {
+  padding: 0 8px;
+  line-height: var(--input-height);
+}
+/*----REACT-SELECT----*/
 .react-select-container {
   background-color: rgba(243, 244, 246, 1) !important;
 }
@@ -22,6 +275,8 @@
   border: 1px solid var(--main-color) !important;
   background-color: rgba(243, 244, 246, 1) !important;
   box-shadow: none !important;
+  transition: background-color 0.3s ease-in-out !important;
+  height: var(--input-height);
 }
 .react-select__control:hover {
   background-color: rgb(222, 228, 239) !important;
@@ -53,7 +308,7 @@
   background-color: rgba(243, 244, 246, 1) !important;
   color: var(--main-color) !important;
   font-weight: 400;
-  transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out !important;
 }
 .react-select__option--is-focused {
   background-color: rgb(222, 228, 239) !important;
@@ -77,6 +332,9 @@
 .react-select__indicator-separator {
   display: none;
 }
+
+/*------------------------------*/
+
 .form__container {
   display: flex;
   flex-direction: column;
@@ -87,15 +345,17 @@
 .form__input {
   box-sizing: border-box;
   width: 100px;
-  height: 38px;
+  height: var(--input-height);
   padding: 2px 8px;
   border: 1px solid var(--main-color);
   border-radius: 4px;
   outline: none;
   width: 170px;
+  width: 100%;
   font-family: inherit;
   font-size: 16px;
   background-color: rgba(243, 244, 246, 1);
+  transition: background-color 0.3s ease-in-out;
 }
 .form__input:hover {
   background-color: rgb(222, 228, 239);
@@ -104,14 +364,11 @@
   box-shadow: 0px 0px 0px 1px var(--main-color);
 }
 
-.form__input.standart {
-  width: 350px;
-}
 .submit {
   margin-top: 20px;
 }
 .label {
-  width: 350px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 6px;
@@ -119,21 +376,20 @@
   font-size: 18px;
   font-weight: 700;
 }
+
+.label.order-input {
+  width: 100%;
+}
+
 .label.profession {
   align-items: center;
 }
-.label.box {
-  flex-direction: row;
-  gap: 10px;
-  align-items: flex-end;
-  justify-content: space-between;
-}
 
-.input__test {
+/*.input__test {
   margin-top: 10px;
   width: 200px;
   min-height: 25px;
-}
+}*/
 
 .wrapper {
   display: flex;
@@ -150,85 +406,6 @@
   font-weight: 500;
   width: 100%;
 }
-.buttons_wrapper {
-  display: flex;
-  gap: 10px;
-  align-self: center;
-}
-.button {
-  width: 350px;
-  height: 38px;
-  border-radius: 4px;
-  border: none;
-  color: white;
-  font-family: inherit;
-  font-size: 18px;
-  font-weight: 500;
-}
-.button:hover {
-  text-decoration: underline 1px;
-}
-.button.send {
-  background-color: var(--accent-green);
-}
-.button.reset {
-  background-color: var(--accent-red);
-}
-.button.button-cancel {
-  background: transparent;
-  color: var(--accent-red);
-  font-size: 16px;
-  height: 20px;
-}
-.button__table {
-  width: 350px;
-  margin-top: 16px;
-  padding: 7px 35px;
-  background-color: var(--accent-dark-blue);
-  position: relative;
-}
-.button__table:before {
-  content: '';
-  position: absolute;
-  top: 6px;
-  left: 45px;
-  size: 20px;
-  width: 23px;
-  height: 27px;
-  background-image: url('../../../img/excel_icon.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-/*******контейнер с приказом********/
-
-.input-order__wrapper {
-  box-sizing: border-box;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid rgba(66, 83, 97, 0.24);
-  border-radius: 4px;
-  width: 350px;
-  /*можно сделать одинаковые по высоте карточки, если убрать height*/
-  height: max-content;
-  gap: 10px;
-}
-
-.input-order__title {
-  font-size: 18px;
-  /*новые стили*/
-  font-family: inherit;
-  font-weight: 700;
-  border: none;
-  text-align: start;
-  padding: 0;
-  background-color: transparent;
-}
-
-.react-select-container.order {
-  width: calc(100% - 20px);
-}
 
 /********чекбокс*********/
 .visually-hidden {
@@ -244,6 +421,10 @@
 .checkbox__label {
   width: max-content;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: var(--accent-dark-blue);
+  margin-top: 4px;
 }
 
 .form__pseudo-checkbox {
@@ -251,8 +432,8 @@
   border: 1px solid rgba(66, 83, 97, 1);
   border-radius: 4px;
   display: inline-block;
-  width: 16px;
-  height: 16px;
+  width: var(--input-height);
+  height: var(--input-height);
   margin-right: 5px;
   vertical-align: sub;
   position: relative;
@@ -262,13 +443,15 @@
   content: '';
   /*рисунок*/
   display: inline-block;
-  width: 16px;
-  height: 16px;
+  width: var(--input-height);
+  height: var(--input-height);
   background-image: url('../../../img/icon__yes.svg');
-  background-size: contain;
   background-repeat: no-repeat;
-  /*выравнивание рисунка*/
-  position: absolute;
+  /*выравнивание рисунка
+    <div className='label__checkbox'>
+                  <label className='checkbox__label'>
+    disabled={!additionalMeans}*/
+  background-position: center;
   opacity: 0;
 }
 /*checked*/
@@ -279,8 +462,9 @@
   opacity: 1;
 }
 .checkbox__label-text {
-  font-size: 16px;
-  font-weight: 400;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
 }
 .checkbox__label.disabled > span {
   color: rgba(66, 83, 97, 0.6);
@@ -293,26 +477,18 @@
   flex-direction: column;
 }
 
-/*.additional-means:disabled {
-  background-color: rgba(192, 23, 17, 0.5);
-}
-.SIZ__lable {
-  display: flex;
-  /*flex-direction: row-reverse;
-  justify-content: flex-end;
-  font-size: 15px;
-  font-weight: 400;
-  cursor: pointer;
-  width: max-content;
-}
-.SIZ__lable-hiden {
-  opacity: 0;
-}*/
-
 .label.profs {
   width: 90%;
   padding: 0 5%;
 }
+
+/*---галочка для разворачивания приказа---
+.input-order__title {
+  background-image: url(../../../img/check-mark.svg);
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+}*/
 
 @media screen and (width <= 767px) {
   .label,
@@ -320,6 +496,10 @@
     width: 100%;
   }
   .form__input.standart {
+    width: 100%;
+  }
+  .label__checkbox {
+    justify-content: flex-start;
     width: 100%;
   }
   .label.box {
@@ -341,13 +521,9 @@
   .modal__window .button.send {
     width: 350px;
   }
+
   /*новые стили для выпадающего меню*/
-  .input-order__title {
-    background-image: url(../../../img/check-mark.svg);
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 12px;
-  }
+
   .dropdown-child_close {
     display: none;
   }
@@ -368,6 +544,9 @@
   .label,
   .input-order__title {
     font-size: 18px;
+  }
+  .spoiler_wrapper {
+    flex-direction: column;
   }
 }
 

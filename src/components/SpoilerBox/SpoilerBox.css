@@ -1,0 +1,38 @@
+/*******контейнер с приказом********/
+
+.input-order__wrapper {
+  box-sizing: border-box;
+   display: flex;
+  flex-direction: column;
+  width: 100%;
+   gap: 10px;
+}
+
+.input-order__title {
+  font-size: 18px;
+  font-family: inherit;
+  font-weight: 700;
+  border: none;
+  text-align: start;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.dropdown-child_close {
+  display: none;
+}
+.dropdown-child_open {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.invisible{
+  height: 68px;
+}
+
+@media (width<=768px) {
+  .input-order__wrapper {
+    width: 100%;
+  }
+}

@@ -1,0 +1,47 @@
+@keyframes loading {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
+
+.preloader {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 20px;
+  background-color: rgba(243, 244, 246, 0.7);
+}
+
+.preloader__container {
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+.preloader__round {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 10px solid rgba(23, 203, 108, 0.35);
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  border-bottom-color: var(--accent-green);
+
+  /**изменить цвета: т.зеленого больше, чем светлого*/
+  /* border-top-color: var(--accent-green);
+  border-left-color: var(--accent-green); */
+
+  animation-name: loading;
+  animation-duration: 1.5s; /* время анимации*/
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
