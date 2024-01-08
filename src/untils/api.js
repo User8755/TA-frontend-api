@@ -39,6 +39,19 @@ class Api {
     }).then(this._checkRes);
   }
 
+  updateUserInfo(item, jwt) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        ...this._headers,
+      },
+      body: JSON.stringify({
+        password: item,
+      }),
+    }).then(this._checkRes);
+  }
+
   tokenValid(jwt) {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {

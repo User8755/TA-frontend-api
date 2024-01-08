@@ -1,0 +1,23 @@
+.form__create-enterprise {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.form__title {
+  margin: 0 auto 15px;
+  border-bottom: 1px solid #000;
+}
+.form__input {
+  background-color: #f3f4f6;
+  border: 1px solid #425361;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 16px;
+  height: 36px;
+  outline: none;
+  padding: 2px 8px;
+  transition: background-color .3s ease-in-out;
+  width: 100%;
+}

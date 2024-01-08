@@ -1,0 +1,31 @@
+.entry__form_profile {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  align-items: center;
+}
+
+.profile__button {
+  background-color: var(--accent-dark-blue);
+  margin-top: 10px;
+}
+
+.profile__button:disabled {
+  opacity: 0.2;
+}
+
+.question__button.profile {
+  color: var(--accent-red);
+  border: none;
+}
+
+.span-error {
+  color: red;
+  font-size: 12px;
+  height: 32px;
+}
+.span-error-success {
+  color: green;
+  font-size: 12px;
+  height: 32px;
+}

@@ -50,6 +50,7 @@
   border-radius: 4px;
   padding: 5px 15px;
   transition: background-color 0.3s ease-in-out;
+  text-align: center;
 }
 ::placeholder {
   color: #8e98a0;

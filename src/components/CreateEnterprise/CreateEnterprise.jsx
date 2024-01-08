@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './CreateEnterprise.css';
 import api from '../../untils/api';
+import ButtonSubmit from '../ButtonSubmit/ButtonSubmit';
 
 function CreateEnterprise() {
   const [input, setInput] = useState({
@@ -10,8 +11,8 @@ function CreateEnterprise() {
     e.preventDefault();
     api
       .createEnterprise(input, JSON.parse(localStorage.getItem('key')).key)
-      .then(i=>console.log(i))
-      .catch(i=>console.log(i));
+      .then((i) => console.log(i))
+      .catch((i) => console.log(i));
   };
 
   const handlerChange = (e) => {
@@ -22,17 +23,20 @@ function CreateEnterprise() {
   };
 
   return (
-    <form onSubmit={handlerSubmit}>
-      <h2>Создать новое предпритятие</h2>
-      <input
-        placeholder='Укажите название предприятия'
-        name='enterprise'
-        value={input.enterprise}
-        on
-        onChange={handlerChange}
-      ></input>
-      <input type='submit'></input>
-    </form>
+    <>
+      <h2 className='form__title'>Создать новое предпритятие</h2>
+      <form className='form__create-enterprise' onSubmit={handlerSubmit}>
+        <input
+          className='form__input'
+          placeholder='Укажите название предприятия'
+          name='enterprise'
+          value={input.enterprise}
+          onChange={handlerChange}
+        ></input>
+        <ButtonSubmit></ButtonSubmit>
+        {/* <input type='submit' className='form__button-submit'></input> */}
+      </form>
+    </>
   );
 }
 

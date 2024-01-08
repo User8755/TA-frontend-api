@@ -1,0 +1,11 @@
+.form__button-submit {
+  border-radius: 5px;
+  width: 100%;
+  background-color: #17cb6c;
+  border: none;
+  color: #fff;
+  height: 38px;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 500;
+}

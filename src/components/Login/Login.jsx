@@ -44,7 +44,7 @@ function Login(props) {
             <input
               className='entry__form_input'
               id='login'
-              placeholder='example@mail.ru'
+              placeholder='Введите Ваш логин'
               name='login'
               onChange={handleChange}
               value={inputValue.login}
@@ -70,10 +70,6 @@ function Login(props) {
               Войти
             </button>
           </form>
-          <div className='question__container'>
-            <p className='question__text'>Забыли пароль?</p>
-            <button className='question__button button'>Напомнить</button>
-          </div>
         </div>
       </section>
     </>

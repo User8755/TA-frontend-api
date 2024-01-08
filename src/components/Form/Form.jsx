@@ -18,7 +18,7 @@ import ListHazards from '../../untils/tables/ListHazards';
 import listOfMeasures from '../../untils/tables/ListOfMeasures';
 import api from '../../untils/api';
 
-function Form(props) {
+function Form() {
   const [isDangerGroup, setDangerGroup] = useState([]);
   const [isDanger, setisDanger] = useState([]);
   const [isDanger776, setDanger776] = useState([]);

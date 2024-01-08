@@ -40,6 +40,9 @@ function Main({ setModal, setChild }) {
         <NavLink to='/list' className='enterprise__buttom'>
           Перейти к списку предприятий
         </NavLink>
+        <NavLink to='/profile' className='enterprise__buttom'>
+          Профиль
+        </NavLink>
       </section>
     </>
   );
