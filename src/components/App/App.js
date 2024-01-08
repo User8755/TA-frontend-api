@@ -10,6 +10,7 @@ import Main from '../Main/Main.jsx';
 import ModalWindow from '../ModalWindow/ModalWindow.jsx';
 import ListEnterprise from '../ListEnterprise/ListEnterprise.jsx';
 import Form from '../Form/Form.jsx';
+import NotFoundPage from '../NotFoundPage/NotFoundPage.jsx';
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -59,6 +60,7 @@ function App() {
           child={child}
         ></ModalWindow>
         <Routes>
+          <Route path='*' element={<NotFoundPage></NotFoundPage>}></Route>
           <Route
             path='/login'
             element={<Login setLogin={setLogin}></Login>}

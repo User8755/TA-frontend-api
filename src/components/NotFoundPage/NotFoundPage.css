@@ -1,0 +1,36 @@
+.notfound {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.notfound__block {
+  display: flex;
+  align-items: center;
+  background-image: url('../../untils/img/travolta2-min.gif');
+  height: 70vh;
+  width: 90vw;
+  background-repeat: no-repeat;
+  flex-direction: column;
+  background-position: center;
+}
+
+.notfound__title {
+  color: white;
+  font-size: 30px;
+  margin-top: 80px;
+}
+
+.notfound__subtitle {
+  color: white;
+  font-size: 30px;
+}
+
+.notfound_type_to-main {
+  color: #000;
+  font-size: 25px;
+  font-weight: 800;
+}
