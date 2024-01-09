@@ -40,6 +40,8 @@ function App() {
             setLoading(false);
           }, 100)
         );
+    }  else {
+      setLoading(false);
     }
   };
 
