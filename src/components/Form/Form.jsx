@@ -40,10 +40,10 @@ function Form() {
   const [isProff, setProff] = useState([]);
   const [checkboxSiz, setCheckboxSIZ] = useState(false); // чекбокс доп средства
   const [inputValue, setInputValue] = useState({
-    probability: '', //Вероятность
-    heaviness: '', // Тяжесть
-    probability1: '', // Тяжесть1
-    heaviness1: '', //Вероятность1
+    probability: 0, //Вероятность
+    heaviness: 0, // Тяжесть
+    probability1: 0, // Тяжесть1
+    heaviness1: 0, //Вероятность1
     periodicity: '', // Периодичность
     responsiblePerson: '', // Ответственное лицо
     completionMark: '', // Отметка о выполнении
@@ -54,6 +54,7 @@ function Form() {
     subdivision: '', // Подразделение
     commit: '', // Комментарий
   });
+
   const [requiredSIZ, setRequiredSIZ] = useState(false);
   const ERROR = 'Ошибка';
   const [isRiskManagement, setRiskManagement] = useState([]);
@@ -339,7 +340,7 @@ function Form() {
       setAdditionalMeans(true);
     }
   }, [selectedTipeSIZ]);
-console.log(currentEnterprise)
+  console.log(currentEnterprise);
   const clear = () => {
     setDanger776({});
     setDangerEvent776({});
@@ -360,10 +361,10 @@ console.log(currentEnterprise)
     setIpr(0);
     setIpr1(0);
     setInputValue({
-      probability: '',
-      heaviness: '',
-      probability1: '',
-      heaviness1: '',
+      probability: 0,
+      heaviness: 0,
+      probability1: 0,
+      heaviness1: 0,
       periodicity: '',
       responsiblePerson: '',
       completionMark: '',
@@ -382,6 +383,22 @@ console.log(currentEnterprise)
     });
   };
 
+  const handleChangeNum = (evt) => {
+    const { name, value } = evt.target;
+    setInputValue({
+      ...inputValue,
+      [name]: Number(value),
+    });
+  };
+
+  // const handleChangeDanger776 = (evt) => {
+  //   setInputValue({
+  //     ...inputValue,
+  //     danger776: evt.label,
+  //     danger776Id: evt.ID,
+  //   });
+  // };
+
   useEffect(() => {
     conversion.forEach((item) => {
       if (
@@ -396,7 +413,7 @@ console.log(currentEnterprise)
       }
     });
   }, [value.danger776, value.dangerEvent776]);
-
+  const onFocus = (e) => e.target.select();
   return (
     <>
       <form className='form' onSubmit={handleSubmit} required>
@@ -496,6 +513,7 @@ console.log(currentEnterprise)
                   classNamePrefix='react-select'
                   options={sortedDanger776}
                   onChange={(evt) => setDanger776(evt)}
+                  //onChange={(e)=>handleChangeDanger776(e)}
                   placeholder={'Опасности'}
                   value={isDanger776}
                 />
@@ -682,20 +700,22 @@ console.log(currentEnterprise)
             <label className='label box'>
               Тяжесть:
               <input
+                onFocus={onFocus}
                 name='heaviness'
                 type='number'
                 className='form__input input'
-                onChange={handleChange}
+                onChange={handleChangeNum}
                 value={inputValue.heaviness}
               ></input>
             </label>
             <label className='label box'>
               Вероятность:
               <input
+                onFocus={onFocus}
                 name='probability'
                 type='number'
                 className='form__input input'
-                onChange={handleChange}
+                onChange={handleChangeNum}
                 value={inputValue.probability}
               ></input>
             </label>
@@ -767,7 +787,7 @@ console.log(currentEnterprise)
                 name='heaviness1'
                 type='number'
                 className='form__input input'
-                onChange={handleChange}
+                onChange={handleChangeNum}
                 value={inputValue.heaviness1}
               ></input>
             </label>
@@ -777,7 +797,7 @@ console.log(currentEnterprise)
                 name='probability1'
                 type='number'
                 className='form__input input'
-                onChange={handleChange}
+                onChange={handleChangeNum}
                 value={inputValue.probability1}
               ></input>
             </label>

@@ -62,7 +62,7 @@ function App() {
       <div className='App'>
         <ModalWindow active={modal} setModal={setModal} child={child} />
         <Routes>
-          <Route path='*' element={NotFoundPage} />
+          <Route path='*' element={<NotFoundPage />} />
           <Route path='/login' element={<Login setLogin={setLogin} />} />
           <Route
             path='/profile'
