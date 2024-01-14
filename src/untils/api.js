@@ -33,6 +33,7 @@ class Api {
   getCurentUser(jwt) {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
+        credentials: 'same-origin',
         ...this._headers,
         Authorization: `Bearer ${jwt}`,
       },
@@ -85,6 +86,15 @@ class Api {
 
   getEnterprise(jwt) {
     return fetch(`${this._baseUrl}/enterprise`, {
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${jwt}`,
+      },
+    }).then(this._checkRes);
+  }
+
+  getEnterpriseAccess(jwt) {
+    return fetch(`${this._baseUrl}/enterprise/access`, {
       headers: {
         ...this._headers,
         Authorization: `Bearer ${jwt}`,
@@ -152,10 +162,32 @@ class Api {
       }),
     }).then(this._checkRes);
   }
+
+  getUsersBranch(jwt) {
+    return fetch(`${this._baseUrl}/users/all/branch`, {
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${jwt}`,
+      },
+    }).then(this._checkRes);
+  }
+
+  updateAccess(enterprise, user, jwt) {
+    return fetch(`${this._baseUrl}/enterprise/access/${enterprise}`, {
+      method: 'PATCH',
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify({
+        user: user,
+      }),
+    }).then(this._checkRes);
+  }
 }
 
 const api = new Api({
-  baseUrl: 'http://localhost:3001',
+  baseUrl: 'http://192.168.3.2:3001',
   headers: {
     'Content-Type': 'application/json',
   },

@@ -2,8 +2,16 @@ import React, { useEffect, useState } from 'react';
 import '../Login/Login.css';
 import './Profile.css';
 import api from '../../untils/api';
+import EnterpriseUpdate from '../EnterpriseUpdate/EnterpriseUpdate';
 
-function Profile({ currentUser, setLogin, setModal, setChild }) {
+function Profile({
+  currentUser,
+  setLogin,
+  setModal,
+  setChild,
+  enterprise,
+  setEnterprise,
+}) {
   const [input, setInput] = useState({
     password: '',
   });
@@ -14,6 +22,23 @@ function Profile({ currentUser, setLogin, setModal, setChild }) {
     localStorage.removeItem('key');
     setLogin(false);
   };
+
+  const handlerClikc = (item) => {
+    setChild(
+      <EnterpriseUpdate
+        enterprise={item}
+        setEnterprise={setEnterprise}
+      ></EnterpriseUpdate>
+    );
+    setModal(true);
+  };
+
+  useEffect(() => {
+    api
+      .getEnterprise(JSON.parse(localStorage.getItem('key')).key)
+      .then((i) => setEnterprise(i))
+      .catch((i) => console.log(i));
+  }, [setEnterprise]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -79,6 +104,20 @@ function Profile({ currentUser, setLogin, setModal, setChild }) {
             <button className='question__button profile' onClick={hendleLogOut}>
               Выйти из аккаунта
             </button>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div className='profile__enterprise-list'>
+          <h2>Мои предприятия</h2>
+          <div className='profile__enterprise-list_box'>
+            {enterprise.map((i) => {
+              return (
+                <button key={i._id} onClick={() => handlerClikc(i)}>
+                  {i.enterprise}
+                </button>
+              );
+            })}
           </div>
         </div>
       </section>

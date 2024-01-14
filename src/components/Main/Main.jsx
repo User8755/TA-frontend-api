@@ -23,7 +23,7 @@ function Main({ setModal, setChild }) {
 
   const hedlerOpenModal = () => {
     setModal(true);
-    setChild(<CreateEnterprise></CreateEnterprise>);
+    setChild(<CreateEnterprise setModal={setModal}></CreateEnterprise>);
   };
 
   return (

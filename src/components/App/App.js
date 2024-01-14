@@ -20,6 +20,7 @@ function App() {
   const [modal, setModal] = useState(false);
   const [child, setChild] = useState(null);
   const [enterprise, setEnterprise] = useState([]);
+  const [enterpriseAccess, setEnterpriseAccess] = useState([]);
 
   useEffect(() => {
     tokenCheck();
@@ -40,7 +41,7 @@ function App() {
             setLoading(false);
           }, 100)
         );
-    }  else {
+    } else {
       setLoading(false);
     }
   };
@@ -56,7 +57,7 @@ function App() {
   if (isLoading) {
     return <Preloader />;
   }
-  console.log(child);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='App'>
@@ -74,6 +75,8 @@ function App() {
                 loggedIn={login}
                 setModal={setModal}
                 setChild={setChild}
+                enterprise={enterprise}
+                setEnterprise={setEnterprise}
               />
             }
           />
@@ -96,6 +99,8 @@ function App() {
                 enterprise={enterprise}
                 setEnterprise={setEnterprise}
                 loggedIn={login}
+                enterpriseAccess={enterpriseAccess}
+                setEnterpriseAccess={setEnterpriseAccess}
               />
             }
           />

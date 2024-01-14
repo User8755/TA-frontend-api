@@ -29,3 +29,18 @@
   font-size: 12px;
   height: 32px;
 }
+
+.profile__enterprise-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  text-align: center;
+  width: 80%;
+  margin: 15px auto 0;
+}
+
+.profile__enterprise-list_box {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, 282px);
+}

@@ -3,7 +3,7 @@ import './CreateEnterprise.css';
 import api from '../../untils/api';
 import ButtonSubmit from '../ButtonSubmit/ButtonSubmit';
 
-function CreateEnterprise() {
+function CreateEnterprise({ setModal }) {
   const [input, setInput] = useState({
     enterprise: '',
   });
@@ -11,7 +11,9 @@ function CreateEnterprise() {
     e.preventDefault();
     api
       .createEnterprise(input, JSON.parse(localStorage.getItem('key')).key)
-      .then((i) => console.log(i))
+      .then(() => {
+        setModal(false);
+      })
       .catch((i) => console.log(i));
   };
 
