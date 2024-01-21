@@ -19,6 +19,7 @@ class Api {
 
   loginUser(item) {
     return fetch(`${this._baseUrl}/users/signin`, {
+      credentials: 'include',
       method: 'POST',
       headers: {
         ...this._headers,
@@ -72,6 +73,7 @@ class Api {
   }
 
   createEnterprise(item, jwt) {
+    console.log(item);
     return fetch(`${this._baseUrl}/enterprise`, {
       method: 'POST',
       headers: {
@@ -80,6 +82,9 @@ class Api {
       },
       body: JSON.stringify({
         enterprise: item.enterprise,
+        inn: item.inn,
+        kpp: item.kpp,
+        order: item.order,
       }),
     }).then(this._checkRes);
   }
@@ -187,7 +192,8 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'http://192.168.3.2:3001',
+  baseUrl: 'https://api.tafontend.online',
+  //baseUrl: 'http://localhost:3001',
   headers: {
     'Content-Type': 'application/json',
   },

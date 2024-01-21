@@ -6,7 +6,11 @@ import ButtonSubmit from '../ButtonSubmit/ButtonSubmit';
 function CreateEnterprise({ setModal }) {
   const [input, setInput] = useState({
     enterprise: '',
+    inn: '',
+    kpp: '',
+    order: '',
   });
+
   const handlerSubmit = (e) => {
     e.preventDefault();
     api
@@ -20,6 +24,7 @@ function CreateEnterprise({ setModal }) {
   const handlerChange = (e) => {
     const { name, value } = e.target;
     setInput({
+      ...input,
       [name]: value,
     });
   };
@@ -28,15 +33,47 @@ function CreateEnterprise({ setModal }) {
     <>
       <h2 className='form__title'>Создать новое предпритятие</h2>
       <form className='form__create-enterprise' onSubmit={handlerSubmit}>
-        <input
-          className='form__input'
-          placeholder='Укажите название предприятия'
-          name='enterprise'
-          value={input.enterprise}
-          onChange={handlerChange}
-        ></input>
+        <div>
+          <label className='label'>Название организации:</label>
+          <input
+            className='form__input'
+            placeholder='Укажите название организации'
+            name='enterprise'
+            value={input.enterprise}
+            onChange={handlerChange}
+          ></input>
+        </div>
+        <div>
+          <label className='label'>ИНН организации:</label>
+          <input
+            className='form__input'
+            placeholder='Введите ИНН'
+            name='inn'
+            value={input.inn}
+            onChange={handlerChange}
+          ></input>
+        </div>
+        <div>
+          <label className='label'>КПП организации:</label>
+          <input
+            className='form__input'
+            placeholder='Введите КПП'
+            name='kpp'
+            value={input.kpp}
+            onChange={handlerChange}
+          ></input>
+        </div>
+        <div>
+          <label className='label'>Номер договора:</label>
+          <input
+            className='form__input'
+            placeholder='Укажите номер договора'
+            name='order'
+            value={input.order}
+            onChange={handlerChange}
+          ></input>
+        </div>
         <ButtonSubmit></ButtonSubmit>
-        {/* <input type='submit' className='form__button-submit'></input> */}
       </form>
     </>
   );

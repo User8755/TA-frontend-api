@@ -8,6 +8,7 @@ function Login(props) {
     login: '',
     password: '',
   });
+  const [err, setErr] = useState({});
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
@@ -15,6 +16,7 @@ function Login(props) {
       ...inputValue,
       [name]: value,
     });
+    setErr({})
   };
   const navigate = useNavigate();
 
@@ -29,7 +31,7 @@ function Login(props) {
           navigate('/', { replace: true });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setErr(err));
   };
 
   return (
@@ -49,9 +51,7 @@ function Login(props) {
               onChange={handleChange}
               value={inputValue.login}
             ></input>
-            <span className='input-error'>
-              Введен некорректный адрес электронной почты
-            </span>
+            <span className='span-error'></span>
             <label htmlFor='password' className='entry__form_label'>
               Пароль
             </label>
@@ -65,7 +65,7 @@ function Login(props) {
               value={inputValue.password}
               autoComplete='on'
             />
-            <span className='input-error'>Ошибка ввода пароля</span>
+            <span className='span-error'>{err.message}</span>
             <button className='button entry__button' type='submit'>
               Войти
             </button>

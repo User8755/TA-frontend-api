@@ -42,7 +42,7 @@ function EnterpriseUpdate({ enterprise }) {
       <h2>Выдать доступ</h2>
       <form onSubmit={handlerSubmit}>
         <select name='user' onChange={handlerChange}>
-          <option defaultChecked></option>
+          <option defaultChecked value={currentE}></option>
           {users.map((i) => {
             return (
               <option key={i._id} value={i._id}>

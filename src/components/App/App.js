@@ -39,7 +39,7 @@ function App() {
         .finally(
           setTimeout(() => {
             setLoading(false);
-          }, 100)
+          }, 1000)
         );
     } else {
       setLoading(false);

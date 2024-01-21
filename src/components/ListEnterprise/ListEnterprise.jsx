@@ -22,7 +22,7 @@ function ListEnterprise({
 
   return (
     <>
-      <h2>Мои предприятия</h2>
+      <h2 className='list__title'>Мои предприятия</h2>
       <div className='list__box'>
         {enterprise.length !== 0 ? (
           enterprise.map((i) => {
@@ -40,7 +40,7 @@ function ListEnterprise({
           <p>Тут пока ничего нет</p>
         )}
       </div>
-      <h2>Предприятия с доступом</h2>
+      <h2 className='list__title'>Предприятия с доступом</h2>
       <div className='list__box'>
         {enterpriseAccess.length !== 0 ? (
           enterpriseAccess.map((i) => {

@@ -18,11 +18,19 @@ a {
   --accent-green: #17cb6c;
   --accent-red: #fe3f57;
   --accent-dark-blue: #425361;
+  --accent-light-color: #f3f4f6;
+  --line-color: #8e98a0;
+  --radius: 5px;
+  --heavy-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  --light-shadow: 0px 4px 23px 3px rgba(0, 0, 0, 0.11);
+  --input-height: 36px;
+  --button-height: 38px;
 }
 .App {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  align-items: center;
 }
 .main {
   margin: 30px 20px;

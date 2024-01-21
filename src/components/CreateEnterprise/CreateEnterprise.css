@@ -18,6 +18,10 @@
   height: 36px;
   outline: none;
   padding: 2px 8px;
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
   width: 100%;
+}
+
+.label {
+  margin-bottom: 5px;
 }
