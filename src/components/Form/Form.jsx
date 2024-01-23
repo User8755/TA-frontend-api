@@ -11,9 +11,6 @@ import riskManagement from '../../untils/riskManagement';
 import conversion from '../../untils/converct';
 import './Form.css';
 import SpoilerBox from '../SpoilerBox/SpoilerBox';
-import mapOPR from '../../untils/tables/mapOPR';
-import baseTable from '../../untils/tables/baseTable';
-import normSiz from '../../untils/tables/normSIZ';
 import ListHazards from '../../untils/tables/ListHazards';
 import listOfMeasures from '../../untils/tables/ListOfMeasures';
 import api from '../../untils/api';
@@ -80,6 +77,55 @@ function Form() {
       })
       .catch((e) => console.log(e));
   }, []);
+
+  const getBaseTabel = () => {
+    api
+      .getBasetabel(
+        localStorage.getItem('id'),
+        JSON.parse(localStorage.getItem('key')).key
+      )
+      .then((i) => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(i);
+        link.download = 'file.xlsx';
+        link.click();
+        link.remove();
+        console.log(link);
+      })
+      .catch((i) => console.log(i));
+  };
+
+  const getNormTabel = () => {
+    api
+      .getNormTabel(
+        localStorage.getItem('id'),
+        JSON.parse(localStorage.getItem('key')).key
+      )
+      .then((i) => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(i);
+        link.download = 'file.xlsx';
+        link.click();
+        link.remove();
+      })
+      .catch((i) => console.log(i));
+  };
+
+  const getMapOPRTabel = () => {
+    api
+      .getMapOPRTabel(
+        localStorage.getItem('id'),
+        JSON.parse(localStorage.getItem('key')).key
+      )
+      .then((i) => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(i);
+        link.download = 'Карта опасностей.xlsx';
+        link.click();
+        link.remove();
+      })
+      .catch((i) => console.log(i));
+  };
 
   useEffect(() => {
     setIpr(inputValue.probability * inputValue.heaviness);
@@ -657,7 +703,8 @@ function Form() {
           <button
             className='button button__table'
             type='button'
-            onClick={() => baseTable(currentEnterprise.value)}
+            //onClick={() => baseTable(currentEnterprise.value)}
+            onClick={() => getBaseTabel()}
           >
             Базовая таблица
           </button>
@@ -671,7 +718,8 @@ function Form() {
           <button
             className='button button__table'
             type='button'
-            onClick={() => mapOPR(currentEnterprise.value)}
+            //onClick={() => mapOPR(currentEnterprise.value)}
+            onClick={() => getMapOPRTabel()}
           >
             Карты опасностей
           </button>
@@ -685,7 +733,8 @@ function Form() {
           <button
             className='button button__table'
             type='button'
-            onClick={() => normSiz(currentEnterprise.value)}
+            //onClick={() => normSiz(currentEnterprise.value)}
+            onClick={() => getNormTabel()}
           >
             Нормы выдачи СИЗ
           </button>

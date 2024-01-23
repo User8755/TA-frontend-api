@@ -189,6 +189,51 @@ class Api {
       }),
     }).then(this._checkRes);
   }
+
+  getBasetabel(enterprise, jwt) {
+    return fetch(`${this._baseUrl}/tabels/base/${enterprise}`, {
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${jwt}`,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.blob();
+        }
+      })
+      .catch((e) => console.log(e));
+  }
+
+  getNormTabel(enterprise, jwt) {
+    return fetch(`${this._baseUrl}/tabels/norm/${enterprise}`, {
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${jwt}`,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.blob();
+        }
+      })
+      .catch((e) => console.log(e));
+  }
+
+  getMapOPRTabel(enterprise, jwt) {
+    return fetch(`${this._baseUrl}/tabels/mapOPR/${enterprise}`, {
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${jwt}`,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.blob();
+        }
+      })
+      .catch((e) => console.log(e));
+  }
 }
 
 const api = new Api({
