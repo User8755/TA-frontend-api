@@ -234,11 +234,26 @@ class Api {
       })
       .catch((e) => console.log(e));
   }
+
+  getListOfMeasuresTabel(enterprise, jwt) {
+    return fetch(`${this._baseUrl}/tabels/listOfMeasures/${enterprise}`, {
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${jwt}`,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.blob();
+        }
+      })
+      .catch((e) => console.log(e));
+  }
 }
 
 const api = new Api({
-  baseUrl: 'https://api.tafontend.online',
-  //baseUrl: 'http://localhost:3001',
+  //baseUrl: 'https://api.tafontend.online',
+  baseUrl: 'http://localhost:3001',
   headers: {
     'Content-Type': 'application/json',
   },

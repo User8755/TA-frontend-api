@@ -111,6 +111,22 @@ function Form() {
       .catch((i) => console.log(i));
   };
 
+  const getListOfMeasuresTable = () => {
+    api
+      .getListOfMeasuresTabel(
+        localStorage.getItem('id'),
+        JSON.parse(localStorage.getItem('key')).key
+      )
+      .then((i) => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(i);
+        link.download = 'file.xlsx';
+        link.click();
+        link.remove();
+      })
+      .catch((i) => console.log(i));
+  };
+
   const getMapOPRTabel = () => {
     api
       .getMapOPRTabel(
@@ -726,7 +742,8 @@ function Form() {
           <button
             className='button button__table'
             type='button'
-            onClick={() => listOfMeasures(currentEnterprise.value)}
+            //onClick={() => listOfMeasures(currentEnterprise.value)}
+            onClick={() => getListOfMeasuresTable()}
           >
             Меры управления без СИЗ
           </button>
