@@ -3,7 +3,7 @@ import '../Login/Login.css';
 import './Profile.css';
 import api from '../../untils/api';
 import EnterpriseUpdate from '../EnterpriseUpdate/EnterpriseUpdate';
-
+import ButtonGoBack from '../ButtonGoBack/ButtonGoBack';
 function Profile({
   currentUser,
   setLogin,
@@ -120,6 +120,7 @@ function Profile({
             })}
           </div>
         </div>
+        <ButtonGoBack />
       </section>
     </>
   );

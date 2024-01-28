@@ -27,10 +27,7 @@ a {
   --button-height: 38px;
 }
 .App {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  align-items: center;
+  display: block;
 }
 .main {
   margin: 30px 20px;

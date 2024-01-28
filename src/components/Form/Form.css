@@ -1,11 +1,20 @@
 /********форма*********/
 .form {
-  display: grid;
-  /* height: 100vh; */
-  width: 100%;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: min-content fit-content 1fr 2fr;
+  display: flex;
   gap: 10px 8px;
+  justify-content: center;
+}
+
+.form__block-left {
+  max-width: 390px;
+}
+
+.form__block-center {
+  max-width: 600px;
+}
+
+.form__block-right {
+  max-width: 500px;
 }
 
 /*-----заголовки секций-----*/
@@ -26,16 +35,7 @@
   font-weight: 700;
 }
 .left {
-  grid-column: 1 / span 1;
-  grid-row: 1;
-  display: flex;
   flex-direction: column;
-}
-.center {
-  grid-column: 2 / span 2;
-}
-.right {
-  grid-column: 4 / span 2;
 }
 
 /*-----секция Профессия-----*/
@@ -50,9 +50,6 @@
   height: fit-content;
 }
 .section.profess {
-  grid-column: 1 / span 1;
-  grid-row: 2/ 4;
-  margin-left: 20px;
   max-width: 410px;
   gap: 10px;
 }
@@ -80,11 +77,7 @@
 }
 
 /*-----секция Приказы ОПР-----*/
-.section.orders {
-  grid-row: 2 / 4;
-}
 .section.orders.opr {
-  grid-column: 2 / span 2;
   height: 470px;
   justify-content: space-between;
 }
@@ -93,16 +86,10 @@
 
 .section.orders.measures {
   height: 260px;
-  grid-column: 4 / span 2;
-  grid-row: 2/3;
-  margin-right: 20px;
 }
 
 /*-----секция Кнопки-----*/
 .section.buttons {
-  grid-column: 1/2;
-  grid-row: 4/5;
-  margin-left: 20px;
   gap: 10px;
 }
 
@@ -110,10 +97,9 @@
   margin-top: 10px;
   text-transform: uppercase;
   align-self: flex-start;
-}
-.line-horiz {
-  border-top: 1px solid var(--line-color);
-  width: 350px;
+  border-bottom: 1px solid var(--line-color);
+  width: 100%;
+  padding-bottom: 3px;
 }
 
 .buttons_wrapper {
@@ -154,19 +140,6 @@
   font-size: 16px;
   height: 20px;
 }
-/* ---иконка---
-.button__table:before {
-  content: '';
-  position: absolute;
-  top: 6px;
-  left: 45px;
-  size: 20px;
-  width: 23px;
-  height: 27px;
-  background-image: url('../../../img/excel_icon.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-}*/
 
 /*-----секция Риски-----*/
 
@@ -175,65 +148,48 @@
   display: flex;
   flex-direction: column;
 }
+
 .label.box.comments {
   width: 100%;
-  grid-column: 1 / span 3;
 }
+
 .risk {
-  width: 600px;
+  width: 100%;
   justify-self: center;
   box-sizing: border-box;
   height: fit-content;
-  padding: 20px;
-}
-.risk-opr {
-  grid-column: 2 / span 2;
-  height: 100%;
-}
-.risk-measures {
-  grid-column: 4/-1;
-  grid-row: 3;
+  padding: 10px;
 }
 
 .risk__labels {
-  display: grid;
-  grid-template-columns: repeat(3, 180px);
   gap: 10px;
+}
+
+.label__box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  column-gap: 10px;
+  margin-bottom: 15px;
 }
 
 .label.box {
   align-items: center;
 }
-.label.risk__attitude {
-  font-size: 16px;
-}
 
-.risk__attitude-text {
-  width: 100%;
-  height: 50px;
-  text-align: center;
+.label.risk__attitude {
+  display: block;
   font-size: 16px;
-  font-family: inherit;
-  font-weight: 400;
-  line-height: 23.83px;
-  grid-column: 2 / span 2;
-  border: 1px solid #f3f4f6;
-  border-radius: var(--radius);
-  resize: none;
-  outline: none;
-  text-align: left;
-  padding: 0 6px;
+  height: 50px;
 }
 
 .buttons_wrapper {
-  margin-top: auto;
+  margin-top: 15px;
 }
 
 /*----секция План-----*/
 
 .plan {
-  grid-column: 4/-1;
-  grid-row: 4;
   background-color: var(--accent-light-color);
   border-radius: var(--radius);
   display: flex;
@@ -241,7 +197,6 @@
   align-items: center;
   gap: 15px;
   padding: 20px 50px;
-  margin-right: 20px;
 }
 .plan__container {
   width: 100%;
@@ -291,12 +246,7 @@
   font-size: 16px;
   font-weight: 400;
 }
-/*выпадающее меню*/
-/*.custom-error-message{
-  padding: 10px 5px !important;
-  color: rgba(66, 83, 97, 1) !important;
-  font-weight: 500 !important;
-}*/
+
 .react-select__menu {
   border: 1px solid var(--main-color) !important;
   background-color: rgba(243, 244, 246, 1) !important;
@@ -344,19 +294,21 @@
 
 .form__input {
   box-sizing: border-box;
-  width: 100px;
   height: var(--input-height);
   padding: 2px 8px;
   border: 1px solid var(--main-color);
   border-radius: 4px;
   outline: none;
-  width: 170px;
-  width: 100%;
   font-family: inherit;
   font-size: 16px;
   background-color: rgba(243, 244, 246, 1);
   transition: background-color 0.3s ease-in-out;
 }
+
+.form__input-opr {
+  width: 46px;
+}
+
 .form__input:hover {
   background-color: rgb(222, 228, 239);
 }
@@ -367,14 +319,17 @@
 .submit {
   margin-top: 20px;
 }
+
 .label {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  row-gap: 6px;
   font-family: inherit;
   font-size: 18px;
   font-weight: 700;
+  margin: 0;
+  width: 100%;
+}
+
+.label__opr {
+  width: max-content;
 }
 
 .label.order-input {
@@ -384,12 +339,6 @@
 .label.profession {
   align-items: center;
 }
-
-/*.input__test {
-  margin-top: 10px;
-  width: 200px;
-  min-height: 25px;
-}*/
 
 .wrapper {
   display: flex;
@@ -447,10 +396,6 @@
   height: var(--input-height);
   background-image: url('../../../img/icon__yes.svg');
   background-repeat: no-repeat;
-  /*выравнивание рисунка
-    <div className='label__checkbox'>
-                  <label className='checkbox__label'>
-    disabled={!additionalMeans}*/
   background-position: center;
   opacity: 0;
 }
@@ -480,109 +425,4 @@
 .label.profs {
   width: 90%;
   padding: 0 5%;
-}
-
-/*---галочка для разворачивания приказа---
-.input-order__title {
-  background-image: url(../../../img/check-mark.svg);
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 12px;
-}*/
-
-@media screen and (width <= 767px) {
-  .label,
-  .input-order__wrapper {
-    width: 100%;
-  }
-  .form__input.standart {
-    width: 100%;
-  }
-  .label__checkbox {
-    justify-content: flex-start;
-    width: 100%;
-  }
-  .label.box {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-  }
-  .react-select-container.order {
-    width: 100%;
-  }
-  .buttons_wrapper {
-    align-items: center;
-  }
-  .button.send,
-  .button.reset {
-    width: calc((100vw - 40px - 10px) / 2);
-  }
-  .modal__window .button.send {
-    width: 350px;
-  }
-
-  /*новые стили для выпадающего меню*/
-
-  .dropdown-child_close {
-    display: none;
-  }
-  .dropdown-child_open {
-    display: block;
-  }
-  /******/
-  .label.box {
-    align-items: flex-start;
-  }
-  .buttons_wrapper {
-    max-width: fit-content;
-  }
-
-  .button.button__table {
-    align-self: center;
-  }
-  .label,
-  .input-order__title {
-    font-size: 18px;
-  }
-  .spoiler_wrapper {
-    flex-direction: column;
-  }
-}
-
-@media (width <=400px) {
-  .button.send,
-  .button.reset {
-    min-width: 170px;
-  }
-
-  .label,
-  .input-order__title {
-    font-size: 16px;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .main {
-    margin: 20px 10px;
-  }
-  .buttons_wrapper {
-    flex-direction: column;
-    gap: 10px;
-  }
-  .button.send,
-  .button.reset {
-    width: 300px;
-  }
-  .button.button__table {
-    width: 300px;
-    margin-top: 10px;
-  }
-  .button.button__table:before {
-    top: 8px;
-    left: 15px;
-    size: 20px;
-    width: 20px;
-    height: 24px;
-  }
 }

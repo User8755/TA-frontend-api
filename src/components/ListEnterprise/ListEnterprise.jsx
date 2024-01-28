@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import './ListEnterprise.css';
 import { useEffect } from 'react';
 import api from '../../untils/api';
+import ButtonGoBack from '../ButtonGoBack/ButtonGoBack';
 
 function ListEnterprise({
   enterprise,
@@ -58,6 +59,7 @@ function ListEnterprise({
           <p>Тут пока ничего нет</p>
         )}
       </div>
+      <ButtonGoBack />
     </>
   );
 }
