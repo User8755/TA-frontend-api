@@ -28,6 +28,7 @@ function Profile({
       <EnterpriseUpdate
         enterprise={item}
         setEnterprise={setEnterprise}
+        currentUser={currentUser}
       ></EnterpriseUpdate>
     );
     setModal(true);

@@ -190,6 +190,19 @@ class Api {
     }).then(this._checkRes);
   }
 
+  updateCloseAccess(enterprise, user, jwt) {
+    return fetch(`${this._baseUrl}/enterprise/access/${enterprise}`, {
+      method: 'DELETE',
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify({
+        user: user,
+      }),
+    }).then(this._checkRes);
+  }
+
   getBasetabel(enterprise, jwt) {
     return fetch(`${this._baseUrl}/tabels/base/${enterprise}`, {
       headers: {
@@ -252,8 +265,8 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://api.tafontend.online',
-  //baseUrl: 'http://localhost:3001',
+  //baseUrl: 'https://api.tafontend.online',
+  baseUrl: 'http://localhost:3001',
   headers: {
     'Content-Type': 'application/json',
   },

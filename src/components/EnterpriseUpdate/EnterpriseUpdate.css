@@ -2,3 +2,9 @@
   display: flex;
   justify-content: space-between;
 }
+
+.form__enterprice-update {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}

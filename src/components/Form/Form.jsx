@@ -721,16 +721,6 @@ function Form() {
               <span className=' label risk__attitude'>
                 Отношение к риску: {riskAttitude}
               </span>
-              <label className='label box comments'>
-                Комментарии:
-                <input
-                  name='commit'
-                  type='text'
-                  className='form__input input'
-                  onChange={handleChange}
-                  value={inputValue.commit}
-                ></input>
-              </label>
             </div>
             <div className='buttons_wrapper'>
               <input type='submit' className='button send'></input>
@@ -740,6 +730,16 @@ function Form() {
                 onClick={clear}
               ></input>
             </div>
+            <label className='label box comments'>
+              Комментарии:
+              <input
+                name='commit'
+                type='text'
+                className='form__input input'
+                onChange={handleChange}
+                value={inputValue.commit}
+              ></input>
+            </label>
             <ButtonGoBack />
           </section>
         </div>
