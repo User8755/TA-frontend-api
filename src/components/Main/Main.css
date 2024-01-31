@@ -1,5 +1,6 @@
 .info__blok {
-  max-width: 70%;
+  max-width: max-content;
+  padding: 0 15%;
   margin: 20px auto 0;
 }
 

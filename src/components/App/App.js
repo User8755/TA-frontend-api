@@ -13,6 +13,7 @@ import Form from '../Form/Form.jsx';
 import NotFoundPage from '../NotFoundPage/NotFoundPage.jsx';
 import ProtectedRouteElement from '../ProtectedRout/ProtectedRout.js';
 import Profile from '../Profile/Profile.jsx';
+import Select from '../Select/Select.jsx';
 function App() {
   const [login, setLogin] = useState(false);
   const [isLoading, setLoading] = useState(true);
@@ -114,6 +115,7 @@ function App() {
               />
             }
           />
+          <Route path='/sel' element={<Select></Select>}></Route>
         </Routes>
       </div>
     </CurrentUserContext.Provider>
