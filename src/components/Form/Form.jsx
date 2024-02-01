@@ -14,6 +14,7 @@ import SpoilerBox from '../SpoilerBox/SpoilerBox';
 import ListHazards from '../../untils/tables/ListHazards';
 import api from '../../untils/api';
 import ButtonGoBack from '../ButtonGoBack/ButtonGoBack';
+import SelectOne from '../Select/Select';
 
 function Form() {
   const [isDangerGroup, setDangerGroup] = useState([]);
@@ -402,8 +403,10 @@ function Form() {
       setAdditionalMeans(true);
     }
   }, [selectedTipeSIZ]);
-  console.log(currentEnterprise);
+
+  const [a, b] = useState();
   const clear = () => {
+    b(null);
     setDanger776({});
     setDangerEvent776({});
     setDangerEvent('');
@@ -476,6 +479,7 @@ function Form() {
     });
   }, [value.danger776, value.dangerEvent776]);
   const handleFocus = (e) => e.target.select();
+
   return (
     <div>
       <form className='form' onSubmit={handleSubmit} required>
@@ -485,6 +489,7 @@ function Form() {
             <span>{currentEnterprise.enterprise}</span>
           </div>
           <section className='section profess'>
+            <SelectOne value={a} option={prof} setValue={b}></SelectOne>
             <label className='label'>
               Профессии:
               <Select

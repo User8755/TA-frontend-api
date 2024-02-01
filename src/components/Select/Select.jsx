@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Select.css';
-import prof from '../../untils/prof';
 
-function Select() {
+function Select({ value, option, setValue }) {
   const [isFocus, setFocus] = useState(false);
   const [inputValue, setInputValue] = useState({
     input: '',
@@ -10,7 +9,7 @@ function Select() {
   const [isObj, setObj] = useState({});
 
   const hendlerClick = (obj) => {
-    setObj(obj);
+    setValue(obj);
     setFocus(false);
     setInputValue({
       input: obj.label,
@@ -25,40 +24,49 @@ function Select() {
     });
   };
 
-  console.log(inputValue);
-  console.log(isObj);
+  const handlerFocus = () => {
+    setInputValue({
+      input: '',
+    });
+    setFocus(true);
+  };
 
-  const hendleFilter = prof.filter((i) =>
-    i.label.toLowerCase().includes(inputValue.input.toLowerCase())
-  );
+  useEffect(() => {
+    if (!value) setInputValue({ input: '' });
+  }, [value]);
+  console.log(value);
+
   return (
-    <>
+    <div className='serchBox'>
       <input
+      className='serchBox__input'
         type='text'
         name='input'
         placeholder='Введите минимум 3 символа'
         value={inputValue.input}
-        onFocus={() => {
-          setFocus(true);
-        }}
+        onFocus={handlerFocus}
         onChange={handlerChangeInput}
       />
       <div className='block'>
-        {isFocus && inputValue.input.length > 3
-          ? hendleFilter.map((el) => {
-              return (
-                <div
-                  className='div'
-                  key={el.profId}
-                  onClick={() => hendlerClick(el)}
-                >
-                  {el.label}
-                </div>
-              );
-            })
+        {isFocus && inputValue.input.length > 2
+          ? option
+              .filter((i) =>
+                i.label.toLowerCase().includes(inputValue.input.toLowerCase())
+              )
+              .map((el) => {
+                return (
+                  <div
+                    className='div'
+                    key={el.profId}
+                    onClick={() => hendlerClick(el)}
+                  >
+                    {el.label}
+                  </div>
+                );
+              })
           : null}
       </div>
-    </>
+    </div>
   );
 }
 

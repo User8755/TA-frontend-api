@@ -4,11 +4,26 @@
 
 .block {
   width: 250px;
-  max-height: 600px;
-  overflow: auto
+  max-height: 300px;
+  overflow: auto;
+  position: absolute;
+  
+  background-color: beige;
+  z-index: 1;
+  top: 0;
 }
 
 .div {
   width: 100%;
   padding: 5px;
+}
+
+.serchBox {
+  position: relative;
+}
+.serchBox__input {
+  padding: 5px;
+  width: 100%;
+  border-radius: 4px;
+  min-height: 38px;
 }
