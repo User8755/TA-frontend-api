@@ -88,7 +88,7 @@ function Form() {
       .then((i) => {
         const link = document.createElement('a');
         link.href = URL.createObjectURL(i);
-        link.download = 'file.xlsx';
+        link.download = 'Базовая таблица.xlsx';
         link.click();
         link.remove();
         console.log(link);
@@ -105,7 +105,7 @@ function Form() {
       .then((i) => {
         const link = document.createElement('a');
         link.href = URL.createObjectURL(i);
-        link.download = 'file.xlsx';
+        link.download = 'Нормы выдачи СИЗ.xlsx';
         link.click();
         link.remove();
       })
@@ -121,7 +121,7 @@ function Form() {
       .then((i) => {
         const link = document.createElement('a');
         link.href = URL.createObjectURL(i);
-        link.download = 'file.xlsx';
+        link.download = 'Меры управления без СИЗ.xlsx';
         link.click();
         link.remove();
       })
@@ -404,9 +404,7 @@ function Form() {
     }
   }, [selectedTipeSIZ]);
 
-  const [a, b] = useState();
   const clear = () => {
-    b(null);
     setDanger776({});
     setDangerEvent776({});
     setDangerEvent('');
@@ -489,10 +487,10 @@ function Form() {
             <span>{currentEnterprise.enterprise}</span>
           </div>
           <section className='section profess'>
-            <SelectOne value={a} option={prof} setValue={b}></SelectOne>
+            {/* <SelectOne value={isProff} option={prof} setValue={setProff}></SelectOne> */}
             <label className='label'>
               Профессии:
-              <Select
+              {/* <Select
                 className='react-select-container'
                 classNamePrefix='react-select'
                 options={prof}
@@ -500,8 +498,13 @@ function Form() {
                 placeholder={'Профессии'}
                 noOptionsMessage={() => 'Значение не найдено'}
                 value={isProff}
-              />
+              /> */}
             </label>
+            <SelectOne
+              value={isProff}
+              option={prof}
+              setValue={setProff}
+            ></SelectOne>
             <label className='label'>
               Объект:
               <input

@@ -6,7 +6,6 @@ function Select({ value, option, setValue }) {
   const [inputValue, setInputValue] = useState({
     input: '',
   });
-  const [isObj, setObj] = useState({});
 
   const hendlerClick = (obj) => {
     setValue(obj);
@@ -15,7 +14,6 @@ function Select({ value, option, setValue }) {
       input: obj.label,
     });
   };
-
   const handlerChangeInput = (e) => {
     const { name, value } = e.target;
     setInputValue({
@@ -32,14 +30,15 @@ function Select({ value, option, setValue }) {
   };
 
   useEffect(() => {
-    if (!value) setInputValue({ input: '' });
+    if (!value) {
+      setInputValue({ input: '' });
+    }
   }, [value]);
-  console.log(value);
 
   return (
     <div className='serchBox'>
       <input
-      className='serchBox__input'
+        className='serchBox__input'
         type='text'
         name='input'
         placeholder='Введите минимум 3 символа'
