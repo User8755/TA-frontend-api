@@ -3,7 +3,7 @@ import danger from '../../untils/danger';
 import prof from '../../untils/prof';
 import dangerEvent from '../../untils/dangerousEvent';
 import Select from 'react-select';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import typeSiz from '../../untils/typeSIZ';
 import danget776 from '../../untils/danger775';
 import dangerEvent776 from '../../untils/dangerEvent776';
@@ -32,8 +32,6 @@ function Form() {
   const [risk1, setRisk1] = useState(''); // уровень риска
   const [acceptability1, setAcceptability1] = useState(''); // приемлемость
   const [riskAttitude1, setRiskAttitude1] = useState(''); // отношение к риску
-  const [obj, setObj] = useState(''); //объект
-  const [source, setSource] = useState(''); // источник
   const [selectedTipeSIZ, setSelectedTipeSIZ] = useState([]);
   const [isProff, setProff] = useState([]);
   const [checkboxSiz, setCheckboxSIZ] = useState(false); // чекбокс доп средства
@@ -51,6 +49,7 @@ function Form() {
     job: '', // Должность
     subdivision: '', // Подразделение
     commit: '', // Комментарий
+    enterpriseId: '',
   });
 
   const [requiredSIZ, setRequiredSIZ] = useState(false);
@@ -61,11 +60,20 @@ function Form() {
   const [isOrder767, setOrder767] = useState(true);
   const [isOrder776, setOrder776] = useState(true);
 
-  // обучаемые списки объект, источник
-  const [listObj, setListObj] = useState([]);
-  const [listSource, setListSource] = useState([]);
-
   const [currentEnterprise, setCurrentEnterprise] = useState({ value: [] });
+  const [counter, setCounter] = useState([]);
+
+  const [isDisabled, setDisabled] = useState(false);
+
+  useEffect(() => {
+    api
+      .getValue(
+        localStorage.getItem('id'),
+        JSON.parse(localStorage.getItem('key')).key
+      )
+      .then((e) => setCounter(e))
+      .catch((e) => console.warn(e));
+  }, []);
 
   useEffect(() => {
     api
@@ -80,6 +88,7 @@ function Form() {
   }, []);
 
   const getBaseTabel = () => {
+    setDisabled(true);
     api
       .getBasetabel(
         localStorage.getItem('id'),
@@ -91,12 +100,13 @@ function Form() {
         link.download = 'Базовая таблица.xlsx';
         link.click();
         link.remove();
-        console.log(link);
+        setDisabled(false);
       })
       .catch((i) => console.log(i));
   };
 
   const getNormTabel = () => {
+    setDisabled(true);
     api
       .getNormTabel(
         localStorage.getItem('id'),
@@ -108,11 +118,13 @@ function Form() {
         link.download = 'Нормы выдачи СИЗ.xlsx';
         link.click();
         link.remove();
+        setDisabled(false);
       })
       .catch((i) => console.log(i));
   };
 
   const getListOfMeasuresTable = () => {
+    setDisabled(true);
     api
       .getListOfMeasuresTabel(
         localStorage.getItem('id'),
@@ -124,11 +136,13 @@ function Form() {
         link.download = 'Меры управления без СИЗ.xlsx';
         link.click();
         link.remove();
+        setDisabled(false);
       })
       .catch((i) => console.log(i));
   };
 
   const getMapOPRTabel = () => {
+    setDisabled(true);
     api
       .getMapOPRTabel(
         localStorage.getItem('id'),
@@ -140,6 +154,7 @@ function Form() {
         link.download = 'Карта опасностей.xlsx';
         link.click();
         link.remove();
+        setDisabled(false);
       })
       .catch((i) => console.log(i));
   };
@@ -355,43 +370,58 @@ function Form() {
     }
   };
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    setCount(count + 1);
-    value['number'] = count + 1;
-    if (!requiredSIZ) {
-      delete value.proffSIZ;
-      setFormValue([...formValue, value]);
-    } else {
-      setFormValue([...formValue, value]);
-    }
-    if (!listObj.includes(obj)) {
-      setListObj([...listObj, obj]);
-    }
-    if (!listSource.includes(source)) {
-      setListSource([...listSource, source]);
-    }
-    if (checkboxSiz) {
-      value['additionalMeans'] = selectedTipeSIZ.additionalMeans;
-      value['AdditionalIssuanceRate'] = selectedTipeSIZ.AdditionalIssuanceRate;
-    }
-    localStorage.setItem('proff', JSON.stringify(isProff));
-    localStorage.setItem('input', JSON.stringify(inputValue));
-    localStorage.setItem('Danger776', JSON.stringify(isDanger776));
-    localStorage.setItem('DangerEvent776', JSON.stringify(isDangerEvent776));
-    localStorage.setItem('Danger', JSON.stringify(isDanger));
-    localStorage.setItem('DangerEvent', JSON.stringify(isDangerEvent));
-    localStorage.setItem('DangerGroup', JSON.stringify(isDangerGroup));
-    api
-      .updateCurrentEnterpriseValue(
-        localStorage.getItem('id'),
-        value,
-        JSON.parse(localStorage.getItem('key')).key
-      )
-      .then((e) => setCurrentEnterprise(e))
-      .catch((e) => console.log(e));
-    clear();
-  };
+  const handleSubmit = useCallback(
+    (evt) => {
+      evt.preventDefault();
+      setCount(count + 1);
+      value['number'] = count + 1;
+      value['enterpriseId'] = localStorage.getItem('id');
+      if (!requiredSIZ) {
+        delete value.proffSIZ;
+        setFormValue([...formValue, value]);
+      } else {
+        setFormValue([...formValue, value]);
+      }
+      if (checkboxSiz) {
+        value['additionalMeans'] = selectedTipeSIZ.additionalMeans;
+        value['AdditionalIssuanceRate'] =
+          selectedTipeSIZ.AdditionalIssuanceRate;
+      }
+      localStorage.setItem('proff', JSON.stringify(isProff));
+      localStorage.setItem('input', JSON.stringify(inputValue));
+      localStorage.setItem('Danger776', JSON.stringify(isDanger776));
+      localStorage.setItem('DangerEvent776', JSON.stringify(isDangerEvent776));
+      localStorage.setItem('Danger', JSON.stringify(isDanger));
+      localStorage.setItem('DangerEvent', JSON.stringify(isDangerEvent));
+      localStorage.setItem('DangerGroup', JSON.stringify(isDangerGroup));
+      api
+        .updateCurrentEnterpriseValue(
+          localStorage.getItem('id'),
+          value,
+          JSON.parse(localStorage.getItem('key')).key
+        )
+        .then((e) => setCounter([...counter, e]))
+        .catch((e) => console.log(e));
+      clear();
+    },
+    [
+      checkboxSiz,
+      count,
+      counter,
+      formValue,
+      inputValue,
+      isDanger,
+      isDanger776,
+      isDangerEvent,
+      isDangerEvent776,
+      isDangerGroup,
+      isProff,
+      requiredSIZ,
+      selectedTipeSIZ.AdditionalIssuanceRate,
+      selectedTipeSIZ.additionalMeans,
+      value,
+    ]
+  );
   const [additionalMeans, setAdditionalMeans] = useState(false);
   useEffect(() => {
     if (
@@ -418,12 +448,11 @@ function Form() {
     setAcceptability1(ERROR);
     setRiskAttitude1(ERROR);
     setSelectedTipeSIZ('');
-    setObj('');
-    setSource('');
     setRequiredSIZ(false);
     setIpr(0);
     setIpr1(0);
     setInputValue({
+      num: '',
       probability: 0,
       heaviness: 0,
       probability1: 0,
@@ -432,6 +461,7 @@ function Form() {
       responsiblePerson: '',
       completionMark: '',
       existingRiskManagement: '',
+      enterpriseId: '',
     });
     setCheckboxSIZ(false);
     setRiskManagement('');
@@ -453,6 +483,12 @@ function Form() {
       [name]: Number(value),
     });
   };
+
+  useEffect(() => {
+    if (inputValue.heaviness)
+      setInputValue({ ...inputValue, heaviness1: inputValue.heaviness });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputValue.heaviness]);
 
   // const handleChangeDanger776 = (evt) => {
   //   setInputValue({
@@ -477,6 +513,15 @@ function Form() {
     });
   }, [value.danger776, value.dangerEvent776]);
   const handleFocus = (e) => e.target.select();
+  useEffect(() => {
+    document.onkeydown = function (e) {
+      if (e.shiftKey && e.key === 'Enter') {
+        handleSubmit(e);
+      }
+
+      return true;
+    };
+  }, [handleSubmit]);
 
   return (
     <div>
@@ -506,6 +551,16 @@ function Form() {
               setValue={setProff}
             ></SelectOne>
             <label className='label'>
+              Номер рабочего места:
+              <input
+                className='form__input'
+                autoComplete='on'
+                onChange={handleChange}
+                name='num'
+                value={inputValue.num}
+              ></input>
+            </label>
+            <label className='label'>
               Объект:
               <input
                 className='form__input'
@@ -515,11 +570,6 @@ function Form() {
                 name='obj'
                 value={inputValue.obj}
               ></input>
-              <datalist id='obj'>
-                {listObj.map((item) => (
-                  <option>{item}</option>
-                ))}
-              </datalist>
             </label>
             <label className='label'>
               Источник:
@@ -531,11 +581,6 @@ function Form() {
                 name='source'
                 value={inputValue.source}
               ></input>
-              <datalist id='source'>
-                {listSource.map((item) => (
-                  <option>{item}</option>
-                ))}
-              </datalist>
             </label>
             <label className='label'>
               Должность отсутствует:
@@ -569,13 +614,15 @@ function Form() {
               type='button'
               //onClick={() => baseTable(currentEnterprise.value)}
               onClick={() => getBaseTabel()}
+              disabled={isDisabled}
             >
               Базовая таблица
             </button>
             <button
               className='button button__table'
               type='button'
-              onClick={() => ListHazards(currentEnterprise.value)}
+              onClick={() => ListHazards(counter)}
+              disabled={isDisabled}
             >
               Реестр опасностей
             </button>
@@ -584,6 +631,7 @@ function Form() {
               type='button'
               //onClick={() => mapOPR(currentEnterprise.value)}
               onClick={() => getMapOPRTabel()}
+              disabled={isDisabled}
             >
               Карты опасностей
             </button>
@@ -592,6 +640,7 @@ function Form() {
               type='button'
               //onClick={() => listOfMeasures(currentEnterprise.value)}
               onClick={() => getListOfMeasuresTable()}
+              disabled={isDisabled}
             >
               Меры управления без СИЗ
             </button>
@@ -600,12 +649,13 @@ function Form() {
               type='button'
               //onClick={() => normSiz(currentEnterprise.value)}
               onClick={() => getNormTabel()}
+              disabled={isDisabled}
             >
               Нормы выдачи СИЗ
             </button>
             <p className='total'>
               всего записей:
-              {currentEnterprise.value.length}
+              {counter.length}
             </p>
           </section>
         </div>
@@ -731,7 +781,13 @@ function Form() {
               </span>
             </div>
             <div className='buttons_wrapper'>
-              <input type='submit' className='button send'></input>
+              <button
+                type='button'
+                className='button send'
+                onClick={handleSubmit}
+              >
+                Отправить
+              </button>
               <input
                 type='reset'
                 className='button reset'

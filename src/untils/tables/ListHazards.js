@@ -4,8 +4,6 @@ const ListHazards = (arr) => {
   const workbook = new Excel.Workbook();
   const sheet = workbook.addWorksheet('sheet');
 
-  arr.forEach((i) => (i['job1'] = i.job || i.proff));
-
   const cellA16 = sheet.getCell('A16');
   const cellB16 = sheet.getCell('B16');
   const cellC16 = sheet.getCell('C16');
@@ -71,54 +69,79 @@ const ListHazards = (arr) => {
   sheet.getColumn(5).width = 20;
   let i = 17;
   let col = 6;
-  let val = 17;
 
-  const table = {};
   const table2 = {};
-  const res = arr.filter(
-    ({ dangerEvent776Id }) =>
-      !table[dangerEvent776Id] && (table[dangerEvent776Id] = 1)
-  );
+
+  let res = arr.reduce((accumulator, currentValue) => {
+    if (
+      accumulator.every(
+        (item) =>
+          !(
+            item.dangerEvent776Id === currentValue.dangerEvent776Id &&
+            item.dangerEventID === currentValue.dangerEventID
+          )
+      )
+    )
+      accumulator.push(currentValue);
+    return accumulator;
+  }, []);
+  console.log(res);
   const resProff = arr.filter(
-    ({ job1 }) => !table2[job1] && (table2[job1] = 1)
+    ({ num }) => !table2[num] && (table2[num] = 1)
   );
 
   res.forEach((e) => {
     sheet.getCell('A' + i).value = e.number;
-    sheet.getCell('B' + i).value = e.danger776Id;
-    sheet.getCell('C' + i).value = e.danger776;
-    sheet.getCell('D' + i).value = e.dangerEvent776Id;
-    sheet.getCell('E' + i).value = e.dangerEvent776;
+    sheet.getCell('B' + i).value = e.danger776Id || e.dangerGroupId;
+    sheet.getCell('C' + i).value = e.danger776 || e.dangerGroup;
+    sheet.getCell('D' + i).value = e.dangerEvent776Id || e.dangerEventID;
+    sheet.getCell('E' + i).value = e.dangerEvent776 || e.dangerEvent;
 
     sheet.getCell('A' + i).style = border;
     sheet.getCell('B' + i).style = border;
     sheet.getCell('C' + i).style = border;
     sheet.getCell('D' + i).style = border;
     sheet.getCell('E' + i).style = border;
-
+    console.log(i);
     i++;
   });
+  const rowAddress = [];
 
   resProff.forEach((e) => {
     const currentCell = sheet.getColumn(col).letter;
+    rowAddress.push(currentCell + 16);
 
-    sheet.getCell(currentCell + 16).value = e.job1;
+    sheet.getCell(currentCell + 16).value = e.num;
     sheet.getCell(currentCell + 16).style = border;
     sheet.getCell(currentCell + 16).width = 20;
     col++;
   });
 
-  arr.forEach(() => {
-    sheet.getRow(16).eachCell(function (cell) {
-      const proffFilter = arr.filter((i) => i.job1 === cell.value);
-      proffFilter.forEach((e) => {
-        if (e.dangerEvent776Id === sheet.getCell('D' + val).value) {
-          sheet.getCell(cell._column.letter + val).value = '+';
-          sheet.getCell(cell._column.letter + val).style = border;
+  rowAddress.forEach((address) => {
+    console.log(sheet.getCell(address)._column.letter);
+    const filterJobValue = arr.filter(
+      (element) => element.num === sheet.getCell(address).value
+    );
+
+    // while (17 <= colStr) {
+    filterJobValue.forEach((v) => {
+      let colStr = i;
+      while (17 <= colStr) {
+        if (sheet.getCell('D' + colStr).value === v.dangerEvent776Id) {
+          console.log(sheet.getCell('D' + colStr).value);
+          sheet.getCell(sheet.getCell(address)._column.letter + colStr).value =
+            '+';
+        } else if (sheet.getCell('D' + colStr).value === v.dangerEventID) {
+          sheet.getCell(sheet.getCell(address)._column.letter + colStr).value =
+            '+';
         }
-      });
+        colStr -= 1;
+      }
     });
-    val++;
+
+    // }
+
+    console.log(filterJobValue);
   });
 
   return workbook.xlsx

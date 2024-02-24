@@ -8,3 +8,14 @@
   flex-direction: column;
   row-gap: 5px;
 }
+
+.form__update_value {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__update_span {
+  font-size: 12px;
+  height: 16px;
+  margin: 5px auto;
+}

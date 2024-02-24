@@ -27,7 +27,6 @@ function Profile({
     setChild(
       <EnterpriseUpdate
         enterprise={item}
-        setEnterprise={setEnterprise}
         currentUser={currentUser}
       ></EnterpriseUpdate>
     );

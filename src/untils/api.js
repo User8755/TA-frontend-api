@@ -116,13 +116,14 @@ class Api {
     }).then(this._checkRes);
   }
   updateCurrentEnterpriseValue(Id, item, jwt) {
-    return fetch(`${this._baseUrl}/enterprise/${Id}`, {
-      method: 'PATCH',
+    return fetch(`${this._baseUrl}/value/${Id}`, {
+      method: 'POST',
       headers: {
         ...this._headers,
         Authorization: `Bearer ${jwt}`,
       },
       body: JSON.stringify({
+        num: item.num,
         proff: item.proff,
         proffId: item.proffId,
         danger: item.danger,
@@ -164,6 +165,7 @@ class Api {
         source: item.source,
         job: item.job,
         subdivision: item.subdivision,
+        enterpriseId: item.enterpriseId,
       }),
     }).then(this._checkRes);
   }
@@ -261,6 +263,28 @@ class Api {
         }
       })
       .catch((e) => console.log(e));
+  }
+
+  uploadeTabel(enterprise, jwt) {
+    return fetch(`${this._baseUrl}/`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'multipart/form-data',
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: { enterprise: enterprise },
+    })
+      .then(this._checkRes)
+      .catch((e) => console.log(e));
+  }
+
+  getValue(Id, jwt) {
+    return fetch(`${this._baseUrl}/value/${Id}`, {
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${jwt}`,
+      },
+    }).then(this._checkRes);
   }
 }
 

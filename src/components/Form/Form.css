@@ -120,6 +120,9 @@
   width: 100%;
   position: relative;
 }
+.button__table:disabled {
+  opacity: 0.4;
+}
 
 .button:hover {
   text-decoration: underline 1px;
