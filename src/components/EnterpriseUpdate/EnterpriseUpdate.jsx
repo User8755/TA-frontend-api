@@ -8,18 +8,20 @@ function EnterpriseUpdate({ enterprise, currentUser }) {
   const [users, setUsers] = useState([]);
   const [access, setAccess] = useState('');
   const [currentE, setCurrentE] = useState(enterprise);
-  const [counter, setCounter] = useState([]);
+  const [counter, setCounter] = useState(0);
+  const [status, setStaus] = useState('');
 
   useEffect(() => {
     setCurrentE(enterprise);
+    setStaus('');
   }, [enterprise]);
 
-  const updateCounter = useCallback(() =>
-    {api
+  const updateCounter = useCallback(() => {
+    api
       .getValue(enterprise._id, JSON.parse(localStorage.getItem('key')).key)
       .then((e) => setCounter(e))
-      .catch((e) => console.warn(e))},[enterprise._id]
-  );
+      .catch((e) => console.warn(e));
+  }, [enterprise._id]);
 
   useEffect(() => {
     updateCounter();
@@ -57,7 +59,6 @@ function EnterpriseUpdate({ enterprise, currentUser }) {
     (user) =>
       !currentE.access.includes(user._id) && user._id !== currentUser._id
   );
-  const [status, setStaus] = useState('');
 
   const hendlerSendFile = (e) => {
     e.preventDefault();
@@ -70,17 +71,22 @@ function EnterpriseUpdate({ enterprise, currentUser }) {
     axios
       .put(`https://api.tafontend.online/value/${enterprise._id}`, formData)
       .then(() => {
-        updateCounter()
+        updateCounter();
         setStaus('файл загружен');
-        setTimeout(()=>{setStaus('')}, 10000)
+        setTimeout(() => {
+          setStaus('');
+        }, 10000);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => setStaus(e.response.data.message))
+      .finally(() => {
+        e.target.reset();
+      });
   };
 
   return (
     <>
       <h2>{currentE.enterprise}</h2>
-      <span>Количество записей: {counter.length}</span>
+      <span>Количество записей: {counter}</span>
       <h2>Обновить данные</h2>
       <form className='form__update_value' onSubmit={hendlerSendFile}>
         <input type='file' accept='.xlsx' />

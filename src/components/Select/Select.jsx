@@ -52,11 +52,11 @@ function Select({ value, option, setValue }) {
               .filter((i) =>
                 i.label.toLowerCase().includes(inputValue.input.toLowerCase())
               )
-              .map((el) => {
+              .map((el, inddex) => {
                 return (
                   <div
                     className='div'
-                    key={el.profId}
+                    key={inddex}
                     onClick={() => hendlerClick(el)}
                   >
                     {el.label}

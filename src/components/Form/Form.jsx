@@ -11,10 +11,10 @@ import riskManagement from '../../untils/riskManagement';
 import conversion from '../../untils/converct';
 import './Form.css';
 import SpoilerBox from '../SpoilerBox/SpoilerBox';
-import ListHazards from '../../untils/tables/ListHazards';
 import api from '../../untils/api';
 import ButtonGoBack from '../ButtonGoBack/ButtonGoBack';
 import SelectOne from '../Select/Select';
+import axios from 'axios';
 
 function Form() {
   const [isDangerGroup, setDangerGroup] = useState([]);
@@ -61,10 +61,11 @@ function Form() {
   const [isOrder776, setOrder776] = useState(true);
 
   const [currentEnterprise, setCurrentEnterprise] = useState({ value: [] });
-  const [counter, setCounter] = useState([]);
+  const [counter, setCounter] = useState(0);
 
   const [isDisabled, setDisabled] = useState(false);
-
+  const [newValue, setNewValue] = useState({});
+  const jwt = JSON.parse(localStorage.getItem('key')).key;
   useEffect(() => {
     api
       .getValue(
@@ -72,7 +73,7 @@ function Form() {
         JSON.parse(localStorage.getItem('key')).key
       )
       .then((e) => setCounter(e))
-      .catch((e) => console.warn(e));
+      .catch((e) => console.log(e));
   }, []);
 
   useEffect(() => {
@@ -87,76 +88,30 @@ function Form() {
       .catch((e) => console.log(e));
   }, []);
 
-  const getBaseTabel = () => {
+  const getTabel = (tableName, fileName) => {
     setDisabled(true);
-    api
-      .getBasetabel(
-        localStorage.getItem('id'),
-        JSON.parse(localStorage.getItem('key')).key
+    axios
+      .get(
+        `https://api.tafontend.online/tabels/${tableName}/${localStorage.getItem(
+          'id'
+        )}`,
+        {
+          responseType: 'blob',
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
       )
       .then((i) => {
+        console.log(i.data);
         const link = document.createElement('a');
-        link.href = URL.createObjectURL(i);
-        link.download = 'Базовая таблица.xlsx';
+        link.href = URL.createObjectURL(i.data);
+        link.download = fileName;
         link.click();
         link.remove();
         setDisabled(false);
       })
-      .catch((i) => console.log(i));
-  };
-
-  const getNormTabel = () => {
-    setDisabled(true);
-    api
-      .getNormTabel(
-        localStorage.getItem('id'),
-        JSON.parse(localStorage.getItem('key')).key
-      )
-      .then((i) => {
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(i);
-        link.download = 'Нормы выдачи СИЗ.xlsx';
-        link.click();
-        link.remove();
-        setDisabled(false);
-      })
-      .catch((i) => console.log(i));
-  };
-
-  const getListOfMeasuresTable = () => {
-    setDisabled(true);
-    api
-      .getListOfMeasuresTabel(
-        localStorage.getItem('id'),
-        JSON.parse(localStorage.getItem('key')).key
-      )
-      .then((i) => {
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(i);
-        link.download = 'Меры управления без СИЗ.xlsx';
-        link.click();
-        link.remove();
-        setDisabled(false);
-      })
-      .catch((i) => console.log(i));
-  };
-
-  const getMapOPRTabel = () => {
-    setDisabled(true);
-    api
-      .getMapOPRTabel(
-        localStorage.getItem('id'),
-        JSON.parse(localStorage.getItem('key')).key
-      )
-      .then((i) => {
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(i);
-        link.download = 'Карта опасностей.xlsx';
-        link.click();
-        link.remove();
-        setDisabled(false);
-      })
-      .catch((i) => console.log(i));
+      .catch((i) => setDisabled(false));
   };
 
   useEffect(() => {
@@ -400,14 +355,22 @@ function Form() {
           value,
           JSON.parse(localStorage.getItem('key')).key
         )
-        .then((e) => setCounter([...counter, e]))
+        .then((e) => {
+          setNewValue(e);
+          api
+            .getValue(
+              localStorage.getItem('id'),
+              JSON.parse(localStorage.getItem('key')).key
+            )
+            .then((e) => setCounter(e))
+            .catch((e) => console.log(e));
+        })
         .catch((e) => console.log(e));
       clear();
     },
     [
       checkboxSiz,
       count,
-      counter,
       formValue,
       inputValue,
       isDanger,
@@ -422,6 +385,7 @@ function Form() {
       value,
     ]
   );
+
   const [additionalMeans, setAdditionalMeans] = useState(false);
   useEffect(() => {
     if (
@@ -613,7 +577,7 @@ function Form() {
               className='button button__table'
               type='button'
               //onClick={() => baseTable(currentEnterprise.value)}
-              onClick={() => getBaseTabel()}
+              onClick={() => getTabel('base', 'Базовая таблица')}
               disabled={isDisabled}
             >
               Базовая таблица
@@ -621,7 +585,8 @@ function Form() {
             <button
               className='button button__table'
               type='button'
-              onClick={() => ListHazards(counter)}
+              //onClick={() => ListHazards(counter)}
+              onClick={() => getTabel('listHazards', 'Реестр опасностей')}
               disabled={isDisabled}
             >
               Реестр опасностей
@@ -630,7 +595,7 @@ function Form() {
               className='button button__table'
               type='button'
               //onClick={() => mapOPR(currentEnterprise.value)}
-              onClick={() => getMapOPRTabel()}
+              onClick={() => getTabel('mapOPR', 'Карты опасностей')}
               disabled={isDisabled}
             >
               Карты опасностей
@@ -639,7 +604,9 @@ function Form() {
               className='button button__table'
               type='button'
               //onClick={() => listOfMeasures(currentEnterprise.value)}
-              onClick={() => getListOfMeasuresTable()}
+              onClick={() =>
+                getTabel('listOfMeasures', 'Меры управления без СИЗ')
+              }
               disabled={isDisabled}
             >
               Меры управления без СИЗ
@@ -648,14 +615,14 @@ function Form() {
               className='button button__table'
               type='button'
               //onClick={() => normSiz(currentEnterprise.value)}
-              onClick={() => getNormTabel()}
+              onClick={() => getTabel('norm', 'Нормы выдачи СИЗ')}
               disabled={isDisabled}
             >
               Нормы выдачи СИЗ
             </button>
             <p className='total'>
               всего записей:
-              {counter.length}
+              {counter}
             </p>
           </section>
         </div>
@@ -804,6 +771,9 @@ function Form() {
                 value={inputValue.commit}
               ></input>
             </label>
+            <span>{`№р/м: ${newValue.num || ' '} Опасность: ${
+              newValue.dangerGroupId || newValue.danger776Id || ' '
+            }`}</span>
             <ButtonGoBack />
           </section>
         </div>

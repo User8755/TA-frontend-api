@@ -85,7 +85,7 @@ const ListHazards = (arr) => {
       accumulator.push(currentValue);
     return accumulator;
   }, []);
-  console.log(res);
+
   const resProff = arr.filter(
     ({ num }) => !table2[num] && (table2[num] = 1)
   );
@@ -123,7 +123,6 @@ const ListHazards = (arr) => {
       (element) => element.num === sheet.getCell(address).value
     );
 
-    // while (17 <= colStr) {
     filterJobValue.forEach((v) => {
       let colStr = i;
       while (17 <= colStr) {
@@ -138,10 +137,6 @@ const ListHazards = (arr) => {
         colStr -= 1;
       }
     });
-
-    // }
-
-    console.log(filterJobValue);
   });
 
   return workbook.xlsx
