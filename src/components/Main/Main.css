@@ -4,10 +4,26 @@
   margin: 20px auto 0;
 }
 
-.enterprise {
+.nav__main {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   row-gap: 10px;
+}
+
+.nav__main_buttom {
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 5px;
+  background-color: #425361;
+  color: #f3f4f6;
+  width: 30%;
+  text-align: center;
+  border-radius: var(--radius);
+}
+.nav__main_buttom:hover {
+  box-shadow: 7px 7px 15px #6a7985;
 }

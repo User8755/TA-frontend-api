@@ -1,0 +1,136 @@
+.users-list {
+  display: flex;
+}
+
+:root {
+  --font-family: 'Segoe UI', sans-serif;
+  --second-family: 'Inter', sans-serif;
+  --main-color: rgba(66, 83, 97, 1);
+  --accent-green: #17cb6c;
+  --accent-red: #fe3f57;
+  --accent-dark-blue: #425361;
+  --accent-light-color: #f3f4f6;
+  --line-color: #8e98a0;
+  --light-line-color:#dadee2;
+  --radius: 5px;
+  --heavy-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  --light-shadow: 0px 4px 23px 3px rgba(0, 0, 0, 0.11);
+  --input-height: 36px;
+  --button-height: 38px;
+}
+.main {
+  display: grid;
+  grid-template-columns: minmax(250px, 300px) 1fr;
+}
+
+.main-content {
+  margin: 30px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-width: 500px;
+  height: fit-content;
+  box-shadow: var(--light-shadow);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.main__title {
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--main-color);
+  margin-bottom: 10px;
+}
+
+.main__form {
+  margin-bottom: 15px;
+}
+
+.main__list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  flex-wrap: wrap;
+}
+
+.main__list-box {
+  border: 1px solid var(--line-color);
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius);
+  color: var(--main-color);
+  background: #fff;
+  transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out;
+}
+.main__list-box:hover {
+  background-color: var(--accent-light-color);
+}
+
+.main__list--subtitle {
+  font-weight: 700;
+  font-size: 18px;
+  padding: 15px;
+  position: relative;
+  display: block;
+}
+/*---галочка---*/
+.main__list--subtitle::after {
+  position: absolute;
+  content: '';
+  top: 24px;
+  right: 15px;
+  width: 10px;
+  height: 6px;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: 0.2s ease-in;
+  z-index: 10;
+}
+
+.main__list--subtitle.close::after {
+  transform: translateY(50%) rotate(180deg);
+}
+
+.main__item.checkbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*-----Инпут-----*/
+.main__form__input {
+  padding-left: 10px;
+  background-color: rgba(243, 244, 246, 1);
+  width: 100%;
+  height: var(--input-height);
+  border: 1px solid var(--main-color);
+  outline: none;
+  border-radius: var(--radius);
+}
+.main__form__input:focus {
+  box-shadow: 0px 0px 0px 1px var(--main-color);
+}
+.main__form__input:focus-visible {
+  border: 1px solid var(--main-color);
+}
+.main__form__input:hover {
+  background-color: rgb(222, 228, 239);
+}
+
+/*-----Права-----*/
+.main__item__pseudo-checkbox {
+  margin-bottom: 7px;
+  background-color: rgba(243, 244, 246, 1);
+  border: 1px solid rgba(66, 83, 97, 1);
+  border-radius: 4px;
+  /* display: block; */
+  width: 26px;
+  height: 26px;
+}
+
+.main__item__pseudo-checkbox.true {
+  background-color: var(--accent-green);
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+}

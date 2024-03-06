@@ -5,7 +5,7 @@ import './Main.css';
 import { NavLink } from 'react-router-dom';
 import CreateEnterprise from '../CreateEnterprise/CreateEnterprise';
 
-function Main({ setModal, setChild }) {
+function Main({ setModal, setChild, currentUser }) {
   const [isInfo, setInfo] = useState([]);
   const [viwe, setViwe] = useState([]);
   useEffect(() => {
@@ -29,21 +29,24 @@ function Main({ setModal, setChild }) {
   return (
     <>
       <section className='info__blok'>
-        {viwe.map((i) => (
-          <p key={viwe.indexOf(i)}>{i}</p>
+        {viwe.map((i, index) => (
+          <p key={index}>{i}</p>
         ))}
       </section>
-      <section className='enterprise'>
-        <button className='enterprise__buttom' onClick={hedlerOpenModal}>
+      <nav className='nav__main'>
+        {currentUser.role && !currentUser.role.includes('root') ? (
+          <NavLink to='/users-list' className='nav__main_buttom'>Администрирование</NavLink>
+        ) : null}
+        <button className='nav__main_buttom' onClick={hedlerOpenModal}>
           Создать предприятие
         </button>
-        <NavLink to='/list' className='enterprise__buttom'>
+        <NavLink to='/list' className='nav__main_buttom'>
           Перейти к списку предприятий
         </NavLink>
-        <NavLink to='/profile' className='enterprise__buttom'>
+        <NavLink to='/profile' className='nav__main_buttom'>
           Профиль
         </NavLink>
-      </section>
+      </nav>
     </>
   );
 }

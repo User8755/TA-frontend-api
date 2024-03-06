@@ -103,7 +103,6 @@ function Form() {
         }
       )
       .then((i) => {
-        console.log(i.data);
         const link = document.createElement('a');
         link.href = URL.createObjectURL(i.data);
         link.download = fileName;
@@ -619,6 +618,15 @@ function Form() {
               disabled={isDisabled}
             >
               Нормы выдачи СИЗ
+            </button>
+            <button
+              className='button button__table'
+              type='button'
+              //onClick={() => normSiz(currentEnterprise.value)}
+              onClick={() => getTabel('planTimetable', 'План-графика мер')}
+              disabled={isDisabled}
+            >
+              План-графика мер
             </button>
             <p className='total'>
               всего записей:

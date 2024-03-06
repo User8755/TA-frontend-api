@@ -14,6 +14,11 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage.jsx';
 import ProtectedRouteElement from '../ProtectedRout/ProtectedRout.js';
 import Profile from '../Profile/Profile.jsx';
 import Select from '../Select/Select.jsx';
+import UsersList from '../UsersList/UsersList.jsx';
+import Registration from '../Registration/Registration.jsx';
+import NewInfo from '../NewInfo/NewInfo.jsx';
+import axios from 'axios';
+
 function App() {
   const [login, setLogin] = useState(false);
   const [isLoading, setLoading] = useState(true);
@@ -22,11 +27,16 @@ function App() {
   const [child, setChild] = useState(null);
   const [enterprise, setEnterprise] = useState([]);
   const [enterpriseAccess, setEnterpriseAccess] = useState([]);
+  console.log(!currentUser.role);
+  axios.defaults.baseURL = 'https://api.tafontend.online';
 
   useEffect(() => {
     tokenCheck();
   }, []);
-
+  if (localStorage.getItem('key'))
+    axios.defaults.headers.common['Authorization'] = `Bearer ${
+      JSON.parse(localStorage.getItem('key')).key
+    }`;
   const tokenCheck = () => {
     if (localStorage.getItem('key')) {
       api
@@ -89,7 +99,38 @@ function App() {
                 setModal={setModal}
                 setChild={setChild}
                 loggedIn={login}
+                currentUser={currentUser}
               />
+            }
+          />
+          <Route
+            path='/users-list'
+            element={
+              <ProtectedRouteElement
+                element={UsersList}
+                setModal={setModal}
+                setChild={setChild}
+                loggedIn={login}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path='/sign-up'
+            element={
+              <ProtectedRouteElement
+                element={Registration}
+                setModal={setModal}
+                setChild={setChild}
+                loggedIn={login}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path='/info'
+            element={
+              <ProtectedRouteElement element={NewInfo} loggedIn={login} />
             }
           />
           <Route
