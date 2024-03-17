@@ -39,3 +39,22 @@ a {
   color: var(--main-color);
   flex: 1 0 auto;
 }
+
+.button_default {
+  text-decoration: none;
+  padding: 5px;
+  color: #f3f4f6;
+  width: 80%;
+  text-align: center;
+  border-radius: var(--radius);
+  font-size: 18px;
+  margin: 0 auto;
+}
+
+.button_color-darck {
+  background-color: #425361;
+}
+
+.button_color-green {
+  background-color: var(--accent-green);
+}

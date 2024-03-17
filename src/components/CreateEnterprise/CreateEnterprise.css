@@ -25,3 +25,9 @@
 .label {
   margin-bottom: 5px;
 }
+
+.form__span_enterprice {
+  width: 100%;
+  color:  red;
+  height: 21px;
+}

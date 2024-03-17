@@ -19,3 +19,23 @@
   height: 16px;
   margin: 5px auto;
 }
+
+.checkbox-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.checkbox {
+  width: 32px;
+  height: 32px;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.checkbox-active {
+  background-image: url('../../untils/img/checkbox.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}

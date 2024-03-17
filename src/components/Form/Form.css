@@ -1,8 +1,11 @@
 /********форма*********/
+.main-form {
+  display: flex;
+  justify-content: center;
+}
 .form {
   display: flex;
   gap: 10px 8px;
-  justify-content: center;
 }
 
 .form__block-left {
@@ -426,4 +429,19 @@
 .label.profs {
   width: 90%;
   padding: 0 5%;
+}
+
+.label__job {
+  display: flex;
+  align-items: center;
+}
+
+.form__block_job {
+  display: flex;
+  column-gap: 5px;
+}
+
+.form__input_small {
+  width: 40px;
+  margin-left: 5px;
 }

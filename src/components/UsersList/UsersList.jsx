@@ -3,13 +3,13 @@ import AsideMenu from '../AsideMenu/AsideMenu';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Card from '../Card/Card';
+import { NavLink } from 'react-router-dom';
 
 function UsersList(props) {
-
   const jwt = JSON.parse(localStorage.getItem('key')).key;
   const [isOpenSpoilerUser, setIsOpenSpoilerUser] = useState(true);
   const [isOpenSpoilerNon, setIsOpenSpoilerNone] = useState(false);
-  const [AllUsers, setAllUsers] = useState([])
+  const [AllUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
     if (props.loggedIn) {
@@ -22,7 +22,17 @@ function UsersList(props) {
 
   return (
     <div className='users-list'>
-      <AsideMenu></AsideMenu>
+      <AsideMenu>
+        <NavLink to='/users-list' className='aside__link'>
+          Список пользователей
+        </NavLink>
+        <NavLink to='/sign-up' className='aside__link'>
+          Регистрация пользователей
+        </NavLink>
+        <NavLink to='/info' className='aside__link'>
+          Общая информация
+        </NavLink>
+      </AsideMenu>
       <div className='main-content'>
         <h2 className='main__title'>Список пользователей</h2>
         <form className='main__form'></form>

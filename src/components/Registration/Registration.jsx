@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Registration.css';
 import AsideMenu from '../AsideMenu/AsideMenu';
+import { NavLink } from 'react-router-dom';
 
 function Registration() {
   const [inputValue, setInputValue] = useState({
@@ -29,7 +30,17 @@ function Registration() {
 
   return (
     <div className='sign-up'>
-      <AsideMenu></AsideMenu>
+      <AsideMenu>
+        <NavLink to='/users-list' className='aside__link'>
+          Список пользователей
+        </NavLink>
+        <NavLink to='/sign-up' className='aside__link'>
+          Регистрация пользователей
+        </NavLink>
+        <NavLink to='/info' className='aside__link'>
+          Общая информация
+        </NavLink>
+      </AsideMenu>
       <section className='sign-up__block'>
         <div className='entry__container'>
           <h1 className='entry__title'>Регистрация</h1>

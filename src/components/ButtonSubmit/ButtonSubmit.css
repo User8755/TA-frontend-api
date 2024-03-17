@@ -9,3 +9,7 @@
   font-size: 18px;
   font-weight: 500;
 }
+
+.form__button-submit:disabled {
+  opacity: 0.2;
+}

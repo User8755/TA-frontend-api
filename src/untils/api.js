@@ -1,3 +1,4 @@
+import { BASE_URL } from './constants';
 class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -166,6 +167,10 @@ class Api {
         job: item.job,
         subdivision: item.subdivision,
         enterpriseId: item.enterpriseId,
+        numWorkers: item.numWorkers,
+        additionalMeans: item.additionalMeans,
+        AdditionalIssuanceRate: item.AdditionalIssuanceRate,
+        SIZ: item.proffSIZ
       }),
     }).then(this._checkRes);
   }
@@ -229,8 +234,8 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://api.tafontend.online',
-  //baseUrl: 'http://localhost:3001',
+  //baseUrl: 'https://api.tafontend.online',
+  baseUrl: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },

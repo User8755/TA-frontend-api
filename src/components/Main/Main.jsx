@@ -14,7 +14,7 @@ function Main({ setModal, setChild, currentUser }) {
       .then((i) => setInfo(i))
       .catch();
   }, []);
-
+  
   useEffect(() => {
     if (isInfo) {
       isInfo.map((i) => setViwe(i.info.split(/\n/g)));

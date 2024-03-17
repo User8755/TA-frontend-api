@@ -10,11 +10,13 @@ function EnterpriseUpdate({ enterprise, currentUser }) {
   const [currentE, setCurrentE] = useState(enterprise);
   const [counter, setCounter] = useState(0);
   const [status, setStaus] = useState('');
+  const [isCheckbox, setCheckbox] = useState(false);
 
   useEffect(() => {
     setCurrentE(enterprise);
     setStaus('');
-  }, [enterprise]);
+    setCheckbox(enterprise.isHiden);
+  }, [enterprise, currentE]);
 
   const updateCounter = useCallback(() => {
     api
@@ -69,7 +71,7 @@ function EnterpriseUpdate({ enterprise, currentUser }) {
     formData.append('file', file);
 
     axios
-      .put(`https://api.tafontend.online/value/${enterprise._id}`, formData)
+      .put(`/value/${enterprise._id}`, formData)
       .then(() => {
         updateCounter();
         setStaus('файл загружен');
@@ -83,16 +85,30 @@ function EnterpriseUpdate({ enterprise, currentUser }) {
       });
   };
 
+  const hendlerCheckBoxClock = () => {
+    setCheckbox(!isCheckbox);
+  };
+  console.log(currentE);
+  console.log(isCheckbox);
   return (
     <>
       <h2>{currentE.enterprise}</h2>
       <span>Количество записей: {counter}</span>
-      <h2>Обновить данные</h2>
+      <h2>Обновить данные:</h2>
       <form className='form__update_value' onSubmit={hendlerSendFile}>
         <input type='file' accept='.xlsx' />
         <span className='form__update_span'>{status}</span>
-        <button type='submit'>Отправить</button>
+        <button type='submit' className='button_default button_color-green'>
+          Отправить
+        </button>
       </form>
+      <div className='checkbox-container'>
+        <h2>Скрыть из списка:</h2>
+        <div
+          onClick={hendlerCheckBoxClock}
+          className={isCheckbox ? 'checkbox checkbox-active' : 'checkbox'}
+        ></div>
+      </div>
       <h2>Выдать доступ</h2>
       <form onSubmit={handlerSubmit}>
         <select name='user' onChange={handlerChange}>

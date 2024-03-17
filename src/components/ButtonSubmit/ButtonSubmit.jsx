@@ -1,9 +1,9 @@
 import './ButtonSubmit.css';
 
-function ButtonSubmit() {
+function ButtonSubmit(props) {
   return (
     <>
-      <input type='submit' className='form__button-submit'></input>
+      <input type='submit' className='form__button-submit' disabled={props.isDisabled}></input>
     </>
   );
 }

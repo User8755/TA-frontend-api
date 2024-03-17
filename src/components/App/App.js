@@ -17,7 +17,9 @@ import Select from '../Select/Select.jsx';
 import UsersList from '../UsersList/UsersList.jsx';
 import Registration from '../Registration/Registration.jsx';
 import NewInfo from '../NewInfo/NewInfo.jsx';
+import MyEnterprise from '../MyEnterprise/MyEnterprise.jsx';
 import axios from 'axios';
+import { BASE_URL } from '../../untils/constants.js';
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -27,16 +29,19 @@ function App() {
   const [child, setChild] = useState(null);
   const [enterprise, setEnterprise] = useState([]);
   const [enterpriseAccess, setEnterpriseAccess] = useState([]);
-  console.log(!currentUser.role);
-  axios.defaults.baseURL = 'https://api.tafontend.online';
+
+  //axios.defaults.baseURL = 'https://api.tafontend.online';
+  axios.defaults.baseURL = BASE_URL;
 
   useEffect(() => {
     tokenCheck();
   }, []);
-  if (localStorage.getItem('key'))
+
+  if (login)
     axios.defaults.headers.common['Authorization'] = `Bearer ${
       JSON.parse(localStorage.getItem('key')).key
     }`;
+
   const tokenCheck = () => {
     if (localStorage.getItem('key')) {
       api
@@ -81,6 +86,21 @@ function App() {
             element={
               <ProtectedRouteElement
                 element={Profile}
+                currentUser={currentUser}
+                setLogin={setLogin}
+                loggedIn={login}
+                setModal={setModal}
+                setChild={setChild}
+                enterprise={enterprise}
+                setEnterprise={setEnterprise}
+              />
+            }
+          />
+          <Route
+            path='/my-enterprise'
+            element={
+              <ProtectedRouteElement
+                element={MyEnterprise}
                 currentUser={currentUser}
                 setLogin={setLogin}
                 loggedIn={login}

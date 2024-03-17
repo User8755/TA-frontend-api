@@ -16,7 +16,7 @@ import ButtonGoBack from '../ButtonGoBack/ButtonGoBack';
 import SelectOne from '../Select/Select';
 import axios from 'axios';
 
-function Form() {
+function Form({ loggedIn }) {
   const [isDangerGroup, setDangerGroup] = useState([]);
   const [isDanger, setisDanger] = useState([]);
   const [isDanger776, setDanger776] = useState([]);
@@ -49,7 +49,8 @@ function Form() {
     job: '', // Должность
     subdivision: '', // Подразделение
     commit: '', // Комментарий
-    enterpriseId: '',
+    enterpriseId: '', // id предприятия
+    numWorkers: '', // Кол-во работников
   });
 
   const [requiredSIZ, setRequiredSIZ] = useState(false);
@@ -66,42 +67,42 @@ function Form() {
   const [isDisabled, setDisabled] = useState(false);
   const [newValue, setNewValue] = useState({});
   const jwt = JSON.parse(localStorage.getItem('key')).key;
-  useEffect(() => {
-    api
-      .getValue(
-        localStorage.getItem('id'),
-        JSON.parse(localStorage.getItem('key')).key
-      )
-      .then((e) => setCounter(e))
-      .catch((e) => console.log(e));
-  }, []);
 
   useEffect(() => {
-    api
-      .getCerrentEnterprise(
-        localStorage.getItem('id'),
-        JSON.parse(localStorage.getItem('key')).key
-      )
-      .then((e) => {
-        setCurrentEnterprise(e);
-      })
-      .catch((e) => console.log(e));
-  }, []);
+    if (loggedIn) {
+      api
+        .getValue(
+          localStorage.getItem('id'),
+          JSON.parse(localStorage.getItem('key')).key
+        )
+        .then((e) => setCounter(e))
+        .catch((e) => console.log(e));
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (loggedIn) {
+      api
+        .getCerrentEnterprise(
+          localStorage.getItem('id'),
+          JSON.parse(localStorage.getItem('key')).key
+        )
+        .then((e) => {
+          setCurrentEnterprise(e);
+        })
+        .catch((e) => console.log(e));
+    }
+  }, [loggedIn]);
 
   const getTabel = (tableName, fileName) => {
     setDisabled(true);
     axios
-      .get(
-        `https://api.tafontend.online/tabels/${tableName}/${localStorage.getItem(
-          'id'
-        )}`,
-        {
-          responseType: 'blob',
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          },
-        }
-      )
+      .get(`/tabels/${tableName}/${localStorage.getItem('id')}`, {
+        responseType: 'blob',
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
       .then((i) => {
         const link = document.createElement('a');
         link.href = URL.createObjectURL(i.data);
@@ -328,7 +329,6 @@ function Form() {
     (evt) => {
       evt.preventDefault();
       setCount(count + 1);
-      value['number'] = count + 1;
       value['enterpriseId'] = localStorage.getItem('id');
       if (!requiredSIZ) {
         delete value.proffSIZ;
@@ -341,6 +341,7 @@ function Form() {
         value['AdditionalIssuanceRate'] =
           selectedTipeSIZ.AdditionalIssuanceRate;
       }
+      console.log(value)
       localStorage.setItem('proff', JSON.stringify(isProff));
       localStorage.setItem('input', JSON.stringify(inputValue));
       localStorage.setItem('Danger776', JSON.stringify(isDanger776));
@@ -425,6 +426,7 @@ function Form() {
       completionMark: '',
       existingRiskManagement: '',
       enterpriseId: '',
+      numWorkers: '',
     });
     setCheckboxSIZ(false);
     setRiskManagement('');
@@ -453,14 +455,6 @@ function Form() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue.heaviness]);
 
-  // const handleChangeDanger776 = (evt) => {
-  //   setInputValue({
-  //     ...inputValue,
-  //     danger776: evt.label,
-  //     danger776Id: evt.ID,
-  //   });
-  // };
-
   useEffect(() => {
     conversion.forEach((item) => {
       if (
@@ -475,7 +469,9 @@ function Form() {
       }
     });
   }, [value.danger776, value.dangerEvent776]);
+
   const handleFocus = (e) => e.target.select();
+
   useEffect(() => {
     document.onkeydown = function (e) {
       if (e.shiftKey && e.key === 'Enter') {
@@ -487,7 +483,7 @@ function Form() {
   }, [handleSubmit]);
 
   return (
-    <div>
+    <div className='main-form'>
       <form className='form' onSubmit={handleSubmit} required>
         <div className='form__block-left'>
           <div className='form__header left'>
@@ -513,16 +509,28 @@ function Form() {
               option={prof}
               setValue={setProff}
             ></SelectOne>
-            <label className='label'>
-              Номер рабочего места:
-              <input
-                className='form__input'
-                autoComplete='on'
-                onChange={handleChange}
-                name='num'
-                value={inputValue.num}
-              ></input>
-            </label>
+            <div className='form__block_job'>
+              <label className='label label__job'>
+                Номер Р/М:
+                <input
+                  className='form__input form__input_small'
+                  autoComplete='on'
+                  onChange={handleChange}
+                  name='num'
+                  value={inputValue.num}
+                ></input>
+              </label>
+              <label className='label label__job'>
+                Кол-во работников:
+                <input
+                  className='form__input form__input_small'
+                  autoComplete='on'
+                  onChange={handleChange}
+                  name='numWorkers'
+                  value={inputValue.numWorkers}
+                ></input>
+              </label>
+            </div>
             <label className='label'>
               Объект:
               <input
@@ -585,10 +593,15 @@ function Form() {
               className='button button__table'
               type='button'
               //onClick={() => ListHazards(counter)}
-              onClick={() => getTabel('listHazards', 'Реестр опасностей')}
+              onClick={() =>
+                getTabel(
+                  'listHazards',
+                  'Перечень идентифицированных опасностей'
+                )
+              }
               disabled={isDisabled}
             >
-              Реестр опасностей
+              Перечень идентифицированных опасностей
             </button>
             <button
               className='button button__table'
@@ -627,6 +640,16 @@ function Form() {
               disabled={isDisabled}
             >
               План-графика мер
+            </button>
+            <button
+              className='button button__table'
+              type='button'
+              onClick={() =>
+                getTabel('registerHazards', 'Реестр оцененных опасностей_ИОУПР')
+              }
+              disabled={isDisabled}
+            >
+              Реестр оцененных опасностей_ИОУПР
             </button>
             <p className='total'>
               всего записей:

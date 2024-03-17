@@ -10,6 +10,8 @@ function CreateEnterprise({ setModal }) {
     kpp: '',
     order: '',
   });
+  const [err, setErr] = useState('');
+  const [isDisabled, setDisabled] = useState(true);
 
   const handlerSubmit = (e) => {
     e.preventDefault();
@@ -18,7 +20,15 @@ function CreateEnterprise({ setModal }) {
       .then(() => {
         setModal(false);
       })
-      .catch((i) => console.log(i));
+      .catch((e) => setErr(e))
+      .finally(() =>
+        setInput({
+          enterprise: '',
+          inn: '',
+          kpp: '',
+          order: '',
+        })
+      );
   };
 
   const handlerChange = (e) => {
@@ -27,6 +37,17 @@ function CreateEnterprise({ setModal }) {
       ...input,
       [name]: value,
     });
+    setErr('');
+    if (
+      input.enterprise.length &&
+      input.inn.length &&
+      input.kpp.length &&
+      input.order.length > 2
+    ) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
   };
 
   return (
@@ -73,7 +94,8 @@ function CreateEnterprise({ setModal }) {
             onChange={handlerChange}
           ></input>
         </div>
-        <ButtonSubmit></ButtonSubmit>
+        <span className='form__span_enterprice'>{err.message}</span>
+        <ButtonSubmit isDisabled={isDisabled}></ButtonSubmit>
       </form>
     </>
   );
