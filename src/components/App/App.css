@@ -49,6 +49,9 @@ a {
   border-radius: var(--radius);
   font-size: 18px;
   margin: 0 auto;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .button_color-darck {
@@ -57,4 +60,8 @@ a {
 
 .button_color-green {
   background-color: var(--accent-green);
+}
+
+.main-menu {
+  display: flex;
 }

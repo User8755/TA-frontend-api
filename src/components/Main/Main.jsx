@@ -14,7 +14,7 @@ function Main({ setModal, setChild, currentUser }) {
       .then((i) => setInfo(i))
       .catch();
   }, []);
-  
+
   useEffect(() => {
     if (isInfo) {
       isInfo.map((i) => setViwe(i.info.split(/\n/g)));
@@ -35,7 +35,9 @@ function Main({ setModal, setChild, currentUser }) {
       </section>
       <nav className='nav__main'>
         {currentUser.role && !currentUser.role.includes('root') ? (
-          <NavLink to='/users-list' className='nav__main_buttom'>Администрирование</NavLink>
+          <NavLink to='/users-list' className='nav__main_buttom'>
+            Администрирование
+          </NavLink>
         ) : null}
         <button className='nav__main_buttom' onClick={hedlerOpenModal}>
           Создать предприятие

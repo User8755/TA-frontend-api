@@ -311,6 +311,8 @@ function Form({ loggedIn }) {
         obj: input.obj,
         source: input.source,
         subdivision: input.subdivision,
+        numWorkers: input.numWorkers,
+        num: input.num,
       });
     }
   };
@@ -341,7 +343,6 @@ function Form({ loggedIn }) {
         value['AdditionalIssuanceRate'] =
           selectedTipeSIZ.AdditionalIssuanceRate;
       }
-      console.log(value)
       localStorage.setItem('proff', JSON.stringify(isProff));
       localStorage.setItem('input', JSON.stringify(inputValue));
       localStorage.setItem('Danger776', JSON.stringify(isDanger776));

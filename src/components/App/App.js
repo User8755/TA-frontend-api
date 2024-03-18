@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 import api from '../../untils/api';
 import Preloader from '../Preloader/Preloader.jsx';
 import { CurrentUserContext } from '../Contexts/CurrentUserContext';
-import Main from '../Main/Main.jsx';
 import ModalWindow from '../ModalWindow/ModalWindow.jsx';
 import ListEnterprise from '../ListEnterprise/ListEnterprise.jsx';
 import Form from '../Form/Form.jsx';
@@ -30,7 +29,6 @@ function App() {
   const [enterprise, setEnterprise] = useState([]);
   const [enterpriseAccess, setEnterpriseAccess] = useState([]);
 
-  //axios.defaults.baseURL = 'https://api.tafontend.online';
   axios.defaults.baseURL = BASE_URL;
 
   useEffect(() => {
@@ -115,11 +113,14 @@ function App() {
             path='/'
             element={
               <ProtectedRouteElement
-                element={Main}
-                setModal={setModal}
-                setChild={setChild}
-                loggedIn={login}
-                currentUser={currentUser}
+              element={ListEnterprise}
+              enterprise={enterprise}
+              setEnterprise={setEnterprise}
+              loggedIn={login}
+              enterpriseAccess={enterpriseAccess}
+              setEnterpriseAccess={setEnterpriseAccess}
+              setModal={setModal}
+              setChild={setChild}
               />
             }
           />
@@ -153,7 +154,7 @@ function App() {
               <ProtectedRouteElement element={NewInfo} loggedIn={login} />
             }
           />
-          <Route
+          {/* <Route
             path='/list'
             element={
               <ProtectedRouteElement
@@ -165,7 +166,7 @@ function App() {
                 setEnterpriseAccess={setEnterpriseAccess}
               />
             }
-          />
+          /> */}
           <Route
             path='/form'
             element={
