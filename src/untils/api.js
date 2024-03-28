@@ -170,7 +170,8 @@ class Api {
         numWorkers: item.numWorkers,
         additionalMeans: item.additionalMeans,
         AdditionalIssuanceRate: item.AdditionalIssuanceRate,
-        SIZ: item.proffSIZ
+        SIZ: item.proffSIZ,
+        code: item.code,
       }),
     }).then(this._checkRes);
   }

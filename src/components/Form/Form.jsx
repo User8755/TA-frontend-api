@@ -51,6 +51,8 @@ function Form({ loggedIn }) {
     commit: '', // Комментарий
     enterpriseId: '', // id предприятия
     numWorkers: '', // Кол-во работников
+    code: '', // Код ОК-016-94
+    proff: '',
   });
 
   const [requiredSIZ, setRequiredSIZ] = useState(false);
@@ -67,7 +69,16 @@ function Form({ loggedIn }) {
   const [isDisabled, setDisabled] = useState(false);
   const [newValue, setNewValue] = useState({});
   const jwt = JSON.parse(localStorage.getItem('key')).key;
+  const [isDisabledSubmit, setDisabledSubmit] = useState(true);
 
+  useEffect(() => {
+    if ((value.proff || value.job) && (value.riskManagement || value.typeSIZ)) {
+      setDisabledSubmit(false);
+    } else {
+      setDisabledSubmit(true);
+    }
+  }, [value, inputValue]);
+  console.log(inputValue.proff);
   useEffect(() => {
     if (loggedIn) {
       api
@@ -428,6 +439,8 @@ function Form({ loggedIn }) {
       existingRiskManagement: '',
       enterpriseId: '',
       numWorkers: '',
+      job: '',
+      proff: '',
     });
     setCheckboxSIZ(false);
     setRiskManagement('');
@@ -492,18 +505,8 @@ function Form({ loggedIn }) {
             <span>{currentEnterprise.enterprise}</span>
           </div>
           <section className='section profess'>
-            {/* <SelectOne value={isProff} option={prof} setValue={setProff}></SelectOne> */}
             <label className='label'>
-              Профессии:
-              {/* <Select
-                className='react-select-container'
-                classNamePrefix='react-select'
-                options={prof}
-                onChange={(evt) => setProff(evt)}
-                placeholder={'Профессии'}
-                noOptionsMessage={() => 'Значение не найдено'}
-                value={isProff}
-              /> */}
+              Профессия (Приказ 767н приложения 1):
             </label>
             <SelectOne
               value={isProff}
@@ -555,12 +558,21 @@ function Form({ loggedIn }) {
               ></input>
             </label>
             <label className='label'>
-              Должность отсутствует:
+              Профессия:
               <input
                 className='form__input'
                 name='job'
                 onChange={handleChange}
                 value={inputValue.job}
+              />
+            </label>
+            <label className='label'>
+              Код ОК-016-94:
+              <input
+                className='form__input'
+                name='code'
+                onChange={handleChange}
+                value={inputValue.code}
               />
             </label>
             <label className='label'>
@@ -637,10 +649,10 @@ function Form({ loggedIn }) {
               className='button button__table'
               type='button'
               //onClick={() => normSiz(currentEnterprise.value)}
-              onClick={() => getTabel('planTimetable', 'План-графика мер')}
+              onClick={() => getTabel('planTimetable', 'План-график мер')}
               disabled={isDisabled}
             >
-              План-графика мер
+              План-график мер
             </button>
             <button
               className='button button__table'
@@ -668,6 +680,7 @@ function Form({ loggedIn }) {
                 title={'Приказ 776'}
                 stateSpoileBox={isOrder776}
                 toggleSpoileBox={setOrder776}
+                newClass='center-block'
               >
                 <label className='invisible'></label>
                 <label className='label order-input'>
@@ -707,6 +720,7 @@ function Form({ loggedIn }) {
                 title={'Приказ 767'}
                 stateSpoileBox={isOrder767}
                 toggleSpoileBox={setOrder767}
+                newClass='center-block'
               >
                 <label className='label order-input'>
                   Группа опасности:
@@ -784,6 +798,7 @@ function Form({ loggedIn }) {
                 type='button'
                 className='button send'
                 onClick={handleSubmit}
+                disabled={isDisabledSubmit}
               >
                 Отправить
               </button>
@@ -819,6 +834,7 @@ function Form({ loggedIn }) {
                 title={'Приказ 776'}
                 stateSpoileBox={isOrder776}
                 toggleSpoileBox={setOrder776}
+                newClass='right-block-right'
               >
                 <label className='label order-input'>
                   Меры управления:
@@ -837,6 +853,7 @@ function Form({ loggedIn }) {
                 title={'Приказ 767'}
                 stateSpoileBox={isOrder767}
                 toggleSpoileBox={setOrder767}
+                newClass='right-block-left'
               >
                 <label className='label'>
                   Тип СИЗ:

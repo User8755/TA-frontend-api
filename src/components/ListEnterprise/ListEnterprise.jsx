@@ -1,9 +1,10 @@
 import { Link, NavLink } from 'react-router-dom';
 import './ListEnterprise.css';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import api from '../../untils/api';
 import AsideMenu from '../AsideMenu/AsideMenu';
 import CreateEnterprise from '../CreateEnterprise/CreateEnterprise';
+import { CurrentUserContext } from '../Contexts/CurrentUserContext';
 
 function ListEnterprise({
   enterprise,
@@ -15,7 +16,8 @@ function ListEnterprise({
   setChild,
 }) {
   const jwt = JSON.parse(localStorage.getItem('key')).key;
-
+  const currentUser = useContext(CurrentUserContext);
+  console.log(currentUser);
   const [inputSearch, setInputSearch] = useState({
     myEnt: '',
     entAcc: '',
@@ -62,9 +64,11 @@ function ListEnterprise({
   return (
     <main className='main-menu'>
       <AsideMenu>
-        <Link to='/users-list' className='aside__link'>
-          Администрирование
-        </Link>
+        {currentUser._id !== '65a58f549fea97653198c99b' ? null : (
+          <Link to='/users-list' className='aside__link'>
+            Администрирование
+          </Link>
+        )}
         <Link to='/profile' className='aside__link'>
           Профиль
         </Link>

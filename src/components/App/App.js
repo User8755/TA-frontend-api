@@ -113,14 +113,14 @@ function App() {
             path='/'
             element={
               <ProtectedRouteElement
-              element={ListEnterprise}
-              enterprise={enterprise}
-              setEnterprise={setEnterprise}
-              loggedIn={login}
-              enterpriseAccess={enterpriseAccess}
-              setEnterpriseAccess={setEnterpriseAccess}
-              setModal={setModal}
-              setChild={setChild}
+                element={ListEnterprise}
+                enterprise={enterprise}
+                setEnterprise={setEnterprise}
+                loggedIn={login}
+                enterpriseAccess={enterpriseAccess}
+                setEnterpriseAccess={setEnterpriseAccess}
+                setModal={setModal}
+                setChild={setChild}
               />
             }
           />

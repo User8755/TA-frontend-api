@@ -134,6 +134,11 @@
   background-color: var(--accent-green);
   width: 100%;
 }
+
+.button.send:disabled {
+  opacity: 0.4;
+}
+
 .button.reset {
   background-color: var(--accent-red);
   width: 100%;
@@ -444,4 +449,16 @@
 .form__input_small {
   width: 40px;
   margin-left: 5px;
+}
+
+.center-block {
+  width: 343px;
+}
+
+.right-block-right {
+  width: 205px;
+}
+
+.right-block-left {
+  width: 239px;
 }
