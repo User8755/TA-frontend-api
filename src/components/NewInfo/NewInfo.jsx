@@ -48,6 +48,9 @@ function NewInfo() {
         <NavLink to='/info' className='aside__link'>
           Общая информация
         </NavLink>
+        <NavLink to='/logs' className='aside__link'>
+          Логи
+        </NavLink>
       </AsideMenu>
       <section className='new-info__section'>
         <h2 className='new-info__title'>Общая информация</h2>

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Registration.css';
 import AsideMenu from '../AsideMenu/AsideMenu';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 
-function Registration() {
+function Registration(props) {
   const [inputValue, setInputValue] = useState({
     name: '',
     family: '',
@@ -15,6 +16,14 @@ function Registration() {
   });
   const [isBranch, setBranch] = useState([]);
 
+  useEffect(() => {
+    if (props.loggedIn)
+      axios
+        .get('/update/branch')
+        .then((i) => setBranch(i.data))
+        .catch((e) => console.log(e));
+  }, [props]);
+
   const handleChange = (evt) => {
     const { name, value } = evt.target;
 
@@ -23,9 +32,10 @@ function Registration() {
       [name]: value,
     });
   };
-
+  console.log(inputValue);
   const handlerSubmit = (evt) => {
     evt.preventDefault();
+    axios.post('/users/signup', inputValue );
   };
 
   return (
@@ -39,6 +49,9 @@ function Registration() {
         </NavLink>
         <NavLink to='/info' className='aside__link'>
           Общая информация
+        </NavLink>
+        <NavLink to='/logs' className='aside__link'>
+          Логи
         </NavLink>
       </AsideMenu>
       <section className='sign-up__block'>
@@ -89,8 +102,8 @@ function Registration() {
               required
             >
               <option defaultValue></option>
-              <option>Пользователь</option>
-              <option>Администратор филиала</option>
+              <option value='user'>Пользователь</option>
+              <option value='admin'>Администратор филиала</option>
             </select>
             <span className='input-error'></span>
             <label htmlFor='branch' className='entry__form_label'>

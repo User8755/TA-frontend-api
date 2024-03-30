@@ -64,7 +64,7 @@ function ListEnterprise({
   return (
     <main className='main-menu'>
       <AsideMenu>
-        {currentUser._id !== '65a58f549fea97653198c99b' ? null : (
+        {currentUser._id === '65a58f549fea97653198c99b' ? null : (
           <Link to='/users-list' className='aside__link'>
             Администрирование
           </Link>

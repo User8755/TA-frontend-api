@@ -32,6 +32,9 @@ function UsersList(props) {
         <NavLink to='/info' className='aside__link'>
           Общая информация
         </NavLink>
+        <NavLink to='/logs' className='aside__link'>
+          Логи
+        </NavLink>
       </AsideMenu>
       <div className='main-content'>
         <h2 className='main__title'>Список пользователей</h2>

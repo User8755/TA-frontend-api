@@ -19,6 +19,7 @@ import NewInfo from '../NewInfo/NewInfo.jsx';
 import MyEnterprise from '../MyEnterprise/MyEnterprise.jsx';
 import axios from 'axios';
 import { BASE_URL } from '../../untils/constants.js';
+import Logs from '../Logs/Logs.jsx';
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -93,6 +94,10 @@ function App() {
                 setEnterprise={setEnterprise}
               />
             }
+          />
+          <Route
+            path='/logs'
+            element={<ProtectedRouteElement element={Logs} loggedIn={login} />}
           />
           <Route
             path='/my-enterprise'
