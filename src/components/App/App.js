@@ -1,8 +1,7 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Login from '../Login/Login';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../../untils/api';
 import Preloader from '../Preloader/Preloader.jsx';
 import { CurrentUserContext } from '../Contexts/CurrentUserContext';
@@ -12,7 +11,6 @@ import Form from '../Form/Form.jsx';
 import NotFoundPage from '../NotFoundPage/NotFoundPage.jsx';
 import ProtectedRouteElement from '../ProtectedRout/ProtectedRout.js';
 import Profile from '../Profile/Profile.jsx';
-import Select from '../Select/Select.jsx';
 import UsersList from '../UsersList/UsersList.jsx';
 import Registration from '../Registration/Registration.jsx';
 import NewInfo from '../NewInfo/NewInfo.jsx';
@@ -20,11 +18,12 @@ import MyEnterprise from '../MyEnterprise/MyEnterprise.jsx';
 import axios from 'axios';
 import { BASE_URL } from '../../untils/constants.js';
 import Logs from '../Logs/Logs.jsx';
+import NewBranch from '../NewBranch/NewBranch.jsx';
 
 function App() {
   const [login, setLogin] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({ role: [] });
   const [modal, setModal] = useState(false);
   const [child, setChild] = useState(null);
   const [enterprise, setEnterprise] = useState([]);
@@ -85,13 +84,18 @@ function App() {
             element={
               <ProtectedRouteElement
                 element={Profile}
-                currentUser={currentUser}
                 setLogin={setLogin}
                 loggedIn={login}
-                setModal={setModal}
-                setChild={setChild}
-                enterprise={enterprise}
-                setEnterprise={setEnterprise}
+              />
+            }
+          />
+          <Route
+            path='/branch'
+            element={
+              <ProtectedRouteElement
+                element={NewBranch}
+                setLogin={setLogin}
+                loggedIn={login}
               />
             }
           />
@@ -104,7 +108,6 @@ function App() {
             element={
               <ProtectedRouteElement
                 element={MyEnterprise}
-                currentUser={currentUser}
                 setLogin={setLogin}
                 loggedIn={login}
                 setModal={setModal}
@@ -137,7 +140,6 @@ function App() {
                 setModal={setModal}
                 setChild={setChild}
                 loggedIn={login}
-                currentUser={currentUser}
               />
             }
           />
@@ -149,7 +151,6 @@ function App() {
                 setModal={setModal}
                 setChild={setChild}
                 loggedIn={login}
-                currentUser={currentUser}
               />
             }
           />
@@ -159,19 +160,6 @@ function App() {
               <ProtectedRouteElement element={NewInfo} loggedIn={login} />
             }
           />
-          {/* <Route
-            path='/list'
-            element={
-              <ProtectedRouteElement
-                element={ListEnterprise}
-                enterprise={enterprise}
-                setEnterprise={setEnterprise}
-                loggedIn={login}
-                enterpriseAccess={enterpriseAccess}
-                setEnterpriseAccess={setEnterpriseAccess}
-              />
-            }
-          /> */}
           <Route
             path='/form'
             element={
@@ -182,7 +170,6 @@ function App() {
               />
             }
           />
-          <Route path='/sel' element={<Select></Select>}></Route>
         </Routes>
       </div>
     </CurrentUserContext.Provider>

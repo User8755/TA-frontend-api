@@ -1,10 +1,8 @@
 .main__card {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  justify-items: start;
+  display: flex;
+  justify-content: space-between;
   gap: 15px;
   padding: 8px 15px;
-
   cursor: pointer;
   border-top: 1px solid var(--light-line-color);
   font-weight: 400;

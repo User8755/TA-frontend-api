@@ -15,27 +15,42 @@ function Registration(props) {
     password: '111111',
   });
   const [isBranch, setBranch] = useState([]);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (props.loggedIn)
       axios
-        .get('/update/branch')
+        .get('/branch')
         .then((i) => setBranch(i.data))
         .catch((e) => console.log(e));
   }, [props]);
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
-
+    //setMessage(evt.target.validationMessage);
     setInputValue({
       ...inputValue,
       [name]: value,
     });
   };
-  console.log(inputValue);
+
   const handlerSubmit = (evt) => {
     evt.preventDefault();
-    axios.post('/users/signup', inputValue );
+    axios
+      .post('/users/signup', inputValue)
+      .then(() => setMessage('Пользователь зарегистрирован'))
+      .catch((e) => setMessage(e.response.data.message))
+      .finally(() =>
+        setInputValue({
+          name: '',
+          family: '',
+          branch: '',
+          login: '',
+          email: '',
+          role: '',
+          password: '111111',
+        })
+      );
   };
 
   return (
@@ -53,6 +68,9 @@ function Registration(props) {
         <NavLink to='/logs' className='aside__link'>
           Логи
         </NavLink>
+        <NavLink to='/branch' className='aside__link'>
+          Новый филиал
+        </NavLink>
       </AsideMenu>
       <section className='sign-up__block'>
         <div className='entry__container'>
@@ -66,7 +84,7 @@ function Registration(props) {
               id='name'
               name='name'
               placeholder='Иван'
-              minLength='1'
+              minLength='2'
               maxLength='40'
               onChange={handleChange}
               value={inputValue.name}
@@ -81,7 +99,7 @@ function Registration(props) {
               id='family'
               name='family'
               placeholder='Иванов'
-              minLength='1'
+              minLength='2'
               maxLength='30'
               onChange={handleChange}
               value={inputValue.family}
@@ -114,7 +132,7 @@ function Registration(props) {
               id='branch'
               name='branch'
               placeholder='Укажите филиал'
-              minLength='1'
+              minLength='2'
               maxLength='40'
               onChange={handleChange}
               value={inputValue.branch}
@@ -134,7 +152,7 @@ function Registration(props) {
               id='login'
               name='login'
               placeholder='Введите логин'
-              minLength='1'
+              minLength='4'
               maxLength='40'
               onChange={handleChange}
               value={inputValue.login}
@@ -154,7 +172,7 @@ function Registration(props) {
               value={inputValue.email}
               required
             ></input>
-            <span className='input-error'></span>
+            <span className='span-error'>{message}</span>
             <button className='button entry__button' type='submit'>
               Зарегистрировать
             </button>

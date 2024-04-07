@@ -4,13 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useEffect } from 'react';
 import api from '../../untils/api';
 
-function MyEnterprise({
-  setChild,
-  currentUser,
-  enterprise,
-  setModal,
-  setEnterprise,
-}) {
+function MyEnterprise({ setChild, enterprise, setModal, setEnterprise }) {
   useEffect(() => {
     api
       .getEnterprise(JSON.parse(localStorage.getItem('key')).key)
@@ -19,12 +13,7 @@ function MyEnterprise({
   }, [setEnterprise]);
 
   const handlerClikc = (item) => {
-    setChild(
-      <EnterpriseUpdate
-        enterprise={item}
-        currentUser={currentUser}
-      ></EnterpriseUpdate>
-    );
+    setChild(<EnterpriseUpdate enterprise={item}></EnterpriseUpdate>);
     setModal(true);
   };
 

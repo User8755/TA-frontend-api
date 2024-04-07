@@ -12,7 +12,7 @@ function Logs({ loggedIn }) {
         .then((l) => setLogs(l.data))
         .catch();
   }, [loggedIn]);
-console.log(isLogs)
+
   return (
     <div className='profile'>
       <AsideMenu>
@@ -28,11 +28,14 @@ console.log(isLogs)
         <NavLink to='/logs' className='aside__link'>
           Логи
         </NavLink>
+        <NavLink to='/branch' className='aside__link'>
+          Новый филиал
+        </NavLink>
       </AsideMenu>
       <div>
         <ul>
-          {isLogs.map((i) => {
-            return <li>{`${i.action} ${i.date}`}</li>;
+          {isLogs.map((i, index) => {
+            return <li key={index}>{`${i.action} ${i.date}`}</li>;
           })}
         </ul>
       </div>

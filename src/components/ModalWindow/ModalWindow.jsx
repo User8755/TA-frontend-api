@@ -12,7 +12,9 @@ function ModalWindow({ active, setModal, child }) {
           className='button_close'
           onClick={() => setModal(false)}
         ></button>
-        <button className='button_close-bottom' onClick={() => setModal(false)}>Закрыть</button>
+        <button className='button_close-bottom' onClick={() => setModal(false)}>
+          Закрыть
+        </button>
       </div>
     </div>
   );

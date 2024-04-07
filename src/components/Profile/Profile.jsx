@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../Login/Login.css';
 import './Profile.css';
 import api from '../../untils/api';
 import AsideMenu from '../AsideMenu/AsideMenu';
 import { NavLink } from 'react-router-dom';
+import { CurrentUserContext } from '../Contexts/CurrentUserContext';
 
-function Profile({
-  currentUser,
-  setLogin,
-  setModal,
-  setChild,
-  enterprise,
-  setEnterprise,
-}) {
+function Profile({ setLogin }) {
   const [input, setInput] = useState({
     password: '',
   });
@@ -23,6 +17,7 @@ function Profile({
     localStorage.removeItem('key');
     setLogin(false);
   };
+  const currentUser = useContext(CurrentUserContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

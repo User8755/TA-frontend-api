@@ -1,16 +1,18 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import api from '../../untils/api';
 import ButtonDel from '../ButtonDel/ButtonDel';
 import './EnterpriseUpdate.css';
 import axios from 'axios';
+import { CurrentUserContext } from '../Contexts/CurrentUserContext';
 
-function EnterpriseUpdate({ enterprise, currentUser }) {
+function EnterpriseUpdate({ enterprise }) {
   const [users, setUsers] = useState([]);
   const [access, setAccess] = useState('');
   const [currentE, setCurrentE] = useState(enterprise);
   const [counter, setCounter] = useState(0);
   const [status, setStaus] = useState('');
   const [isCheckbox, setCheckbox] = useState(false);
+  const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
     setCurrentE(enterprise);
@@ -88,8 +90,7 @@ function EnterpriseUpdate({ enterprise, currentUser }) {
   const hendlerCheckBoxClock = () => {
     setCheckbox(!isCheckbox);
   };
-  console.log(currentE);
-  console.log(isCheckbox);
+
   return (
     <>
       <h2>{currentE.enterprise}</h2>

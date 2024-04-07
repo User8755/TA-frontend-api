@@ -1,24 +1,26 @@
 import './UsersList.css';
 import AsideMenu from '../AsideMenu/AsideMenu';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import Card from '../Card/Card';
 import { NavLink } from 'react-router-dom';
+import { CurrentUserContext } from '../Contexts/CurrentUserContext';
 
 function UsersList(props) {
-  const jwt = JSON.parse(localStorage.getItem('key')).key;
   const [isOpenSpoilerUser, setIsOpenSpoilerUser] = useState(true);
   const [isOpenSpoilerNon, setIsOpenSpoilerNone] = useState(false);
   const [AllUsers, setAllUsers] = useState([]);
-
+  const currentUser = useContext(CurrentUserContext);
   useEffect(() => {
     if (props.loggedIn) {
       axios
         .get('/users/all')
-        .then((i) => setAllUsers(i.data))
+        .then((res) =>
+          setAllUsers(res.data.filter((i) => i._id !== currentUser._id))
+        )
         .catch((i) => console.log(i));
     }
-  }, [jwt, props.loggedIn]);
+  }, [currentUser._id, props.loggedIn]);
 
   return (
     <div className='users-list'>
@@ -34,6 +36,9 @@ function UsersList(props) {
         </NavLink>
         <NavLink to='/logs' className='aside__link'>
           Логи
+        </NavLink>
+        <NavLink to='/branch' className='aside__link'>
+          Новый филиал
         </NavLink>
       </AsideMenu>
       <div className='main-content'>
@@ -52,13 +57,14 @@ function UsersList(props) {
             >
               Пользователи с доступом
             </h2>
-
             {AllUsers.map((u) => {
               return (
                 <Card
                   key={u._id}
                   user={u}
                   isOpenSpoiler={isOpenSpoilerUser}
+                  setChild={props.setChild}
+                  setModal={props.setModal}
                 ></Card>
               );
             })}
@@ -70,23 +76,10 @@ function UsersList(props) {
                   ? 'main__list--subtitle'
                   : ' main__list--subtitle close'
               }
-              // className='main__list--subtitle'
               onClick={() => setIsOpenSpoilerNone(!isOpenSpoilerNon)}
             >
               Пользователи без доступа
             </h2>
-
-            {/* {hendleFilterNone.map((u) => {
-              return (
-                <Card
-                  key={u._id}
-                  user={u}
-                  setModal={setModal}
-                  setChild={setChild}
-                  isOpenSpoiler={isOpenSpoilerNon}
-                ></Card>
-              );
-            })} */}
           </div>
         </section>
       </div>
