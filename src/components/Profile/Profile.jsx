@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import '../Login/Login.css';
 import './Profile.css';
 import api from '../../untils/api';
-import AsideMenu from '../AsideMenu/AsideMenu';
 import { NavLink } from 'react-router-dom';
 import { CurrentUserContext } from '../Contexts/CurrentUserContext';
+import MainFrame from '../MainFrame/MainFrame';
 
 function Profile({ setLogin }) {
   const [input, setInput] = useState({
@@ -43,15 +43,20 @@ function Profile({ setLogin }) {
       .catch((err) => setErr(err.message), setInput({ password: '' }));
   };
   return (
-    <div className='profile'>
-      <AsideMenu>
-        <NavLink to='/profile' className='aside__link'>
-          Данные профиля
-        </NavLink>
-        <NavLink to='/my-enterprise' className='aside__link'>
-          Мои предприятия
-        </NavLink>
-      </AsideMenu>
+    <MainFrame
+      childNavLink={
+        <>
+          <NavLink to='/profile' className='aside__link'>
+            Данные профиля
+          </NavLink>
+          {currentUser.role.includes('user') ? (
+            <NavLink to='/my-enterprise' className='aside__link'>
+              Мои предприятия
+            </NavLink>
+          ) : null}
+        </>
+      }
+    >
       <div className='profile-block'>
         <section className='section entry'>
           <div className='entry__container profile'>
@@ -101,7 +106,7 @@ function Profile({ setLogin }) {
           </div>
         </section>
       </div>
-    </div>
+    </MainFrame>
   );
 }
 

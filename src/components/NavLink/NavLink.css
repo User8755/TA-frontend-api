@@ -1,0 +1,13 @@
+.aside__link {
+  text-decoration: none;
+  color: var(--main-color);
+  font-weight: 700;
+}
+
+.aside__link:hover {
+  scale: 1.002;
+}
+
+.active {
+  text-transform: uppercase;
+}

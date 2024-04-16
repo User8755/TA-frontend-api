@@ -53,6 +53,9 @@ function Form({ loggedIn }) {
     numWorkers: '', // Кол-во работников
     code: '', // Код ОК-016-94
     proff: '',
+    laborFunction: '', // Функция
+    materials: '', // Материалы
+    equipment: '', // Оборудование
   });
 
   const [requiredSIZ, setRequiredSIZ] = useState(false);
@@ -72,13 +75,13 @@ function Form({ loggedIn }) {
   const [isDisabledSubmit, setDisabledSubmit] = useState(true);
 
   useEffect(() => {
-    if ((value.proff || value.job) && (value.riskManagement || value.typeSIZ)) {
+    if ((value.proff || value.job) && (value.riskManagement || value.typeSIZ) && value.num && value.numWorkers) {
       setDisabledSubmit(false);
     } else {
       setDisabledSubmit(true);
     }
   }, [value, inputValue]);
-  console.log(inputValue.proff);
+
   useEffect(() => {
     if (loggedIn) {
       api
@@ -515,7 +518,7 @@ function Form({ loggedIn }) {
             ></SelectOne>
             <div className='form__block_job'>
               <label className='label label__job'>
-                Номер Р/М:
+                Номер Р/М&#42;:
                 <input
                   className='form__input form__input_small'
                   autoComplete='on'
@@ -525,7 +528,7 @@ function Form({ loggedIn }) {
                 ></input>
               </label>
               <label className='label label__job'>
-                Кол-во работников:
+                Кол-во работников&#42;:
                 <input
                   className='form__input form__input_small'
                   autoComplete='on'
@@ -536,7 +539,7 @@ function Form({ loggedIn }) {
               </label>
             </div>
             <label className='label'>
-              Объект:
+              Объект&#42;:
               <input
                 className='form__input'
                 autoComplete='on'
@@ -547,7 +550,7 @@ function Form({ loggedIn }) {
               ></input>
             </label>
             <label className='label'>
-              Источник:
+              Источник&#42;:
               <input
                 className='form__input'
                 autoComplete='on'
@@ -816,6 +819,36 @@ function Form({ loggedIn }) {
                 className='form__input input'
                 onChange={handleChange}
                 value={inputValue.commit}
+              ></input>
+            </label>
+            <label className='label box comments'>
+              Оборудование:
+              <input
+                name='equipment'
+                type='text'
+                className='form__input input'
+                onChange={handleChange}
+                value={inputValue.equipment}
+              ></input>
+            </label>
+            <label className='label box comments'>
+              Материалы:
+              <input
+                name='materials'
+                type='text'
+                className='form__input input'
+                onChange={handleChange}
+                value={inputValue.materials}
+              ></input>
+            </label>
+            <label className='label box comments'>
+              Функции:
+              <input
+                name='laborFunction'
+                type='text'
+                className='form__input input'
+                onChange={handleChange}
+                value={inputValue.laborFunction}
               ></input>
             </label>
             <span>{`№р/м: ${newValue.num || ' '} Опасность: ${

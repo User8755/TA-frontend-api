@@ -1,6 +1,5 @@
 import axios from 'axios';
 import './Card.css';
-import { useState } from 'react';
 
 function Card({ user, setModal, setChild, isOpenSpoiler }) {
   const handlerDelRole = (i) => {

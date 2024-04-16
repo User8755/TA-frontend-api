@@ -1,16 +1,17 @@
 import './UsersList.css';
-import AsideMenu from '../AsideMenu/AsideMenu';
 import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import Card from '../Card/Card';
-import { NavLink } from 'react-router-dom';
 import { CurrentUserContext } from '../Contexts/CurrentUserContext';
+import MainFrame from '../MainFrame/MainFrame';
+import NavLinks from '../NavLink/NavLink';
 
 function UsersList(props) {
   const [isOpenSpoilerUser, setIsOpenSpoilerUser] = useState(true);
   const [isOpenSpoilerNon, setIsOpenSpoilerNone] = useState(false);
   const [AllUsers, setAllUsers] = useState([]);
   const currentUser = useContext(CurrentUserContext);
+
   useEffect(() => {
     if (props.loggedIn) {
       axios
@@ -23,27 +24,10 @@ function UsersList(props) {
   }, [currentUser._id, props.loggedIn]);
 
   return (
-    <div className='users-list'>
-      <AsideMenu>
-        <NavLink to='/users-list' className='aside__link'>
-          Список пользователей
-        </NavLink>
-        <NavLink to='/sign-up' className='aside__link'>
-          Регистрация пользователей
-        </NavLink>
-        <NavLink to='/info' className='aside__link'>
-          Общая информация
-        </NavLink>
-        <NavLink to='/logs' className='aside__link'>
-          Логи
-        </NavLink>
-        <NavLink to='/branch' className='aside__link'>
-          Новый филиал
-        </NavLink>
-      </AsideMenu>
+    <MainFrame childNavLink={<NavLinks />}>
       <div className='main-content'>
         <h2 className='main__title'>Список пользователей</h2>
-        <form className='main__form'></form>
+        <div className='main__form'></div>
         <section className='main__list'>
           <div className='main__list-box'></div>
           <div className='main__list-box'>
@@ -83,7 +67,7 @@ function UsersList(props) {
           </div>
         </section>
       </div>
-    </div>
+    </MainFrame>
   );
 }
 

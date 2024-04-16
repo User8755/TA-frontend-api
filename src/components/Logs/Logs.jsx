@@ -1,8 +1,9 @@
 import './Logs.css';
 import axios from 'axios';
-import AsideMenu from '../AsideMenu/AsideMenu';
-import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import MainFrame from '../MainFrame/MainFrame';
+import NavLinks from '../NavLink/NavLink';
+
 function Logs({ loggedIn }) {
   const [isLogs, setLogs] = useState([]);
   useEffect(() => {
@@ -14,24 +15,7 @@ function Logs({ loggedIn }) {
   }, [loggedIn]);
 
   return (
-    <div className='profile'>
-      <AsideMenu>
-        <NavLink to='/users-list' className='aside__link'>
-          Список пользователей
-        </NavLink>
-        <NavLink to='/sign-up' className='aside__link'>
-          Регистрация пользователей
-        </NavLink>
-        <NavLink to='/info' className='aside__link'>
-          Общая информация
-        </NavLink>
-        <NavLink to='/logs' className='aside__link'>
-          Логи
-        </NavLink>
-        <NavLink to='/branch' className='aside__link'>
-          Новый филиал
-        </NavLink>
-      </AsideMenu>
+    <MainFrame childNavLink={<NavLinks />}>
       <div>
         <ul>
           {isLogs.map((i, index) => {
@@ -39,7 +23,7 @@ function Logs({ loggedIn }) {
           })}
         </ul>
       </div>
-    </div>
+    </MainFrame>
   );
 }
 export default Logs;

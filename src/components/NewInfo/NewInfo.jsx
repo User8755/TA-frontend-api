@@ -1,8 +1,8 @@
 import './NewInfo.css';
-import AsideMenu from '../AsideMenu/AsideMenu';
 import { useState } from 'react';
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
+import NavLinks from '../NavLink/NavLink';
+import MainFrame from '../MainFrame/MainFrame';
 
 function NewInfo() {
   const [input, setInput] = useState({
@@ -37,24 +37,7 @@ function NewInfo() {
   };
 
   return (
-    <div className='new-info'>
-      <AsideMenu>
-        <NavLink to='/users-list' className='aside__link'>
-          Список пользователей
-        </NavLink>
-        <NavLink to='/sign-up' className='aside__link'>
-          Регистрация пользователей
-        </NavLink>
-        <NavLink to='/info' className='aside__link'>
-          Общая информация
-        </NavLink>
-        <NavLink to='/logs' className='aside__link'>
-          Логи
-        </NavLink>
-        <NavLink to='/branch' className='aside__link'>
-          Новый филиал
-        </NavLink>
-      </AsideMenu>
+    <MainFrame childNavLink={<NavLinks />}>
       <section className='new-info__section'>
         <h2 className='new-info__title'>Общая информация</h2>
         <form className='new-info__form' onSubmit={handlerSubmit}>
@@ -73,7 +56,7 @@ function NewInfo() {
           </button>
         </form>
       </section>
-    </div>
+    </MainFrame>
   );
 }
 

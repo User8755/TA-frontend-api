@@ -19,6 +19,7 @@ import axios from 'axios';
 import { BASE_URL } from '../../untils/constants.js';
 import Logs from '../Logs/Logs.jsx';
 import NewBranch from '../NewBranch/NewBranch.jsx';
+import ProtectedRouteRole from '../ProtectedRout/ProtectedRouteRole.jsx';
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -92,7 +93,7 @@ function App() {
           <Route
             path='/branch'
             element={
-              <ProtectedRouteElement
+              <ProtectedRouteRole
                 element={NewBranch}
                 setLogin={setLogin}
                 loggedIn={login}
@@ -101,12 +102,12 @@ function App() {
           />
           <Route
             path='/logs'
-            element={<ProtectedRouteElement element={Logs} loggedIn={login} />}
+            element={<ProtectedRouteRole element={Logs} loggedIn={login} />}
           />
           <Route
             path='/my-enterprise'
             element={
-              <ProtectedRouteElement
+              <ProtectedRouteRole
                 element={MyEnterprise}
                 setLogin={setLogin}
                 loggedIn={login}
@@ -135,7 +136,7 @@ function App() {
           <Route
             path='/users-list'
             element={
-              <ProtectedRouteElement
+              <ProtectedRouteRole
                 element={UsersList}
                 setModal={setModal}
                 setChild={setChild}
@@ -146,7 +147,7 @@ function App() {
           <Route
             path='/sign-up'
             element={
-              <ProtectedRouteElement
+              <ProtectedRouteRole
                 element={Registration}
                 setModal={setModal}
                 setChild={setChild}
@@ -157,7 +158,7 @@ function App() {
           <Route
             path='/info'
             element={
-              <ProtectedRouteElement element={NewInfo} loggedIn={login} />
+              <ProtectedRouteRole element={NewInfo} loggedIn={login} />
             }
           />
           <Route

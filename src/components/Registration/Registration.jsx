@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Registration.css';
-import AsideMenu from '../AsideMenu/AsideMenu';
-import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import MainFrame from '../MainFrame/MainFrame';
+import NavLinks from '../NavLink/NavLink';
 
 function Registration(props) {
   const [inputValue, setInputValue] = useState({
@@ -54,24 +54,7 @@ function Registration(props) {
   };
 
   return (
-    <div className='sign-up'>
-      <AsideMenu>
-        <NavLink to='/users-list' className='aside__link'>
-          Список пользователей
-        </NavLink>
-        <NavLink to='/sign-up' className='aside__link'>
-          Регистрация пользователей
-        </NavLink>
-        <NavLink to='/info' className='aside__link'>
-          Общая информация
-        </NavLink>
-        <NavLink to='/logs' className='aside__link'>
-          Логи
-        </NavLink>
-        <NavLink to='/branch' className='aside__link'>
-          Новый филиал
-        </NavLink>
-      </AsideMenu>
+    <MainFrame childNavLink={<NavLinks />}>
       <section className='sign-up__block'>
         <div className='entry__container'>
           <h1 className='entry__title'>Регистрация</h1>
@@ -179,7 +162,7 @@ function Registration(props) {
           </form>
         </div>
       </section>
-    </div>
+    </MainFrame>
   );
 }
 

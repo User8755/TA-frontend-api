@@ -1,6 +1,6 @@
 import './NewBranch.css';
-import AsideMenu from '../AsideMenu/AsideMenu';
-import { NavLink } from 'react-router-dom';
+import MainFrame from '../MainFrame/MainFrame';
+import NavLinks from '../NavLink/NavLink';
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -26,24 +26,7 @@ function NewBranch() {
   };
 
   return (
-    <main className='profile'>
-      <AsideMenu>
-        <NavLink to='/users-list' className='aside__link'>
-          Список пользователей
-        </NavLink>
-        <NavLink to='/sign-up' className='aside__link'>
-          Регистрация пользователей
-        </NavLink>
-        <NavLink to='/info' className='aside__link'>
-          Общая информация
-        </NavLink>
-        <NavLink to='/logs' className='aside__link'>
-          Логи
-        </NavLink>
-        <NavLink to='/branch' className='aside__link'>
-          Новый филиал
-        </NavLink>
-      </AsideMenu>
+    <MainFrame childNavLink={<NavLinks />}>
       <div className='entry__container'>
         <h2 className='entry__title'>Новый филиал</h2>
         <form className='entry__form' onSubmit={handlerSubmit}>
@@ -67,7 +50,7 @@ function NewBranch() {
           </button>
         </form>
       </div>
-    </main>
+    </MainFrame>
   );
 }
 export default NewBranch;

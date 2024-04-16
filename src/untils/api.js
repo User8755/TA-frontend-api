@@ -172,6 +172,9 @@ class Api {
         AdditionalIssuanceRate: item.AdditionalIssuanceRate,
         SIZ: item.proffSIZ,
         code: item.code,
+        laborFunction: item.laborFunction, // Функция
+        materials: item.materials, // Материалы
+        equipment: item.equipment, // Оборудование
       }),
     }).then(this._checkRes);
   }
