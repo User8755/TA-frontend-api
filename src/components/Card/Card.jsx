@@ -21,7 +21,7 @@ function Card({ user, setModal, setChild, isOpenSpoiler }) {
   const handleChange = (e) => {
     data.role = e.target.value;
   };
-  
+  console.log(data);
   const handlerOpenUser = () => {
     setModal(true);
     setChild(

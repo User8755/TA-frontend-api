@@ -107,7 +107,7 @@ function App() {
           <Route
             path='/my-enterprise'
             element={
-              <ProtectedRouteRole
+              <ProtectedRouteElement
                 element={MyEnterprise}
                 setLogin={setLogin}
                 loggedIn={login}

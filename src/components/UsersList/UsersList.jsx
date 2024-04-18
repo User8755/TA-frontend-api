@@ -11,7 +11,7 @@ function UsersList(props) {
   const [isOpenSpoilerNon, setIsOpenSpoilerNone] = useState(false);
   const [AllUsers, setAllUsers] = useState([]);
   const currentUser = useContext(CurrentUserContext);
-
+  
   useEffect(() => {
     if (props.loggedIn) {
       axios

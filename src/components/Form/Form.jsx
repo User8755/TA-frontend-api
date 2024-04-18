@@ -75,7 +75,12 @@ function Form({ loggedIn }) {
   const [isDisabledSubmit, setDisabledSubmit] = useState(true);
 
   useEffect(() => {
-    if ((value.proff || value.job) && (value.riskManagement || value.typeSIZ) && value.num && value.numWorkers) {
+    if (
+      (value.proff || value.job) &&
+      (value.riskManagement || value.typeSIZ) &&
+      value.num &&
+      value.numWorkers
+    ) {
       setDisabledSubmit(false);
     } else {
       setDisabledSubmit(true);
