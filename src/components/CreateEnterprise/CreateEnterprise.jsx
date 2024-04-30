@@ -12,6 +12,7 @@ function CreateEnterprise({ setModal, enterprise, setEnterprise }) {
   });
   const [err, setErr] = useState('');
   const [isDisabled, setDisabled] = useState(true);
+  const [errMessage, setErrMessage] = useState('');
 
   const handlerSubmit = (e) => {
     e.preventDefault();
@@ -33,6 +34,7 @@ function CreateEnterprise({ setModal, enterprise, setEnterprise }) {
   };
 
   const handlerChange = (e) => {
+    setErrMessage(e.target.validationMessage);
     const { name, value } = e.target;
     setInput({
       ...input,
@@ -40,9 +42,9 @@ function CreateEnterprise({ setModal, enterprise, setEnterprise }) {
     });
     setErr('');
     if (
-      input.enterprise.length &&
-      input.inn.length &&
-      input.kpp.length &&
+      input.enterprise &&
+      input.inn &&
+      input.kpp &&
       input.order.length > 2
     ) {
       setDisabled(false);
@@ -63,6 +65,8 @@ function CreateEnterprise({ setModal, enterprise, setEnterprise }) {
             name='enterprise'
             value={input.enterprise}
             onChange={handlerChange}
+            minLength={2}
+            required
           ></input>
         </div>
         <div>
@@ -73,6 +77,8 @@ function CreateEnterprise({ setModal, enterprise, setEnterprise }) {
             name='inn'
             value={input.inn}
             onChange={handlerChange}
+            minLength={2}
+            required
           ></input>
         </div>
         <div>
@@ -83,6 +89,8 @@ function CreateEnterprise({ setModal, enterprise, setEnterprise }) {
             name='kpp'
             value={input.kpp}
             onChange={handlerChange}
+            minLength={2}
+            required
           ></input>
         </div>
         <div>
@@ -93,9 +101,13 @@ function CreateEnterprise({ setModal, enterprise, setEnterprise }) {
             name='order'
             value={input.order}
             onChange={handlerChange}
+            minLength={4}
+            required
           ></input>
         </div>
-        <span className='form__span_enterprice'>{err.message}</span>
+        <span className='form__span_enterprice'>
+          {errMessage || err.message}
+        </span>
         <ButtonSubmit isDisabled={isDisabled}></ButtonSubmit>
       </form>
     </>

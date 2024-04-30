@@ -130,7 +130,7 @@ function Form({ loggedIn }) {
         link.remove();
         setDisabled(false);
       })
-      .catch((i) => setDisabled(false));
+      .catch(() => setDisabled(false));
   };
 
   useEffect(() => {
@@ -505,505 +505,492 @@ function Form({ loggedIn }) {
   }, [handleSubmit]);
 
   return (
-    <div className='main-form'>
-      <form className='form' onSubmit={handleSubmit} required>
-        <div className='form__block-left'>
-          <div className='form__header left'>
-            <h2 className='form__header-title'>Данные о предприятии</h2>
-            <span>{currentEnterprise.enterprise}</span>
-          </div>
-          <section className='section profess'>
-            <label className='label'>
-              Профессия (Приказ 767н приложения 1):
-            </label>
-            <SelectOne
-              value={isProff}
-              option={prof}
-              setValue={setProff}
-            ></SelectOne>
-            <div className='form__block_job'>
-              <label className='label label__job'>
-                Номер Р/М&#42;:
-                <input
-                  className='form__input form__input_small'
-                  autoComplete='on'
-                  onChange={handleChange}
-                  name='num'
-                  value={inputValue.num}
-                ></input>
-              </label>
-              <label className='label label__job'>
-                Кол-во работников&#42;:
-                <input
-                  className='form__input form__input_small'
-                  autoComplete='on'
-                  onChange={handleChange}
-                  name='numWorkers'
-                  value={inputValue.numWorkers}
-                ></input>
-              </label>
-            </div>
-            <label className='label'>
-              Объект&#42;:
-              <input
-                className='form__input'
-                autoComplete='on'
-                onChange={handleChange}
-                list='obj'
-                name='obj'
-                value={inputValue.obj}
-              ></input>
-            </label>
-            <label className='label'>
-              Источник&#42;:
-              <input
-                className='form__input'
-                autoComplete='on'
-                onChange={handleChange}
-                list='source'
-                name='source'
-                value={inputValue.source}
-              ></input>
-            </label>
-            <label className='label'>
-              Профессия:
-              <input
-                className='form__input'
-                name='job'
-                onChange={handleChange}
-                value={inputValue.job}
-              />
-            </label>
-            <label className='label'>
-              Код ОК-016-94:
-              <input
-                className='form__input'
-                name='code'
-                onChange={handleChange}
-                value={inputValue.code}
-              />
-            </label>
-            <label className='label'>
-              Подразделение:
-              <input
-                className='form__input'
-                name='subdivision'
-                onChange={handleChange}
-                value={inputValue.subdivision}
-              />
-            </label>
-            <button
-              className='button copy'
-              type='button'
-              onClick={handleCopyData}
-            >
-              Копия
-            </button>
-          </section>
-          <section className='section buttons'>
-            <button
-              className='button button__table'
-              type='button'
-              //onClick={() => baseTable(currentEnterprise.value)}
-              onClick={() => getTabel('base', 'Базовая таблица')}
-              disabled={isDisabled}
-            >
-              Базовая таблица
-            </button>
-            <button
-              className='button button__table'
-              type='button'
-              //onClick={() => ListHazards(counter)}
-              onClick={() =>
-                getTabel(
-                  'listHazards',
-                  'Перечень идентифицированных опасностей'
-                )
-              }
-              disabled={isDisabled}
-            >
-              Перечень идентифицированных опасностей
-            </button>
-            <button
-              className='button button__table'
-              type='button'
-              //onClick={() => mapOPR(currentEnterprise.value)}
-              onClick={() => getTabel('mapOPR', 'Карты опасностей')}
-              disabled={isDisabled}
-            >
-              Карты опасностей
-            </button>
-            <button
-              className='button button__table'
-              type='button'
-              //onClick={() => listOfMeasures(currentEnterprise.value)}
-              onClick={() =>
-                getTabel('listOfMeasures', 'Меры управления без СИЗ')
-              }
-              disabled={isDisabled}
-            >
-              Меры управления без СИЗ
-            </button>
-            <button
-              className='button button__table'
-              type='button'
-              //onClick={() => normSiz(currentEnterprise.value)}
-              onClick={() => getTabel('norm', 'Нормы выдачи СИЗ')}
-              disabled={isDisabled}
-            >
-              Нормы выдачи СИЗ
-            </button>
-            <button
-              className='button button__table'
-              type='button'
-              //onClick={() => normSiz(currentEnterprise.value)}
-              onClick={() => getTabel('planTimetable', 'План-график мер')}
-              disabled={isDisabled}
-            >
-              План-график мер
-            </button>
-            <button
-              className='button button__table'
-              type='button'
-              onClick={() =>
-                getTabel('registerHazards', 'Реестр оцененных опасностей_ИОУПР')
-              }
-              disabled={isDisabled}
-            >
-              Реестр оцененных опасностей_ИОУПР
-            </button>
-            <p className='total'>
-              всего записей:
-              {counter}
-            </p>
-          </section>
+    <form className='form' onSubmit={handleSubmit} required>
+      <div className='form__block-left'>
+        <div className='form__header left'>
+          <h2 className='form__header-title'>Данные о предприятии</h2>
+          <span>{currentEnterprise.enterprise}</span>
         </div>
-        <div className='form__block-center'>
-          <div className='form__header center'>
-            <h2 className='form__header-title'>ОПР</h2>
+        <section className='section profess'>
+          <label className='label'>Профессия (Приказ 767н приложения 1):</label>
+          <SelectOne
+            value={isProff}
+            option={prof}
+            setValue={setProff}
+          ></SelectOne>
+          <div className='form__block_job'>
+            <label className='label label__job'>
+              Номер Р/М&#42;:
+              <input
+                className='form__input form__input_small'
+                autoComplete='on'
+                onChange={handleChange}
+                name='num'
+                value={inputValue.num}
+              ></input>
+            </label>
+            <label className='label label__job'>
+              Кол-во работников&#42;:
+              <input
+                className='form__input form__input_small'
+                autoComplete='on'
+                onChange={handleChange}
+                name='numWorkers'
+                value={inputValue.numWorkers}
+              ></input>
+            </label>
           </div>
-          <section className='section orders opr'>
-            <div className='spoiler-wrapper'>
-              <SpoilerBox
-                title={'Приказ 776'}
-                stateSpoileBox={isOrder776}
-                toggleSpoileBox={setOrder776}
-                newClass='center-block'
-              >
-                <label className='invisible'></label>
-                <label className='label order-input'>
-                  Опасности:
-                  <Select
-                    className='react-select-container order'
-                    classNamePrefix='react-select'
-                    options={sortedDanger776}
-                    onChange={(evt) => setDanger776(evt)}
-                    //onChange={(e)=>handleChangeDanger776(e)}
-                    placeholder={'Опасности'}
-                    value={isDanger776}
-                  />
-                </label>
-                <label className='label order-input'>
-                  Опасное событие:
-                  <Select
-                    className='react-select-container order'
-                    classNamePrefix='react-select'
-                    options={sortedDangerEvent776}
-                    onChange={(evt) => setDangerEvent776(evt)}
-                    placeholder={'Опасное событие'}
-                    value={isDangerEvent776}
-                  />
-                </label>
-                <label className='label'>
-                  Существующие меры управления:
+          <label className='label'>
+            Объект&#42;:
+            <input
+              className='form__input'
+              autoComplete='on'
+              onChange={handleChange}
+              list='obj'
+              name='obj'
+              value={inputValue.obj}
+            ></input>
+          </label>
+          <label className='label'>
+            Источник&#42;:
+            <input
+              className='form__input'
+              autoComplete='on'
+              onChange={handleChange}
+              list='source'
+              name='source'
+              value={inputValue.source}
+            ></input>
+          </label>
+          <label className='label'>
+            Профессия:
+            <input
+              className='form__input'
+              name='job'
+              onChange={handleChange}
+              value={inputValue.job}
+            />
+          </label>
+          <label className='label'>
+            Код ОК-016-94:
+            <input
+              className='form__input'
+              name='code'
+              onChange={handleChange}
+              value={inputValue.code}
+            />
+          </label>
+          <label className='label'>
+            Подразделение:
+            <input
+              className='form__input'
+              name='subdivision'
+              onChange={handleChange}
+              value={inputValue.subdivision}
+            />
+          </label>
+          <button
+            className='button copy'
+            type='button'
+            onClick={handleCopyData}
+          >
+            Копия
+          </button>
+        </section>
+        <section className='section buttons'>
+          <button
+            className='button button__table'
+            type='button'
+            //onClick={() => baseTable(currentEnterprise.value)}
+            onClick={() => getTabel('base', 'Базовая таблица')}
+            disabled={isDisabled}
+          >
+            Базовая таблица
+          </button>
+          <button
+            className='button button__table'
+            type='button'
+            //onClick={() => ListHazards(counter)}
+            onClick={() =>
+              getTabel('listHazards', 'Перечень идентифицированных опасностей')
+            }
+            disabled={isDisabled}
+          >
+            Перечень идентифицированных опасностей
+          </button>
+          <button
+            className='button button__table'
+            type='button'
+            //onClick={() => mapOPR(currentEnterprise.value)}
+            onClick={() => getTabel('mapOPR', 'Карты опасностей')}
+            disabled={isDisabled}
+          >
+            Карты опасностей
+          </button>
+          <button
+            className='button button__table'
+            type='button'
+            //onClick={() => listOfMeasures(currentEnterprise.value)}
+            onClick={() =>
+              getTabel('listOfMeasures', 'Меры управления без СИЗ')
+            }
+            disabled={isDisabled}
+          >
+            Меры управления без СИЗ
+          </button>
+          <button
+            className='button button__table'
+            type='button'
+            //onClick={() => normSiz(currentEnterprise.value)}
+            onClick={() => getTabel('norm', 'Нормы выдачи СИЗ')}
+            disabled={isDisabled}
+          >
+            Нормы выдачи СИЗ
+          </button>
+          <button
+            className='button button__table'
+            type='button'
+            //onClick={() => normSiz(currentEnterprise.value)}
+            onClick={() => getTabel('planTimetable', 'План-график мер')}
+            disabled={isDisabled}
+          >
+            План-график мер
+          </button>
+          <button
+            className='button button__table'
+            type='button'
+            onClick={() =>
+              getTabel('registerHazards', 'Реестр оцененных опасностей_ИОУПР')
+            }
+            disabled={isDisabled}
+          >
+            Реестр оцененных опасностей_ИОУПР
+          </button>
+          <p className='total'>
+            всего записей:
+            {counter}
+          </p>
+        </section>
+      </div>
+      <div className='form__block-center'>
+        <div className='form__header center'>
+          <h2 className='form__header-title'>ОПР</h2>
+        </div>
+        <section className='section orders opr'>
+          <div className='spoiler-wrapper'>
+            <SpoilerBox
+              title={'Приказ 776'}
+              stateSpoileBox={isOrder776}
+              toggleSpoileBox={setOrder776}
+              newClass='center-block'
+            >
+              <label className='invisible'></label>
+              <label className='label order-input'>
+                Опасности:
+                <Select
+                  className='react-select-container order'
+                  classNamePrefix='react-select'
+                  options={sortedDanger776}
+                  onChange={(evt) => setDanger776(evt)}
+                  //onChange={(e)=>handleChangeDanger776(e)}
+                  placeholder={'Опасности'}
+                  value={isDanger776}
+                />
+              </label>
+              <label className='label order-input'>
+                Опасное событие:
+                <Select
+                  className='react-select-container order'
+                  classNamePrefix='react-select'
+                  options={sortedDangerEvent776}
+                  onChange={(evt) => setDangerEvent776(evt)}
+                  placeholder={'Опасное событие'}
+                  value={isDangerEvent776}
+                />
+              </label>
+              <label className='label'>
+                Существующие меры управления:
+                <input
+                  name='existingRiskManagement'
+                  className='form__input'
+                  onChange={handleChange}
+                ></input>
+              </label>
+            </SpoilerBox>
+            <div className='line'></div>
+            <SpoilerBox
+              title={'Приказ 767'}
+              stateSpoileBox={isOrder767}
+              toggleSpoileBox={setOrder767}
+              newClass='center-block'
+            >
+              <label className='label order-input'>
+                Группа опасности:
+                <Select
+                  className='react-select-container order'
+                  classNamePrefix='react-select'
+                  options={dangerGroup}
+                  onChange={(name) => setDangerGroup(name)}
+                  placeholder={'Группа опасности'}
+                  value={isDangerGroup}
+                />
+              </label>
+              <label className='label order-input'>
+                Опасности:
+                <Select
+                  className='react-select-container order'
+                  classNamePrefix='react-select'
+                  options={sortedDangerGroup}
+                  onChange={(evt) => setisDanger(evt)}
+                  placeholder={'Опасности'}
+                  value={isDanger}
+                />
+              </label>
+              <label className='label order-input'>
+                Опасное событие:
+                <Select
+                  className='react-select-container order'
+                  classNamePrefix='react-select'
+                  options={sortedDangerEvent}
+                  onChange={(evt) => setDangerEvent(evt)}
+                  placeholder={'Опасное событие'}
+                  value={isDangerEvent}
+                />
+              </label>
+            </SpoilerBox>
+          </div>
+          <button className='button copy' type='button' onClick={handleCopyOPR}>
+            Копия
+          </button>
+        </section>
+        <section className='risk risk-opr'>
+          <div className='risk__labels'>
+            <div className='label__box'>
+              <label className='label box label__opr'>Тяжесть:</label>
+              <input
+                onFocus={handleFocus}
+                name='heaviness'
+                type='number'
+                className='form__input-opr form__input'
+                onChange={handleChangeNum}
+                value={inputValue.heaviness}
+              ></input>
+              <label className='label box label__opr'>Вероятность:</label>
+              <input
+                onFocus={handleFocus}
+                name='probability'
+                type='number'
+                className='form__input-opr form__input'
+                onChange={handleChangeNum}
+                value={inputValue.probability}
+              ></input>
+              <label className='label box label__opr'>ИПР:</label>
+              <span>{ipr}</span>
+            </div>
+            <span className=' label risk__attitude'>
+              Отношение к риску: {riskAttitude}
+            </span>
+          </div>
+          <div className='buttons_wrapper'>
+            <button
+              type='button'
+              className='button send'
+              onClick={handleSubmit}
+              disabled={isDisabledSubmit}
+            >
+              Отправить
+            </button>
+            <input
+              type='reset'
+              className='button reset'
+              onClick={clear}
+            ></input>
+          </div>
+          <label className='label box comments'>
+            Комментарии:
+            <input
+              name='commit'
+              type='text'
+              className='form__input input'
+              onChange={handleChange}
+              value={inputValue.commit}
+            ></input>
+          </label>
+          <label className='label box comments'>
+            Оборудование:
+            <input
+              name='equipment'
+              type='text'
+              className='form__input input'
+              onChange={handleChange}
+              value={inputValue.equipment}
+            ></input>
+          </label>
+          <label className='label box comments'>
+            Материалы:
+            <input
+              name='materials'
+              type='text'
+              className='form__input input'
+              onChange={handleChange}
+              value={inputValue.materials}
+            ></input>
+          </label>
+          <label className='label box comments'>
+            Функции:
+            <input
+              name='laborFunction'
+              type='text'
+              className='form__input input'
+              onChange={handleChange}
+              value={inputValue.laborFunction}
+            ></input>
+          </label>
+          <span>{`№р/м: ${newValue.num || ' '} Опасность: ${
+            newValue.dangerGroupId || newValue.danger776Id || ' '
+          }`}</span>
+          <ButtonGoBack />
+        </section>
+      </div>
+      <div className='form__block-right'>
+        <div className='form__header right'>
+          <h2 className='form__header-title'>Меры управления</h2>
+        </div>
+        <section className='section orders measures'>
+          <div className='spoiler-wrapper'>
+            <SpoilerBox
+              title={'Приказ 776'}
+              stateSpoileBox={isOrder776}
+              toggleSpoileBox={setOrder776}
+              newClass='right-block-right'
+            >
+              <label className='label order-input'>
+                Меры управления:
+                <Select
+                  className='react-select-container order'
+                  classNamePrefix='react-select'
+                  options={sortedRiskManagemet}
+                  onChange={(evt) => setRiskManagement(evt)}
+                  placeholder={'Меры управления'}
+                  value={isRiskManagement}
+                />
+              </label>
+            </SpoilerBox>
+            <div className='line'></div>
+            <SpoilerBox
+              title={'Приказ 767'}
+              stateSpoileBox={isOrder767}
+              toggleSpoileBox={setOrder767}
+              newClass='right-block-left'
+            >
+              <label className='label'>
+                Тип СИЗ:
+                <Select
+                  className='react-select-container'
+                  classNamePrefix='react-select'
+                  options={resTypeSiz}
+                  onChange={(evt) => setSelectedTipeSIZ(evt)}
+                  placeholder={'Тип СИЗ'}
+                  value={selectedTipeSIZ}
+                />
+                <label className='checkbox__label'>
                   <input
-                    name='existingRiskManagement'
-                    className='form__input'
-                    onChange={handleChange}
-                  ></input>
-                </label>
-              </SpoilerBox>
-              <div className='line'></div>
-              <SpoilerBox
-                title={'Приказ 767'}
-                stateSpoileBox={isOrder767}
-                toggleSpoileBox={setOrder767}
-                newClass='center-block'
-              >
-                <label className='label order-input'>
-                  Группа опасности:
-                  <Select
-                    className='react-select-container order'
-                    classNamePrefix='react-select'
-                    options={dangerGroup}
-                    onChange={(name) => setDangerGroup(name)}
-                    placeholder={'Группа опасности'}
-                    value={isDangerGroup}
+                    type='checkbox'
+                    name='siz'
+                    className='form__checkbox visually-hidden'
+                    onClick={(evt) => setRequiredSIZ(evt.target.checked)}
                   />
+                  <span className='form__pseudo-checkbox'></span>
+                  <span className='checkbox__label-text'>Обязательные СИЗ</span>
                 </label>
-                <label className='label order-input'>
-                  Опасности:
-                  <Select
-                    className='react-select-container order'
-                    classNamePrefix='react-select'
-                    options={sortedDangerGroup}
-                    onChange={(evt) => setisDanger(evt)}
-                    placeholder={'Опасности'}
-                    value={isDanger}
+                <label
+                  htmlFor='additional-means'
+                  className={
+                    additionalMeans
+                      ? 'checkbox__label'
+                      : 'checkbox__label disabled'
+                  }
+                >
+                  <input
+                    id='additional-means'
+                    type='checkbox'
+                    name='additional-means'
+                    className='additional-means form__checkbox visually-hidden'
+                    onClick={(evt) => setCheckboxSIZ(evt.target.checked)}
+                    disabled={!additionalMeans}
                   />
+                  <span className='form__pseudo-checkbox'></span>
+                  <span className='checkbox__label-text'>
+                    Доп. средства защиты
+                  </span>
                 </label>
-                <label className='label order-input'>
-                  Опасное событие:
-                  <Select
-                    className='react-select-container order'
-                    classNamePrefix='react-select'
-                    options={sortedDangerEvent}
-                    onChange={(evt) => setDangerEvent(evt)}
-                    placeholder={'Опасное событие'}
-                    value={isDangerEvent}
-                  />
-                </label>
-              </SpoilerBox>
-            </div>
-            <button
-              className='button copy'
-              type='button'
-              onClick={handleCopyOPR}
-            >
-              Копия
-            </button>
-          </section>
-          <section className='risk risk-opr'>
-            <div className='risk__labels'>
-              <div className='label__box'>
-                <label className='label box label__opr'>Тяжесть:</label>
-                <input
-                  onFocus={handleFocus}
-                  name='heaviness'
-                  type='number'
-                  className='form__input-opr form__input'
-                  onChange={handleChangeNum}
-                  value={inputValue.heaviness}
-                ></input>
-                <label className='label box label__opr'>Вероятность:</label>
-                <input
-                  onFocus={handleFocus}
-                  name='probability'
-                  type='number'
-                  className='form__input-opr form__input'
-                  onChange={handleChangeNum}
-                  value={inputValue.probability}
-                ></input>
-                <label className='label box label__opr'>ИПР:</label>
-                <span>{ipr}</span>
-              </div>
-              <span className=' label risk__attitude'>
-                Отношение к риску: {riskAttitude}
-              </span>
-            </div>
-            <div className='buttons_wrapper'>
-              <button
-                type='button'
-                className='button send'
-                onClick={handleSubmit}
-                disabled={isDisabledSubmit}
-              >
-                Отправить
-              </button>
-              <input
-                type='reset'
-                className='button reset'
-                onClick={clear}
-              ></input>
-            </div>
-            <label className='label box comments'>
-              Комментарии:
-              <input
-                name='commit'
-                type='text'
-                className='form__input input'
-                onChange={handleChange}
-                value={inputValue.commit}
-              ></input>
-            </label>
-            <label className='label box comments'>
-              Оборудование:
-              <input
-                name='equipment'
-                type='text'
-                className='form__input input'
-                onChange={handleChange}
-                value={inputValue.equipment}
-              ></input>
-            </label>
-            <label className='label box comments'>
-              Материалы:
-              <input
-                name='materials'
-                type='text'
-                className='form__input input'
-                onChange={handleChange}
-                value={inputValue.materials}
-              ></input>
-            </label>
-            <label className='label box comments'>
-              Функции:
-              <input
-                name='laborFunction'
-                type='text'
-                className='form__input input'
-                onChange={handleChange}
-                value={inputValue.laborFunction}
-              ></input>
-            </label>
-            <span>{`№р/м: ${newValue.num || ' '} Опасность: ${
-              newValue.dangerGroupId || newValue.danger776Id || ' '
-            }`}</span>
-            <ButtonGoBack />
-          </section>
-        </div>
-        <div className='form__block-right'>
-          <div className='form__header right'>
-            <h2 className='form__header-title'>Меры управления</h2>
+              </label>
+            </SpoilerBox>
           </div>
-          <section className='section orders measures'>
-            <div className='spoiler-wrapper'>
-              <SpoilerBox
-                title={'Приказ 776'}
-                stateSpoileBox={isOrder776}
-                toggleSpoileBox={setOrder776}
-                newClass='right-block-right'
-              >
-                <label className='label order-input'>
-                  Меры управления:
-                  <Select
-                    className='react-select-container order'
-                    classNamePrefix='react-select'
-                    options={sortedRiskManagemet}
-                    onChange={(evt) => setRiskManagement(evt)}
-                    placeholder={'Меры управления'}
-                    value={isRiskManagement}
-                  />
-                </label>
-              </SpoilerBox>
-              <div className='line'></div>
-              <SpoilerBox
-                title={'Приказ 767'}
-                stateSpoileBox={isOrder767}
-                toggleSpoileBox={setOrder767}
-                newClass='right-block-left'
-              >
-                <label className='label'>
-                  Тип СИЗ:
-                  <Select
-                    className='react-select-container'
-                    classNamePrefix='react-select'
-                    options={resTypeSiz}
-                    onChange={(evt) => setSelectedTipeSIZ(evt)}
-                    placeholder={'Тип СИЗ'}
-                    value={selectedTipeSIZ}
-                  />
-                  <label className='checkbox__label'>
-                    <input
-                      type='checkbox'
-                      name='siz'
-                      className='form__checkbox visually-hidden'
-                      onClick={(evt) => setRequiredSIZ(evt.target.checked)}
-                    />
-                    <span className='form__pseudo-checkbox'></span>
-                    <span className='checkbox__label-text'>
-                      Обязательные СИЗ
-                    </span>
-                  </label>
-                  <label
-                    htmlFor='additional-means'
-                    className={
-                      additionalMeans
-                        ? 'checkbox__label'
-                        : 'checkbox__label disabled'
-                    }
-                  >
-                    <input
-                      id='additional-means'
-                      type='checkbox'
-                      name='additional-means'
-                      className='additional-means form__checkbox visually-hidden'
-                      onClick={(evt) => setCheckboxSIZ(evt.target.checked)}
-                      disabled={!additionalMeans}
-                    />
-                    <span className='form__pseudo-checkbox'></span>
-                    <span className='checkbox__label-text'>
-                      Доп. средства защиты
-                    </span>
-                  </label>
-                </label>
-              </SpoilerBox>
+        </section>
+        <section className='risk risk-measures'>
+          <div className='risk__labels'>
+            <div className='label__box'>
+              <label className='label box label__opr'>Тяжесть1:</label>
+              <input
+                name='heaviness1'
+                type='number'
+                className='form__input form__input-opr'
+                onChange={handleChangeNum}
+                onFocus={handleFocus}
+                value={inputValue.heaviness1}
+              ></input>
+              <label className='label box label__opr'>Вероятность1:</label>
+              <input
+                name='probability1'
+                type='number'
+                className='form__input form__input-opr'
+                onChange={handleChangeNum}
+                onFocus={handleFocus}
+                value={inputValue.probability1}
+              ></input>
+              <label className='label box label__opr'>ИПР1:</label>
+              <span>{ipr1}</span>
             </div>
-          </section>
-          <section className='risk risk-measures'>
-            <div className='risk__labels'>
-              <div className='label__box'>
-                <label className='label box label__opr'>Тяжесть1:</label>
-                <input
-                  name='heaviness1'
-                  type='number'
-                  className='form__input form__input-opr'
-                  onChange={handleChangeNum}
-                  onFocus={handleFocus}
-                  value={inputValue.heaviness1}
-                ></input>
-                <label className='label box label__opr'>Вероятность1:</label>
-                <input
-                  name='probability1'
-                  type='number'
-                  className='form__input form__input-opr'
-                  onChange={handleChangeNum}
-                  onFocus={handleFocus}
-                  value={inputValue.probability1}
-                ></input>
-                <label className='label box label__opr'>ИПР1:</label>
-                <span>{ipr1}</span>
-              </div>
-              <span className='label risk__attitude risk__attitude-right'>
-                Отношение к риску: {riskAttitude1}
-              </span>
-            </div>
-          </section>
-          <section className='plan'>
-            <h2 className='plan__title'>План-график</h2>
-            <div className='plan__container'>
-              <label className='label'>
-                Ответственное лицо
-                <input
-                  name='responsiblePerson'
-                  className='form__input plan-input'
-                  onChange={handleChange}
-                  placeholder='Ответственное лицо'
-                ></input>
-              </label>
-              <label className='label'>
-                Периодичность
-                <input
-                  name='periodicity'
-                  className='form__input plan-input'
-                  onChange={handleChange}
-                  placeholder='Периодичность'
-                ></input>
-              </label>
-              <label className='label'>
-                Отметка о выполнении
-                <input
-                  name='completionMark'
-                  className='form__input plan-input'
-                  onChange={handleChange}
-                  placeholder='Отметка о выполнении'
-                ></input>
-              </label>
-            </div>
-          </section>
-        </div>
-      </form>
-    </div>
+            <span className='risk__attitude-right label risk__attitude'>
+              Отношение к риску: {riskAttitude1}
+            </span>
+          </div>
+        </section>
+        <section className='plan'>
+          <h2 className='plan__title'>План-график</h2>
+          <div className='plan__container'>
+            <label className='label'>
+              Ответственное лицо
+              <input
+                name='responsiblePerson'
+                className='form__input plan-input'
+                onChange={handleChange}
+                placeholder='Ответственное лицо'
+              ></input>
+            </label>
+            <label className='label'>
+              Периодичность
+              <input
+                name='periodicity'
+                className='form__input plan-input'
+                onChange={handleChange}
+                placeholder='Периодичность'
+              ></input>
+            </label>
+            <label className='label'>
+              Отметка о выполнении
+              <input
+                name='completionMark'
+                className='form__input plan-input'
+                onChange={handleChange}
+                placeholder='Отметка о выполнении'
+              ></input>
+            </label>
+          </div>
+        </section>
+      </div>
+    </form>
   );
 }
 
