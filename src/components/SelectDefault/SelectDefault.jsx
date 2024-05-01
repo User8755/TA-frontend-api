@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react';
-import './Select.css';
 
-function Select({ value, option, setValue }) {
+function SelectDefault({ value, option, setValue }) {
   const [isFocus, setFocus] = useState(false);
   const [inputValue, setInputValue] = useState({
     input: '',
   });
-
   const hendlerClick = (obj) => {
     setValue(obj);
-    setFocus(false);
     setInputValue({
-      input: obj.label,
+      input: value.label || obj.label,
     });
+    setFocus(false);
   };
+
   const handlerChangeInput = (e) => {
     const { name, value } = e.target;
     setInputValue({
@@ -23,34 +22,60 @@ function Select({ value, option, setValue }) {
   };
 
   const handlerFocus = () => {
-    setInputValue({
-      input: '',
-    });
     setFocus(true);
   };
 
+  const handlerBlur = () => {
+    setTimeout(() => {
+      setFocus(false);
+    }, 200);
+  };
+
   useEffect(() => {
-    if (!value) {
-      setInputValue({ input: '' });
+    if (!inputValue.input) {
+      setValue({});
+    }
+  }, [inputValue, setValue]);
+
+  useEffect(() => {
+    if (option)
+      option.forEach(
+        (i) => (i.visiblyLabel = i.ID ? `${i.label} id: ${i.ID}` : i.label)
+      );
+  }, [option]);
+
+  useEffect(() => {
+    if (value.label) {
+      setInputValue({ input: value.label });
     }
   }, [value]);
+
+  useEffect(() => {
+    if (!value.label) {
+      setInputValue({ input: '' });
+    }
+  }, [value.label]);
 
   return (
     <div className='serchBox'>
       <input
-        className='serchBox__input'
-        type='text'
+        className='form__input'
+        type='search'
         name='input'
-        placeholder='Введите минимум 3 символа'
+        placeholder='Выберите значение'
         value={inputValue.input}
         onFocus={handlerFocus}
         onChange={handlerChangeInput}
+        autoComplete='off'
+        onBlur={handlerBlur}
       />
       <div className='block'>
-        {isFocus && inputValue.input.length > 2
+        {isFocus
           ? option
               .filter((i) =>
-                i.label.toLowerCase().includes(inputValue.input.toLowerCase())
+                i.visiblyLabel
+                  .toLowerCase()
+                  .includes(inputValue.input.toLowerCase())
               )
               .map((el, index) => {
                 return (
@@ -59,7 +84,7 @@ function Select({ value, option, setValue }) {
                     key={index}
                     onClick={() => hendlerClick(el)}
                   >
-                    {el.label}
+                    {el.visiblyLabel}
                   </div>
                 );
               })
@@ -69,4 +94,4 @@ function Select({ value, option, setValue }) {
   );
 }
 
-export default Select;
+export default SelectDefault;

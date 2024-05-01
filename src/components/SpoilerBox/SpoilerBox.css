@@ -28,7 +28,7 @@
   gap: 10px;
 }
 .invisible{
-  height: 62px;
+  height: 52px;
 }
 
 @media (width<=768px) {
