@@ -15,6 +15,7 @@ import ButtonGoBack from '../ButtonGoBack/ButtonGoBack';
 import SelectOne from '../Select/Select';
 import axios from 'axios';
 import SelectDefault from '../SelectDefault/SelectDefault';
+import code from '../../untils/code';
 
 function Form({ loggedIn }) {
   const [isDangerGroup, setDangerGroup] = useState([]);
@@ -195,6 +196,7 @@ function Form({ loggedIn }) {
       setRiskAttitude1('Немедленное прекращение деятельности');
     }
   }, [ipr1, inputValue]);
+
   useEffect(() => {
     setValue({
       ...inputValue,
@@ -363,7 +365,7 @@ function Form({ loggedIn }) {
       value,
     ]
   );
-  console.log(newValue);
+
   const [additionalMeans, setAdditionalMeans] = useState(false);
   useEffect(() => {
     if (
@@ -449,7 +451,7 @@ function Form({ loggedIn }) {
       }
     });
   }, [value.danger776, value.dangerEvent776]);
-  console.table(value);
+
   const handleFocus = (e) => e.target.select();
   useEffect(() => {
     document.onkeydown = function (e) {
@@ -459,6 +461,17 @@ function Form({ loggedIn }) {
       return true;
     };
   }, [handleSubmit]);
+
+  useEffect(() => {
+    if (value.proff) {
+      const test = code.filter((i) => i.label.includes(value.proff));
+      test.length === 1
+        ? setInputValue({ ...inputValue, code: test[0].ID })
+        : setInputValue({ ...inputValue, code: 'Выберите значение' });
+    } else {
+      setInputValue({ ...inputValue, code: '' });
+    }
+  }, [value.proff]);
 
   return (
     <form className='form' onSubmit={handleSubmit} required>
@@ -525,6 +538,7 @@ function Form({ loggedIn }) {
               name='job'
               onChange={handleChange}
               value={inputValue.job}
+              list='job'
             />
           </label>
           <label className='label'>

@@ -6,6 +6,7 @@ import CreateEnterprise from '../CreateEnterprise/CreateEnterprise';
 import { CurrentUserContext } from '../Contexts/CurrentUserContext';
 import MainFrame from '../MainFrame/MainFrame';
 
+
 function ListEnterprise({
   enterprise,
   setEnterprise,
@@ -149,96 +150,6 @@ function ListEnterprise({
         </div>
       </div>
     </MainFrame>
-    // <>
-    //   {!currentUser.role.includes('user') ? (
-    //     <h1>Нет доступа</h1>
-    //   ) : (
-    //     <main className='main-menu'>
-    //       <AsideMenu>
-    //         {!currentUser.role.includes('admin') ? null : (
-    //           <Link to='/users-list' className='aside__link'>
-    //             Администрирование
-    //           </Link>
-    //         )}
-    //         <Link to='/profile' className='aside__link'>
-    //           Профиль
-    //         </Link>
-    //         <button
-    //           className='button_color-green button_default button_width-max'
-    //           onClick={hedlerOpenModal}
-    //         >
-    //           Создать предприятие
-    //         </button>
-    //       </AsideMenu>
-    //       <div className='list__main'>
-    //         <h2 className='list__title'>Мои предприятия</h2>
-    //         <input
-    //           type='search'
-    //           name='myEnt'
-    //           onChange={handleChange}
-    //           value={inputSearch.myEnt}
-    //           className='list__input-search'
-    //           placeholder='Начните ввод'
-    //         />
-    //         <div className='list__box'>
-    //           {hendleFilterEnt.length !== 0 ? (
-    //             hendleFilterEnt.reverse().map((i) => {
-    //               return (
-    //                 <NavLink
-    //                   to='/form'
-    //                   key={i._id}
-    //                   onClick={() => localStorage.setItem('id', i._id)}
-    //                   className={
-    //                     'button_default button_color-darck button_width-max'
-    //                   }
-    //                 >
-    //                   {i.enterprise}
-    //                 </NavLink>
-    //               );
-    //             })
-    //           ) : (
-    //             <>
-    //               <div></div>
-    //               <span className='list__span'>Тут пока ничего нет</span>
-    //             </>
-    //           )}
-    //         </div>
-    //         <h2 className='list__title'>Предприятия с доступом</h2>
-    //         <input
-    //           type='search'
-    //           name='entAcc'
-    //           onChange={handleChange}
-    //           value={inputSearch.entAcc}
-    //           className='list__input-search'
-    //           placeholder='Начните ввод'
-    //         />
-    //         <div className='list__box'>
-    //           {hendleFilterEntAcc.length !== 0 ? (
-    //             hendleFilterEntAcc.map((i) => {
-    //               return (
-    //                 <NavLink
-    //                   to='/form'
-    //                   key={i._id}
-    //                   onClick={() => localStorage.setItem('id', i._id)}
-    //                   className={
-    //                     'button_default button_color-darck button_width-max'
-    //                   }
-    //                 >
-    //                   {i.enterprise}
-    //                 </NavLink>
-    //               );
-    //             })
-    //           ) : (
-    //             <>
-    //               <div></div>
-    //               <span className='list__span'>Тут пока ничего нет</span>
-    //             </>
-    //           )}
-    //         </div>
-    //       </div>
-    //     </main>
-    //   )}
-    // </>
   );
 }
 

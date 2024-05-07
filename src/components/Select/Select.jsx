@@ -26,11 +26,12 @@ function Select({ value, option, setValue }) {
     setInputValue({
       input: '',
     });
+    setValue({});
     setFocus(true);
   };
 
   useEffect(() => {
-    if (!value) {
+    if (!value.profId) {
       setInputValue({ input: '' });
     }
   }, [value]);

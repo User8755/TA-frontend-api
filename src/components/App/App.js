@@ -48,6 +48,8 @@ function App() {
         .then((item) => {
           if (item) {
             setLogin(true);
+          } else {
+            setLogin(false);
           }
         })
         .catch((err) => console.log(err))
@@ -157,9 +159,7 @@ function App() {
           />
           <Route
             path='/info'
-            element={
-              <ProtectedRouteRole element={NewInfo} loggedIn={login} />
-            }
+            element={<ProtectedRouteRole element={NewInfo} loggedIn={login} />}
           />
           <Route
             path='/form'
