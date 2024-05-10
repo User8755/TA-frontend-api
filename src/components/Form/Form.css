@@ -67,19 +67,16 @@
 }
 .spoiler-wrapper {
   display: flex;
-  gap: 10px;
+  /* gap: 10px; */
   width: 100%;
 }
 
-.line {
-  border-left: 1px solid var(--line-color);
-  height: 100%;
+.input-order__wrapper:nth-child(1) {
+  border-right: 1px solid var(--line-color);
+  padding-right: 10px;
 }
-
-/*-----секция Приказы ОПР-----*/
-.section.orders.opr {
-  height: 360px;
-  justify-content: space-between;
+.input-order__wrapper:nth-child(2) {
+  padding-left: 10px;
 }
 
 /*-----секция Кнопки-----*/
@@ -229,7 +226,6 @@
 }
 
 .history {
-  width: 502px;
   display: flex;
   flex-direction: column;
 }
@@ -451,7 +447,7 @@
 }
 
 .form__input_small {
-  width: 40px;
+  width: 70px;
   margin-left: 5px;
 }
 

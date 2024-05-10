@@ -1,4 +1,3 @@
-import dangerGroup from '../../untils/dangerGroup';
 import danger from '../../untils/danger';
 import prof from '../../untils/prof';
 import dangerEvent from '../../untils/dangerousEvent';
@@ -16,6 +15,7 @@ import SelectOne from '../Select/Select';
 import axios from 'axios';
 import SelectDefault from '../SelectDefault/SelectDefault';
 import code from '../../untils/code';
+import SelectCodeProff from '../../SelectCodeProff/SelectCodeProff';
 
 function Form({ loggedIn }) {
   const [isDangerGroup, setDangerGroup] = useState([]);
@@ -39,8 +39,8 @@ function Form({ loggedIn }) {
   const [inputValue, setInputValue] = useState({
     probability: 0, //Вероятность
     heaviness: 0, // Тяжесть
-    probability1: 0, // Тяжесть1
-    heaviness1: 0, //Вероятность1
+    probability1: 0, // Вероятность1
+    heaviness1: 0, // Тяжесть1
     periodicity: '', // Периодичность
     responsiblePerson: '', // Ответственное лицо
     completionMark: '', // Отметка о выполнении
@@ -53,10 +53,10 @@ function Form({ loggedIn }) {
     enterpriseId: '', // id предприятия
     numWorkers: '', // Кол-во работников
     code: '', // Код ОК-016-94
-    proff: '',
     laborFunction: '', // Функция
     materials: '', // Материалы
     equipment: '', // Оборудование
+    num: '', // Номер Р/М
   });
 
   const [requiredSIZ, setRequiredSIZ] = useState(false);
@@ -164,7 +164,6 @@ function Form({ loggedIn }) {
       setRiskAttitude('Немедленное прекращение деятельности');
     }
   }, [ipr, inputValue]);
-
   // результат ИПР1
   useEffect(() => {
     setIpr1(inputValue.probability1 * inputValue.heaviness1);
@@ -202,8 +201,8 @@ function Form({ loggedIn }) {
       ...inputValue,
       proff: isProff.label,
       proffId: isProff.profId,
-      danger: isDangerGroup.label,
-      dangerID: isDangerGroup.ID,
+      danger: isDanger.dependence,
+      dangerID: isDanger.dependenceID,
       dangerGroup: isDanger.label,
       dangerGroupId: isDanger.ID,
       dangerEvent: isDangerEvent.label,
@@ -249,10 +248,6 @@ function Form({ loggedIn }) {
     riskAttitude1,
     selectedTipeSIZ,
   ]);
-
-  const resDangerGroup = danger.filter(
-    (item) => isDangerGroup.label === item.dependence
-  );
 
   const resDangerEvent = dangerEvent.filter(
     (item) => isDanger.label === item.dependence
@@ -412,7 +407,6 @@ function Form({ loggedIn }) {
     });
     setCheckboxSIZ(false);
     setRiskManagement('');
-    document.querySelector('.form').reset();
   };
 
   const handleChange = (evt) => {
@@ -453,14 +447,12 @@ function Form({ loggedIn }) {
   }, [value.danger776, value.dangerEvent776]);
 
   const handleFocus = (e) => e.target.select();
-  useEffect(() => {
-    document.onkeydown = function (e) {
-      if (e.shiftKey && e.key === 'Enter') {
-        handleSubmit(e);
-      }
-      return true;
-    };
-  }, [handleSubmit]);
+
+  document.onkeydown = function (e) {
+    if (e.shiftKey && e.key === 'Enter' && !isDisabledSubmit) {
+      handleSubmit(e);
+    }
+  };
 
   useEffect(() => {
     if (value.proff) {
@@ -493,9 +485,11 @@ function Form({ loggedIn }) {
               <input
                 className='form__input form__input_small'
                 autoComplete='on'
-                onChange={handleChange}
+                onChange={handleChangeNum}
                 name='num'
                 value={inputValue.num}
+                type='number'
+                onFocus={handleFocus}
               ></input>
             </label>
             <label className='label label__job'>
@@ -503,9 +497,11 @@ function Form({ loggedIn }) {
               <input
                 className='form__input form__input_small'
                 autoComplete='on'
-                onChange={handleChange}
+                onChange={handleChangeNum}
                 name='numWorkers'
+                type='number'
                 value={inputValue.numWorkers}
+                onFocus={handleFocus}
               ></input>
             </label>
           </div>
@@ -533,12 +529,16 @@ function Form({ loggedIn }) {
           </label>
           <label className='label'>
             Профессия:
-            <input
+            {/* <input
               className='form__input'
               name='job'
               onChange={handleChange}
               value={inputValue.job}
-              list='job'
+            /> */}
+            <SelectCodeProff
+              option={sortedOption(code)}
+              setValue={setInputValue}
+              value={value}
             />
           </label>
           <label className='label'>
@@ -571,7 +571,6 @@ function Form({ loggedIn }) {
           <button
             className='button button__table'
             type='button'
-            //onClick={() => baseTable(currentEnterprise.value)}
             onClick={() => getTabel('base', 'Базовая таблица')}
             disabled={isDisabled}
           >
@@ -580,7 +579,6 @@ function Form({ loggedIn }) {
           <button
             className='button button__table'
             type='button'
-            //onClick={() => ListHazards(counter)}
             onClick={() =>
               getTabel('listHazards', 'Перечень идентифицированных опасностей')
             }
@@ -591,7 +589,6 @@ function Form({ loggedIn }) {
           <button
             className='button button__table'
             type='button'
-            //onClick={() => mapOPR(currentEnterprise.value)}
             onClick={() => getTabel('mapOPR', 'Карты опасностей')}
             disabled={isDisabled}
           >
@@ -600,7 +597,6 @@ function Form({ loggedIn }) {
           <button
             className='button button__table'
             type='button'
-            //onClick={() => listOfMeasures(currentEnterprise.value)}
             onClick={() =>
               getTabel('listOfMeasures', 'Меры управления без СИЗ')
             }
@@ -611,7 +607,6 @@ function Form({ loggedIn }) {
           <button
             className='button button__table'
             type='button'
-            //onClick={() => normSiz(currentEnterprise.value)}
             onClick={() => getTabel('norm', 'Нормы выдачи СИЗ')}
             disabled={isDisabled}
           >
@@ -620,7 +615,6 @@ function Form({ loggedIn }) {
           <button
             className='button button__table'
             type='button'
-            //onClick={() => normSiz(currentEnterprise.value)}
             onClick={() => getTabel('planTimetable', 'План-график мер')}
             disabled={isDisabled}
           >
@@ -654,18 +648,8 @@ function Form({ loggedIn }) {
               toggleSpoileBox={setOrder776}
               newClass='center-block'
             >
-              <label className='invisible'></label>
               <label className='label order-input'>
                 Опасности:
-                {/* <Select
-                  className='react-select-container order'
-                  classNamePrefix='react-select'
-                  options={sortedDanger776}
-                  onChange={(evt) => setDanger776(evt)}
-                  //onChange={(e)=>handleChangeDanger776(e)}
-                  placeholder={'Опасности'}
-                  value={isDanger776}
-                /> */}
                 <SelectDefault
                   option={sortedOption(danget776)}
                   setValue={setDanger776}
@@ -674,21 +658,12 @@ function Form({ loggedIn }) {
               </label>
               <label className='label order-input'>
                 Опасное событие:
-                {/* <Select
-                  className='react-select-container order'
-                  classNamePrefix='react-select'
-                  options={sortedDangerEvent776}
-                  onChange={(evt) => setDangerEvent776(evt)}
-                  placeholder={'Опасное событие'}
-                  value={isDangerEvent776}
-                /> */}
                 <SelectDefault
                   option={sortedOption(resDangerEvent776)}
                   setValue={setDangerEvent776}
                   value={isDangerEvent776}
                 />
               </label>
-
               <label className='label'>
                 Существующие меры управления:
                 <input
@@ -699,55 +674,30 @@ function Form({ loggedIn }) {
                 ></input>
               </label>
             </SpoilerBox>
-            <div className='line'></div>
             <SpoilerBox
               title={'Приказ 767'}
               stateSpoileBox={isOrder767}
               toggleSpoileBox={setOrder767}
               newClass='center-block'
             >
-              <label className='label order-input'>
+              {/* <label className='label order-input'>
                 Группа опасности:
-                {/* <Select
-                  className='react-select-container order'
-                  classNamePrefix='react-select'
-                  options={dangerGroup}
-                  onChange={(name) => setDangerGroup(name)}
-                  placeholder={'Группа опасности'}
-                  value={isDangerGroup}
-                /> */}
                 <SelectDefault
                   option={dangerGroup}
                   setValue={setDangerGroup}
                   value={isDangerGroup}
                 />
-              </label>
+              </label> */}
               <label className='label order-input'>
                 Опасности:
-                {/* <Select
-                  className='react-select-container order'
-                  classNamePrefix='react-select'
-                  options={sortedDangerGroup}
-                  onChange={(evt) => setisDanger(evt)}
-                  placeholder={'Опасности'}
-                  value={isDanger}
-                /> */}
                 <SelectDefault
-                  option={sortedOption(resDangerGroup)}
+                  option={sortedOption(danger)}
                   setValue={setisDanger}
                   value={isDanger}
                 />
               </label>
               <label className='label order-input'>
                 Опасное событие:
-                {/* <Select
-                  className='react-select-container order'
-                  classNamePrefix='react-select'
-                  options={sortedDangerEvent}
-                  onChange={(evt) => setDangerEvent(evt)}
-                  placeholder={'Опасное событие'}
-                  value={isDangerEvent}
-                /> */}
                 <SelectDefault
                   option={sortedOption(resDangerEvent)}
                   setValue={setDangerEvent}
@@ -797,11 +747,9 @@ function Form({ loggedIn }) {
             >
               Отправить
             </button>
-            <input
-              type='reset'
-              className='button reset'
-              onClick={clear}
-            ></input>
+            <button type='reset' className='button reset' onClick={clear}>
+              Очистить
+            </button>
           </div>
           <ButtonGoBack />
           <div className='history'>
@@ -832,14 +780,6 @@ function Form({ loggedIn }) {
             >
               <label className='label order-input'>
                 Меры управления:
-                {/* <Select
-                  className='react-select-container order'
-                  classNamePrefix='react-select'
-                  options={sortedRiskManagemet}
-                  onChange={(evt) => setRiskManagement(evt)}
-                  placeholder={'Меры управления'}
-                  value={isRiskManagement}
-                /> */}
                 <SelectDefault
                   option={sortedOption(resRiskManagemet)}
                   setValue={setRiskManagement}
@@ -847,7 +787,6 @@ function Form({ loggedIn }) {
                 />
               </label>
             </SpoilerBox>
-            <div className='line'></div>
             <SpoilerBox
               title={'Приказ 767'}
               stateSpoileBox={isOrder767}
@@ -856,14 +795,6 @@ function Form({ loggedIn }) {
             >
               <label className='label'>
                 Тип СИЗ:
-                {/* <Select
-                  className='react-select-container'
-                  classNamePrefix='react-select'
-                  options={resTypeSiz}
-                  onChange={(evt) => setSelectedTipeSIZ(evt)}
-                  placeholder={'Тип СИЗ'}
-                  value={selectedTipeSIZ}
-                /> */}
                 <SelectDefault
                   option={resTypeSiz}
                   setValue={setSelectedTipeSIZ}
@@ -968,18 +899,6 @@ function Form({ loggedIn }) {
             </label>
           </div>
         </section>
-        {/* <div className='history'>
-            <h2 className='plan__title'>Истроия записей:</h2>
-            {newValue.slice(-6).map((i) => {
-              return (
-                <span>{`№р/м: ${i.num}; Опасность: ${
-                  i.dangerGroupId || i.danger776Id
-                }; Событие: ${
-                  i.dangerEventID || i.dangerEvent776Id
-                }; Источник: ${i.source}`}</span>
-              );
-            })}
-          </div> */}
         <label className='label box comments'>
           Комментарии:
           <input

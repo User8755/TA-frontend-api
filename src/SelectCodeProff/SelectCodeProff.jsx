@@ -1,24 +1,23 @@
 import { useEffect, useState } from 'react';
 
-function SelectDefault({ value, option, setValue }) {
+function SelectCodeProff({ value, option, setValue }) {
   const [isFocus, setFocus] = useState(false);
   const [inputValue, setInputValue] = useState({
     input: '',
   });
-
   const hendlerClick = (obj) => {
-    setValue(obj);
-    setInputValue({
-      input: value.label || obj.label,
+    setValue({
+      ...value,
+      job: obj.label,
+      code: obj.ID || '',
     });
     setFocus(false);
   };
-  console.log(option);
+
   const handlerChangeInput = (e) => {
-    const { name, value } = e.target;
-    setInputValue({
-      ...inputValue,
-      [name]: value,
+    setValue({
+      ...value,
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -34,7 +33,11 @@ function SelectDefault({ value, option, setValue }) {
 
   useEffect(() => {
     if (!inputValue.input) {
-      setValue({});
+      setValue({
+        ...value,
+        job: '',
+        code: '',
+      });
     }
   }, [inputValue, setValue]);
 
@@ -46,23 +49,22 @@ function SelectDefault({ value, option, setValue }) {
   }, [option]);
 
   useEffect(() => {
-    if (value.label) {
-      setInputValue({ input: value.label });
+    if (value.job) {
+      setInputValue({ input: value.job });
     }
   }, [value]);
 
   useEffect(() => {
-    if (!value.label) {
+    if (!value.job) {
       setInputValue({ input: '' });
     }
-  }, [value.label]);
-
+  }, [value.job]);
   return (
     <div className='serchBox'>
       <input
         className='form__input'
         type='search'
-        name='input'
+        name='job'
         placeholder='Выберите значение'
         value={inputValue.input}
         onFocus={handlerFocus}
@@ -71,7 +73,7 @@ function SelectDefault({ value, option, setValue }) {
         onBlur={handlerBlur}
       />
       <div className='block'>
-        {isFocus
+        {isFocus && inputValue.input.length > 2
           ? option
               .filter((i) =>
                 i.visiblyLabel
@@ -95,4 +97,4 @@ function SelectDefault({ value, option, setValue }) {
   );
 }
 
-export default SelectDefault;
+export default SelectCodeProff;
