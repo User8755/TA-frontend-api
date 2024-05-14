@@ -229,6 +229,12 @@
   display: flex;
   flex-direction: column;
 }
+
+.history__span {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 /*----REACT-SELECT----*/
 /* .react-select-container {
   background-color: rgba(243, 244, 246, 1) !important;

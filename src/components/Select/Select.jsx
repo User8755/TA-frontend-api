@@ -6,7 +6,7 @@ function Select({ value, option, setValue }) {
   const [inputValue, setInputValue] = useState({
     input: '',
   });
-
+  console.log(value);
   const hendlerClick = (obj) => {
     setValue(obj);
     setFocus(false);
@@ -33,6 +33,8 @@ function Select({ value, option, setValue }) {
   useEffect(() => {
     if (!value.profId) {
       setInputValue({ input: '' });
+    } else {
+      setInputValue({ input: value.label });
     }
   }, [value]);
 

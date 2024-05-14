@@ -13,7 +13,6 @@ function SelectDefault({ value, option, setValue }) {
     });
     setFocus(false);
   };
-  console.log(option);
   const handlerChangeInput = (e) => {
     const { name, value } = e.target;
     setInputValue({

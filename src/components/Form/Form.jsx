@@ -1,7 +1,7 @@
 import danger from '../../untils/danger';
 import prof from '../../untils/prof';
 import dangerEvent from '../../untils/dangerousEvent';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import typeSiz from '../../untils/typeSIZ';
 import danget776 from '../../untils/danger775';
 import dangerEvent776 from '../../untils/dangerEvent776';
@@ -16,6 +16,7 @@ import axios from 'axios';
 import SelectDefault from '../SelectDefault/SelectDefault';
 import code from '../../untils/code';
 import SelectCodeProff from '../../SelectCodeProff/SelectCodeProff';
+import SelectCoverct from '../SelectCoverct/SelectCoverct';
 
 function Form({ loggedIn }) {
   const [isDangerGroup, setDangerGroup] = useState([]);
@@ -58,7 +59,7 @@ function Form({ loggedIn }) {
     equipment: '', // Оборудование
     num: '', // Номер Р/М
   });
-
+  const [additionalMeans, setAdditionalMeans] = useState(false); // Доп сиз чек-бокс
   const [requiredSIZ, setRequiredSIZ] = useState(false);
   const ERROR = 'Ошибка';
   const [isRiskManagement, setRiskManagement] = useState([]);
@@ -72,8 +73,20 @@ function Form({ loggedIn }) {
 
   const [isDisabled, setDisabled] = useState(false);
   const [newValue, setNewValue] = useState([]);
-  const jwt = JSON.parse(localStorage.getItem('key')).key;
   const [isDisabledSubmit, setDisabledSubmit] = useState(true);
+  const [optionState, setOptionState] = useState([]);
+
+  const key = JSON.parse(localStorage.getItem('key')).key;
+  const id = localStorage.getItem('id');
+  const input = JSON.parse(localStorage.getItem('input'));
+
+  const handleFocus = (e) => e.target.select();
+
+  document.onkeydown = function (e) {
+    if (e.shiftKey && e.key === 'Enter' && !isDisabledSubmit) {
+      handleSubmit(e);
+    }
+  };
 
   useEffect(() => {
     if (
@@ -90,38 +103,20 @@ function Form({ loggedIn }) {
 
   useEffect(() => {
     if (loggedIn) {
-      api
-        .getValue(
-          localStorage.getItem('id'),
-          JSON.parse(localStorage.getItem('key')).key
-        )
-        .then((e) => setCounter(e))
-        .catch((e) => console.log(e));
-    }
-  }, [loggedIn]);
-
-  useEffect(() => {
-    if (loggedIn) {
-      api
-        .getCerrentEnterprise(
-          localStorage.getItem('id'),
-          JSON.parse(localStorage.getItem('key')).key
-        )
-        .then((e) => {
-          setCurrentEnterprise(e);
+      Promise.all([api.getCerrentEnterprise(id, key), api.getValue(id, key)])
+        .then(([current, count]) => {
+          setCurrentEnterprise(current);
+          setCounter(count);
         })
         .catch((e) => console.log(e));
     }
-  }, [loggedIn]);
+  }, [id, key, loggedIn]);
 
   const getTabel = (tableName, fileName) => {
     setDisabled(true);
     axios
-      .get(`/tabels/${tableName}/${localStorage.getItem('id')}`, {
+      .get(`/tabels/${tableName}/${id}`, {
         responseType: 'blob',
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
       })
       .then((i) => {
         const link = document.createElement('a');
@@ -274,8 +269,6 @@ function Form({ loggedIn }) {
       return 0;
     });
 
-  const input = JSON.parse(localStorage.getItem('input'));
-
   const handleCopyData = () => {
     if (localStorage.getItem('input') || localStorage.getItem('proff')) {
       setProff(JSON.parse(localStorage.getItem('proff')));
@@ -300,68 +293,40 @@ function Form({ loggedIn }) {
     }
   };
 
-  const handleSubmit = useCallback(
-    (evt) => {
-      evt.preventDefault();
-      setCount(count + 1);
-      value['enterpriseId'] = localStorage.getItem('id');
-      if (!requiredSIZ) {
-        delete value.proffSIZ;
-        setFormValue([...formValue, value]);
-      } else {
-        setFormValue([...formValue, value]);
-      }
-      if (checkboxSiz) {
-        value['additionalMeans'] = selectedTipeSIZ.additionalMeans;
-        value['AdditionalIssuanceRate'] =
-          selectedTipeSIZ.AdditionalIssuanceRate;
-      }
-      localStorage.setItem('proff', JSON.stringify(isProff));
-      localStorage.setItem('input', JSON.stringify(inputValue));
-      localStorage.setItem('Danger776', JSON.stringify(isDanger776));
-      localStorage.setItem('DangerEvent776', JSON.stringify(isDangerEvent776));
-      localStorage.setItem('Danger', JSON.stringify(isDanger));
-      localStorage.setItem('DangerEvent', JSON.stringify(isDangerEvent));
-      localStorage.setItem('DangerGroup', JSON.stringify(isDangerGroup));
-      api
-        .updateCurrentEnterpriseValue(
-          localStorage.getItem('id'),
-          value,
-          JSON.parse(localStorage.getItem('key')).key
-        )
-        .then((e) => {
-          setNewValue([...newValue, e]);
-          api
-            .getValue(
-              localStorage.getItem('id'),
-              JSON.parse(localStorage.getItem('key')).key
-            )
-            .then((e) => setCounter(e))
-            .catch((e) => console.log(e));
-        })
-        .catch((e) => console.log(e));
-      clear();
-    },
-    [
-      checkboxSiz,
-      count,
-      formValue,
-      inputValue,
-      isDanger,
-      isDanger776,
-      isDangerEvent,
-      isDangerEvent776,
-      isDangerGroup,
-      isProff,
-      newValue,
-      requiredSIZ,
-      selectedTipeSIZ.AdditionalIssuanceRate,
-      selectedTipeSIZ.additionalMeans,
-      value,
-    ]
-  );
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    setCount(count + 1);
+    value['enterpriseId'] = localStorage.getItem('id');
+    if (!requiredSIZ) {
+      delete value.proffSIZ;
+      setFormValue([...formValue, value]);
+    } else {
+      setFormValue([...formValue, value]);
+    }
+    if (checkboxSiz) {
+      value['additionalMeans'] = selectedTipeSIZ.additionalMeans;
+      value['AdditionalIssuanceRate'] = selectedTipeSIZ.AdditionalIssuanceRate;
+    }
+    localStorage.setItem('proff', JSON.stringify(isProff));
+    localStorage.setItem('input', JSON.stringify(inputValue));
+    localStorage.setItem('Danger776', JSON.stringify(isDanger776));
+    localStorage.setItem('DangerEvent776', JSON.stringify(isDangerEvent776));
+    localStorage.setItem('Danger', JSON.stringify(isDanger));
+    localStorage.setItem('DangerEvent', JSON.stringify(isDangerEvent));
+    localStorage.setItem('DangerGroup', JSON.stringify(isDangerGroup));
+    api
+      .updateCurrentEnterpriseValue(id, value, key)
+      .then((e) => {
+        setNewValue([...newValue, e]);
+        api
+          .getValue(id, key)
+          .then((e) => setCounter(e))
+          .catch((e) => console.log(e));
+      })
+      .catch((e) => console.log(e));
+    clear();
+  };
 
-  const [additionalMeans, setAdditionalMeans] = useState(false);
   useEffect(() => {
     if (
       typeof selectedTipeSIZ.additionalMeans === 'undefined' ||
@@ -374,6 +339,7 @@ function Form({ loggedIn }) {
   }, [selectedTipeSIZ]);
 
   const clear = () => {
+    setOptionState([]);
     setDanger776({});
     setDangerEvent776({});
     setDangerEvent({});
@@ -432,27 +398,25 @@ function Form({ loggedIn }) {
   }, [inputValue.heaviness]);
 
   useEffect(() => {
-    conversion.forEach((item) => {
-      if (
-        value.danger776 === item.Danger776 &&
-        value.dangerEvent776 === item.dangerEvent776
-      ) {
-        setisDanger({ ID: item.IdDanger767, label: item.danger767 });
-        setDangerEvent({
-          ID: item.IdDangerEvent767,
-          label: item.dangerEvent767,
-        });
-      }
-    });
-  }, [value.danger776, value.dangerEvent776]);
-
-  const handleFocus = (e) => e.target.select();
-
-  document.onkeydown = function (e) {
-    if (e.shiftKey && e.key === 'Enter' && !isDisabledSubmit) {
-      handleSubmit(e);
+    const arrayOptions = conversion.filter(
+      (i) =>
+        i.danger776 === value.danger776 &&
+        i.IdDangerEvent776 === value.dangerEvent776Id
+    );
+    if (arrayOptions.length > 0) {
+      setisDanger({
+        ID: arrayOptions[0].IdDanger767,
+        label: arrayOptions[0].danger767,
+      });
+      setDangerEvent({
+        ID: arrayOptions[0].IdDangerEvent767,
+        label: arrayOptions[0].dangerEvent767,
+      });
     }
-  };
+    if (arrayOptions.length > 1) {
+      setOptionState(arrayOptions);
+    }
+  }, [value.danger776, value.dangerEvent776Id]);
 
   useEffect(() => {
     if (value.proff) {
@@ -463,8 +427,9 @@ function Form({ loggedIn }) {
     } else {
       setInputValue({ ...inputValue, code: '' });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value.proff]);
-
+  console.table(value);
   return (
     <form className='form' onSubmit={handleSubmit} required>
       <div className='form__block-left'>
@@ -529,12 +494,6 @@ function Form({ loggedIn }) {
           </label>
           <label className='label'>
             Профессия:
-            {/* <input
-              className='form__input'
-              name='job'
-              onChange={handleChange}
-              value={inputValue.job}
-            /> */}
             <SelectCodeProff
               option={sortedOption(code)}
               setValue={setInputValue}
@@ -680,14 +639,6 @@ function Form({ loggedIn }) {
               toggleSpoileBox={setOrder767}
               newClass='center-block'
             >
-              {/* <label className='label order-input'>
-                Группа опасности:
-                <SelectDefault
-                  option={dangerGroup}
-                  setValue={setDangerGroup}
-                  value={isDangerGroup}
-                />
-              </label> */}
               <label className='label order-input'>
                 Опасности:
                 <SelectDefault
@@ -704,6 +655,16 @@ function Form({ loggedIn }) {
                   value={isDangerEvent}
                 />
               </label>
+              {optionState.length > 0 ? (
+                <label className='label order-input'>
+                  Конвертер:
+                  <SelectCoverct
+                    option={optionState}
+                    Danger={setisDanger}
+                    DangerEvent={setDangerEvent}
+                  />
+                </label>
+              ) : null}
             </SpoilerBox>
           </div>
           <button className='button copy' type='button' onClick={handleCopyOPR}>
@@ -754,13 +715,12 @@ function Form({ loggedIn }) {
           <ButtonGoBack />
           <div className='history'>
             <h2 className='plan__title'>Истроия записей:</h2>
+            <span>
+              №р/м; Опасное событие (приказ 776/767); Источник; Тип СИЗ;
+            </span>
             {newValue.slice(-10).map((i) => {
               return (
-                <span>{`№р/м: ${i.num}; Опасность: ${
-                  i.dangerGroupId || i.danger776Id
-                }; Событие: ${
-                  i.dangerEventID || i.dangerEvent776Id
-                }; Источник: ${i.source}`}</span>
+                <span className='history__span'>{`${i.num}; ${i.dangerEvent776Id}/${i.dangerEventID}; ${i.source}; ${i.typeSIZ}`}</span>
               );
             })}
           </div>
