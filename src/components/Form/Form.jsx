@@ -18,7 +18,7 @@ import code from '../../untils/code';
 import SelectCodeProff from '../../SelectCodeProff/SelectCodeProff';
 import SelectCoverct from '../SelectCoverct/SelectCoverct';
 
-function Form({ loggedIn }) {
+function Form({ loggedIn, setModal, setChild }) {
   const [isDangerGroup, setDangerGroup] = useState([]);
   const [isDanger, setisDanger] = useState([]);
   const [isDanger776, setDanger776] = useState({});
@@ -126,7 +126,16 @@ function Form({ loggedIn }) {
         link.remove();
         setDisabled(false);
       })
-      .catch(() => setDisabled(false));
+      .catch(e => {
+        if (e.response) {
+          e.response.data.text().then(data => {
+            setChild(data);
+            setModal(true);
+            setDisabled(false);
+          });
+          
+        }
+      })
   };
 
   useEffect(() => {
@@ -373,6 +382,7 @@ function Form({ loggedIn }) {
     });
     setCheckboxSIZ(false);
     setRiskManagement('');
+    document.querySelector('.form').reset()
   };
 
   const handleChange = (evt) => {
@@ -429,7 +439,7 @@ function Form({ loggedIn }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value.proff]);
-  console.table(value);
+
   return (
     <form className='form' onSubmit={handleSubmit} required>
       <div className='form__block-left'>

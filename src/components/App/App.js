@@ -168,6 +168,8 @@ function App() {
                 element={Form}
                 enterprise={enterprise}
                 loggedIn={login}
+                setModal={setModal}
+                setChild={setChild}
               />
             }
           />

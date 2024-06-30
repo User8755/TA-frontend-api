@@ -6,7 +6,6 @@ function Select({ value, option, setValue }) {
   const [inputValue, setInputValue] = useState({
     input: '',
   });
-  console.log(value);
   const hendlerClick = (obj) => {
     setValue(obj);
     setFocus(false);

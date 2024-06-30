@@ -16,11 +16,20 @@ function Logs({ loggedIn }) {
 
   return (
     <MainFrame childNavLink={<NavLinks />}>
-      <div>
-        <ul>
-          {isLogs.map((i, index) => {
-            return <li key={index}>{`${i.action} ${i.date}`}</li>;
-          })}
+      <div className='logs'>
+        <ul className='logs__container'>
+          {isLogs.length > 0 ? (
+            isLogs.map((i, index) => {
+              return (
+                <li
+                  className='logs_event'
+                  key={index}
+                >{`${i.action} ${i.date}`}</li>
+              );
+            })
+          ) : (
+            <li>Что-то полшло не так, попробуйте позже</li>
+          )}
         </ul>
       </div>
     </MainFrame>
