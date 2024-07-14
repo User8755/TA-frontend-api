@@ -301,7 +301,7 @@ function Form({ loggedIn, setModal, setChild }) {
       setDanger776(JSON.parse(localStorage.getItem('Danger776')));
     }
   };
-
+console.table(value)
   const handleSubmit = (evt) => {
     evt.preventDefault();
     setCount(count + 1);
@@ -598,6 +598,16 @@ function Form({ loggedIn, setModal, setChild }) {
             disabled={isDisabled}
           >
             Реестр оцененных опасностей_ИОУПР
+          </button>
+          <button
+            className='button button__table'
+            type='button'
+            onClick={() =>
+              getTabel('listSiz', 'Перечень СИЗ')
+            }
+            disabled={isDisabled}
+          >
+            Перечень СИЗ
           </button>
           <p className='total'>
             всего записей:
