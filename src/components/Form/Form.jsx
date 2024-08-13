@@ -38,10 +38,10 @@ function Form({ loggedIn, setModal, setChild }) {
   const [isProff, setProff] = useState([]);
   const [checkboxSiz, setCheckboxSIZ] = useState(false); // чекбокс доп средства
   const [inputValue, setInputValue] = useState({
-    probability: 0, //Вероятность
-    heaviness: 0, // Тяжесть
+    probability: 1, //Вероятность
+    heaviness: 1, // Тяжесть
     probability1: 0, // Вероятность1
-    heaviness1: 0, // Тяжесть1
+    heaviness1: 1, // Тяжесть1
     periodicity: '', // Периодичность
     responsiblePerson: '', // Ответственное лицо
     completionMark: '', // Отметка о выполнении
@@ -126,16 +126,15 @@ function Form({ loggedIn, setModal, setChild }) {
         link.remove();
         setDisabled(false);
       })
-      .catch(e => {
+      .catch((e) => {
         if (e.response) {
-          e.response.data.text().then(data => {
+          e.response.data.text().then((data) => {
             setChild(data);
             setModal(true);
             setDisabled(false);
           });
-          
         }
-      })
+      });
   };
 
   useEffect(() => {
@@ -301,7 +300,7 @@ function Form({ loggedIn, setModal, setChild }) {
       setDanger776(JSON.parse(localStorage.getItem('Danger776')));
     }
   };
-console.table(value)
+  console.table(value);
   const handleSubmit = (evt) => {
     evt.preventDefault();
     setCount(count + 1);
@@ -367,10 +366,10 @@ console.table(value)
     setIpr1(0);
     setInputValue({
       num: '',
-      probability: 0,
-      heaviness: 0,
+      probability: 1,
+      heaviness: 1,
       probability1: 0,
-      heaviness1: 0,
+      heaviness1: 1,
       periodicity: '',
       responsiblePerson: '',
       completionMark: '',
@@ -382,7 +381,7 @@ console.table(value)
     });
     setCheckboxSIZ(false);
     setRiskManagement('');
-    document.querySelector('.form').reset()
+    document.querySelector('.form').reset();
   };
 
   const handleChange = (evt) => {
@@ -602,9 +601,7 @@ console.table(value)
           <button
             className='button button__table'
             type='button'
-            onClick={() =>
-              getTabel('listSiz', 'Перечень СИЗ')
-            }
+            onClick={() => getTabel('listSiz', 'Перечень СИЗ')}
             disabled={isDisabled}
           >
             Перечень СИЗ
@@ -702,6 +699,8 @@ console.table(value)
                 className='form__input-opr form__input'
                 onChange={handleChangeNum}
                 value={inputValue.heaviness}
+                min='1'
+                max='5'
               ></input>
               <label className='label box label__opr'>Вероятность:</label>
               <input
@@ -711,6 +710,8 @@ console.table(value)
                 className='form__input-opr form__input'
                 onChange={handleChangeNum}
                 value={inputValue.probability}
+                min='1'
+                max='5'
               ></input>
               <label className='label box label__opr'>ИПР:</label>
               <span>{ipr}</span>
@@ -734,7 +735,7 @@ console.table(value)
           </div>
           <ButtonGoBack />
           <div className='history'>
-            <h2 className='plan__title'>Истроия записей:</h2>
+            <h2 className='plan__title'>История записей:</h2>
             <span>
               №р/м; Опасное событие (приказ 776/767); Источник; Тип СИЗ;
             </span>
@@ -826,6 +827,8 @@ console.table(value)
                 onChange={handleChangeNum}
                 onFocus={handleFocus}
                 value={inputValue.heaviness1}
+                min='1'
+                max='5'
               ></input>
               <label className='label box label__opr'>Вероятность1:</label>
               <input
@@ -835,6 +838,8 @@ console.table(value)
                 onChange={handleChangeNum}
                 onFocus={handleFocus}
                 value={inputValue.probability1}
+                min='0'
+                max='5'
               ></input>
               <label className='label box label__opr'>ИПР1:</label>
               <span>{ipr1}</span>

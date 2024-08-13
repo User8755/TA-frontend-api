@@ -11,14 +11,11 @@ function EnterpriseUpdate({ enterprise }) {
   const [currentE, setCurrentE] = useState(enterprise);
   const [counter, setCounter] = useState(0);
   const [status, setStaus] = useState('');
-  const [isCheckbox, setCheckbox] = useState(false);
   const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
     setCurrentE(enterprise);
-    setStaus('');
-    setCheckbox(enterprise.isHiden);
-  }, [enterprise, currentE]);
+  }, [enterprise]);
 
   const updateCounter = useCallback(() => {
     api
@@ -55,6 +52,15 @@ function EnterpriseUpdate({ enterprise }) {
       .catch((i) => console.log(i));
   };
 
+  const handlerChangeHiden = () => {
+    axios
+      .post(`/enterprise/status/${enterprise._id}`, {
+        isHiden: !currentE.isHiden,
+      })
+      .then((i) => setCurrentE(i.data))
+      .catch((i) => console.log(i));
+  };
+
   const hendlerFilterAccess = users.filter((user) =>
     currentE.access.includes(user._id)
   );
@@ -77,18 +83,11 @@ function EnterpriseUpdate({ enterprise }) {
       .then(() => {
         updateCounter();
         setStaus('файл загружен');
-        setTimeout(() => {
-          setStaus('');
-        }, 10000);
       })
       .catch((e) => setStaus(e.response.data.message))
       .finally(() => {
         e.target.reset();
       });
-  };
-
-  const hendlerCheckBoxClock = () => {
-    setCheckbox(!isCheckbox);
   };
 
   return (
@@ -97,7 +96,7 @@ function EnterpriseUpdate({ enterprise }) {
       <span>Количество записей: {counter}</span>
       <h2>Обновить данные:</h2>
       <form className='form__update_value' onSubmit={hendlerSendFile}>
-        <input type='file' accept='.xlsx' />
+        <input type='file' accept='.xlsx' onChange={() => setStaus('')} />
         <span className='form__update_span'>{status}</span>
         <button type='submit' className='button_default button_color-green'>
           Отправить
@@ -106,8 +105,8 @@ function EnterpriseUpdate({ enterprise }) {
       <div className='checkbox-container'>
         <h2>Скрыть из списка:</h2>
         <div
-          onClick={hendlerCheckBoxClock}
-          className={isCheckbox ? 'checkbox checkbox-active' : 'checkbox'}
+          onClick={handlerChangeHiden}
+          className={currentE.isHiden ? 'checkbox checkbox-active' : 'checkbox'}
         ></div>
       </div>
       <h2>Выдать доступ</h2>

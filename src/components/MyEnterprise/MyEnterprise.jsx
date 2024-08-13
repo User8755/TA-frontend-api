@@ -7,7 +7,7 @@ function MyEnterprise({ setChild, enterprise, setModal, setEnterprise }) {
   useEffect(() => {
     api
       .getEnterprise(JSON.parse(localStorage.getItem('key')).key)
-      .then((i) => setEnterprise(i))
+      .then((i) => setEnterprise(i.reverse()))
       .catch((i) => console.log(i));
   }, [setEnterprise]);
 
@@ -15,7 +15,8 @@ function MyEnterprise({ setChild, enterprise, setModal, setEnterprise }) {
     setChild(<EnterpriseUpdate enterprise={item}></EnterpriseUpdate>);
     setModal(true);
   };
-
+  const handleFiltreVisible = enterprise.filter(i=> !i.isHiden )
+  const handleFiltreHiden = enterprise.filter(i=> i.isHiden )
   return (
     <MainFrame
       childNavLink={
@@ -32,7 +33,23 @@ function MyEnterprise({ setChild, enterprise, setModal, setEnterprise }) {
       <section className='profile-block'>
         <h2 className='entry__title'>Мои предприятия</h2>
         <div className='profile__enterprise-list_box'>
-          {enterprise.map((i) => {
+          {handleFiltreVisible.map((i) => {
+            return (
+              <button
+                key={i._id}
+                onClick={() => handlerClikc(i)}
+                className='button_default button_color-darck'
+              >
+                {i.enterprise}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+      <section className='profile-block'>
+        <h2 className='entry__title'>Скрытые предприятия</h2>
+        <div className='profile__enterprise-list_box'>
+          {handleFiltreHiden.map((i) => {
             return (
               <button
                 key={i._id}

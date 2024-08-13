@@ -6,7 +6,6 @@ import CreateEnterprise from '../CreateEnterprise/CreateEnterprise';
 import { CurrentUserContext } from '../Contexts/CurrentUserContext';
 import MainFrame from '../MainFrame/MainFrame';
 
-
 function ListEnterprise({
   enterprise,
   setEnterprise,
@@ -35,8 +34,8 @@ function ListEnterprise({
     }
   }, [jwt, loggedIn, setEnterprise, setEnterpriseAccess]);
 
-  const hendleFilterEnt = enterprise.filter((i) =>
-    i.enterprise.toLowerCase().includes(inputSearch.myEnt)
+  const hendleFilterEnt = enterprise.filter(
+    (i) => i.enterprise.toLowerCase().includes(inputSearch.myEnt) && !i.isHiden
   );
 
   const hendleFilterEntAcc = enterpriseAccess.filter((i) =>

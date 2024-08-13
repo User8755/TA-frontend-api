@@ -9,7 +9,7 @@ import NavLinks from '../NavLink/NavLink';
 function UsersList(props) {
   const [isOpenSpoilerUser, setIsOpenSpoilerUser] = useState(true);
   const [isOpenSpoilerNon, setIsOpenSpoilerNone] = useState(false);
-  const [AllUsers, setAllUsers] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
   const currentUser = useContext(CurrentUserContext);
   
   useEffect(() => {
@@ -41,7 +41,7 @@ function UsersList(props) {
             >
               Пользователи с доступом
             </h2>
-            {AllUsers.map((u) => {
+            {allUsers.filter(u=> u.role.includes('user')).map((u) => {
               return (
                 <Card
                   key={u._id}
@@ -64,6 +64,17 @@ function UsersList(props) {
             >
               Пользователи без доступа
             </h2>
+            {allUsers.filter(u=> !u.role.includes('user')).map((u) => {
+              return (
+                <Card
+                  key={u._id}
+                  user={u}
+                  isOpenSpoiler={isOpenSpoilerUser}
+                  setChild={props.setChild}
+                  setModal={props.setModal}
+                ></Card>
+              );
+            })}
           </div>
         </section>
       </div>
