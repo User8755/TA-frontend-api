@@ -28,7 +28,27 @@
 
 .form__span_enterprice {
   width: 100%;
-  color:  red;
+  color: red;
   height: 21px;
   font-size: 11px;
+}
+
+.container {
+  display: flex;
+}
+
+.container__right {
+  width: 50%;
+  padding: 5px;
+}
+
+.container__left {
+  width: 50%;
+  padding: 5px;
+}
+
+.form__inpyt_row {
+  display: flex;
+  gap: 5px;
+  padding-bottom: 5px;
 }

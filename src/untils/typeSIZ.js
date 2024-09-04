@@ -930,8 +930,9 @@ const typeSiz = [
     issuanceRate: '24 пары на 12 мес',
     additionalMeans: '',
     AdditionalIssuanceRate: '',
-    standart: 'ГОСТ 12.4.010-75 ИЛИ EN 388:2016 ',
-    OperatingLevel: '(Ми), стойкость к истиранию - уровень не менее 3',
+    standart: 'EN 388:2016 ',
+    OperatingLevel:
+      '(подтверждение защитных свойств в декларации или сертификате)',
   },
   {
     dependence: '1.26.1',
@@ -1030,8 +1031,9 @@ const typeSiz = [
     issuanceRate: '24 пары на 12 мес',
     additionalMeans: '',
     AdditionalIssuanceRate: '',
-    standart: 'ГОСТ 12.4.010-75 ИЛИ EN 388:2016 ',
-    OperatingLevel: '',
+    standart: 'EN 388:2016 ',
+    OperatingLevel:
+      '(подтверждение защитных свойств в декларации или сертификате)',
   },
   {
     dependence: '2.1.1',
@@ -1051,7 +1053,7 @@ const typeSiz = [
     speciesSIZ: 'Полуботинки /  Ботинки /  Полусапоги /  Сапоги',
     issuanceRate: '1 пара на 12 мес',
     additionalMeans:
-      'Туфли /  Туфли "сабо" /  Туфли "тапочки" /  Сандалеты (полуботинки с перфорацией)',
+      "Туфли /  Туфли 'сабо' /  Туфли 'тапочки' /  Сандалеты (полуботинки с перфорацией)",
     AdditionalIssuanceRate: '1 пара на 12 мес',
     standart: 'ТР ТС 019/2011',
     OperatingLevel: '',
@@ -1717,7 +1719,7 @@ const typeSiz = [
     additionalMeans: '',
     AdditionalIssuanceRate: '',
     standart: 'ГОСТ 12.4.103-2020',
-    OperatingLevel: 'водонепроницаемая (ВН) ',
+    OperatingLevel: 'водонепроницаемая (В) ',
   },
   {
     dependence: '4.5.1',
@@ -1906,7 +1908,7 @@ const typeSiz = [
     additionalMeans: '',
     AdditionalIssuanceRate: '',
     standart: 'ГОСТ 12.4.103-2020',
-    OperatingLevel: 'водонепроницаемая (ВН) ',
+    OperatingLevel: 'водонепроницаемая (В) ',
   },
   {
     dependence: '4.9.1',
@@ -2027,7 +2029,7 @@ const typeSiz = [
     issuanceRate: '12 пар на 12 мес',
     additionalMeans: '',
     AdditionalIssuanceRate: '',
-    standart: 'ГОСТ Р 12.4.301-2018 ИЛИ ГОСТ ISO 374-1-2019',
+    standart: 'ГОСТ EN374-1-2019',
     OperatingLevel: 'водонепроницаемая (ВН) ИЛИ  Тип С и выше',
   },
   {
@@ -2230,7 +2232,7 @@ const typeSiz = [
       'Фартук для защиты от растворов кислот /  Фартук для защиты от щелочей /  Халат для защиты от растворов кислот /  Халат для защиты от щелочей',
     AdditionalIssuanceRate: '1 шт. на 12 мес',
     standart: 'ГОСТ ISO 16602-2019 ИЛИ ГОСТ 12.4.279-2014',
-    OperatingLevel: '(К, Щ), Тип 5',
+    OperatingLevel: 'Костюм/комбинезон: (К, Щ), Тип 5; Фартук (К,Щ)',
   },
   {
     dependence: '6.3.1',
@@ -2309,7 +2311,7 @@ const typeSiz = [
     issuanceRate: 'определяется документами изготовителя',
     additionalMeans: 'Респиратор /  Противогаз',
     AdditionalIssuanceRate: 'определяется документами изготовителя',
-    standart: 'ГОСТ 12.4.244-2013(EN 149:2001+A1:2009)',
+    standart: 'ГОСТ 12.4.244-2013 (EN 149:2001+A1:2009)',
     OperatingLevel: '',
   },
   {
@@ -2805,7 +2807,8 @@ const typeSiz = [
     additionalMeans: '',
     AdditionalIssuanceRate: '',
     standart: 'ГОСТ 12.4.253-2013 (EN 166:2002)',
-    OperatingLevel: '',
+    OperatingLevel:
+      '(шкальный номер 5 - солнцезащитный светофильтр без нормирования по инфракрасному излучению)',
   },
   {
     dependence: '12.2.1',
@@ -3228,8 +3231,9 @@ const typeSiz = [
     issuanceRate: '12 пар на 12 мес',
     additionalMeans: 'Нарукавники',
     AdditionalIssuanceRate: '12 пар на 12 мес',
-    standart: 'ГОСТ 12.4.010-75 ИЛИ EN 388:2016 ',
-    OperatingLevel: '',
+    standart: 'EN 388:2016 ',
+    OperatingLevel:
+      '(подтверждение защитных свойств в декларации или сертификате)',
   },
   {
     dependence: '16.2.1',
@@ -3285,8 +3289,9 @@ const typeSiz = [
     issuanceRate: '12 пар на 12 мес',
     additionalMeans: '',
     AdditionalIssuanceRate: '',
-    standart: 'ГОСТ 12.4.010-75 ИЛИ EN 388:2016 ',
-    OperatingLevel: '',
+    standart: 'EN 388:2016 ',
+    OperatingLevel:
+      '(подтверждение защитных свойств в декларации или сертификате)',
   },
   {
     dependence: '16.2.1',
@@ -3353,8 +3358,9 @@ const typeSiz = [
     issuanceRate: '12 пар на 12 мес',
     additionalMeans: '',
     AdditionalIssuanceRate: '',
-    standart: 'ГОСТ 12.4.010-75 ИЛИ EN 388:2016 ',
-    OperatingLevel: '',
+    standart: 'EN 388:2016 ',
+    OperatingLevel:
+      '(подтверждение защитных свойств в декларации или сертификате)',
   },
   {
     dependence: '16.3.1',

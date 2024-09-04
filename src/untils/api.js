@@ -73,23 +73,6 @@ class Api {
     }).then(this._checkRes);
   }
 
-  createEnterprise(item, jwt) {
-    console.log(item);
-    return fetch(`${this._baseUrl}/enterprise`, {
-      method: 'POST',
-      headers: {
-        ...this._headers,
-        Authorization: `Bearer ${jwt}`,
-      },
-      body: JSON.stringify({
-        enterprise: item.enterprise,
-        inn: item.inn,
-        kpp: item.kpp,
-        order: item.order,
-      }),
-    }).then(this._checkRes);
-  }
-
   getEnterprise(jwt) {
     return fetch(`${this._baseUrl}/enterprise`, {
       headers: {

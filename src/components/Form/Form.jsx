@@ -40,7 +40,7 @@ function Form({ loggedIn, setModal, setChild }) {
   const [inputValue, setInputValue] = useState({
     probability: 1, //Вероятность
     heaviness: 1, // Тяжесть
-    probability1: 0, // Вероятность1
+    probability1: 1, // Вероятность1
     heaviness1: 1, // Тяжесть1
     periodicity: '', // Периодичность
     responsiblePerson: '', // Ответственное лицо
@@ -281,12 +281,14 @@ function Form({ loggedIn, setModal, setChild }) {
     if (localStorage.getItem('input') || localStorage.getItem('proff')) {
       setProff(JSON.parse(localStorage.getItem('proff')));
       setInputValue({
+        ...inputValue,
         job: input.job,
         obj: input.obj,
         source: input.source,
         subdivision: input.subdivision,
         numWorkers: input.numWorkers,
         num: input.num,
+        code: input.code,
       });
     }
   };
@@ -298,9 +300,15 @@ function Form({ loggedIn, setModal, setChild }) {
       setDangerEvent(JSON.parse(localStorage.getItem('DangerEvent')));
       setDangerEvent776(JSON.parse(localStorage.getItem('DangerEvent776')));
       setDanger776(JSON.parse(localStorage.getItem('Danger776')));
+      setInputValue({
+        ...inputValue,
+        existingRiskManagement: input.existingRiskManagement,
+        heaviness: input.heaviness,
+        probability: input.probability,
+      });
     }
   };
-  console.table(value);
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     setCount(count + 1);
@@ -321,7 +329,6 @@ function Form({ loggedIn, setModal, setChild }) {
     localStorage.setItem('DangerEvent776', JSON.stringify(isDangerEvent776));
     localStorage.setItem('Danger', JSON.stringify(isDanger));
     localStorage.setItem('DangerEvent', JSON.stringify(isDangerEvent));
-    localStorage.setItem('DangerGroup', JSON.stringify(isDangerGroup));
     api
       .updateCurrentEnterpriseValue(id, value, key)
       .then((e) => {
@@ -368,7 +375,7 @@ function Form({ loggedIn, setModal, setChild }) {
       num: '',
       probability: 1,
       heaviness: 1,
-      probability1: 0,
+      probability1: 1,
       heaviness1: 1,
       periodicity: '',
       responsiblePerson: '',
@@ -402,9 +409,13 @@ function Form({ loggedIn, setModal, setChild }) {
 
   useEffect(() => {
     if (inputValue.heaviness)
-      setInputValue({ ...inputValue, heaviness1: inputValue.heaviness });
+      setInputValue({
+        ...inputValue,
+        heaviness1: inputValue.heaviness,
+        probability1: inputValue.probability,
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputValue.heaviness]);
+  }, [inputValue.heaviness, inputValue.probability]);
 
   useEffect(() => {
     const arrayOptions = conversion.filter(
