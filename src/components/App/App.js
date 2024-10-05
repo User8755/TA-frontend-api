@@ -20,6 +20,7 @@ import { BASE_URL } from '../../untils/constants.js';
 import Logs from '../Logs/Logs.jsx';
 import NewBranch from '../NewBranch/NewBranch.jsx';
 import ProtectedRouteRole from '../ProtectedRout/ProtectedRouteRole.jsx';
+import WorkerPlaceInfo from '../WorkerPlaceInfo/WorkerPlaceInfo.jsx';
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -167,6 +168,17 @@ function App() {
               <ProtectedRouteElement
                 element={Form}
                 enterprise={enterprise}
+                loggedIn={login}
+                setModal={setModal}
+                setChild={setChild}
+              />
+            }
+          />
+          <Route
+            path='/worker-places-info'
+            element={
+              <ProtectedRouteRole
+                element={WorkerPlaceInfo}
                 loggedIn={login}
                 setModal={setModal}
                 setChild={setChild}

@@ -234,6 +234,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  font-size: 13px;
 }
 /*----REACT-SELECT----*/
 /* .react-select-container {

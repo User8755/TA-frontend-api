@@ -5,6 +5,7 @@ function SelectCodeProff({ value, option, setValue }) {
   const [inputValue, setInputValue] = useState({
     input: '',
   });
+
   const hendlerClick = (obj) => {
     setValue({
       ...value,

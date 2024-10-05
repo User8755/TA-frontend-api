@@ -32,7 +32,6 @@ function CreateEnterprise({ setModal, enterprise, setEnterprise }) {
     e.preventDefault();
     axios.post('/enterprise', input)
       .then((i) => {
-        console.log(i)
         setEnterprise([...enterprise, i.data]);
         setModal(false);
       })

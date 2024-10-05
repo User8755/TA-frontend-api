@@ -1,0 +1,23 @@
+.siz__container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.history__container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  max-height: 60vh;
+  overflow: auto;
+  margin: 15px;
+}
+
+.history__info {
+  max-width: max-content;
+  cursor: pointer;
+}
+
+.history__info:hover {
+  scale: 0.95;
+}

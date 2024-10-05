@@ -17,6 +17,7 @@ import SelectDefault from '../SelectDefault/SelectDefault';
 import code from '../../untils/code';
 import SelectCodeProff from '../../SelectCodeProff/SelectCodeProff';
 import SelectCoverct from '../SelectCoverct/SelectCoverct';
+import { NavLink } from 'react-router-dom';
 
 function Form({ loggedIn, setModal, setChild }) {
   const [isDangerGroup, setDangerGroup] = useState([]);
@@ -103,6 +104,7 @@ function Form({ loggedIn, setModal, setChild }) {
 
   useEffect(() => {
     if (loggedIn) {
+      axios.get(`value/${id}/worker`).then((i) => console.log(i.data));
       Promise.all([api.getCerrentEnterprise(id, key), api.getValue(id, key)])
         .then(([current, count]) => {
           setCurrentEnterprise(current);
@@ -452,6 +454,7 @@ function Form({ loggedIn, setModal, setChild }) {
 
   return (
     <form className='form' onSubmit={handleSubmit} required>
+      <NavLink to='/worker-places-info'>Info</NavLink>
       <div className='form__block-left'>
         <div className='form__header left'>
           <h2 className='form__header-title'>Данные о предприятии</h2>
@@ -484,7 +487,6 @@ function Form({ loggedIn, setModal, setChild }) {
                 autoComplete='on'
                 onChange={handleChangeNum}
                 name='numWorkers'
-                type='number'
                 value={inputValue.numWorkers}
                 onFocus={handleFocus}
               ></input>
