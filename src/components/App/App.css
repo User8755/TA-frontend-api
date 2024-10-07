@@ -54,6 +54,10 @@ a {
   overflow: hidden;
 }
 
+.button_default:disabled {
+  opacity: 0.4;
+}
+
 .button_color-darck {
   background-color: #425361;
 }

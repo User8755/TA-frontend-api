@@ -61,7 +61,6 @@ function Form({ loggedIn, setModal, setChild }) {
     num: '', // Номер Р/М
   });
   const [additionalMeans, setAdditionalMeans] = useState(false); // Доп сиз чек-бокс
-  const [requiredSIZ, setRequiredSIZ] = useState(false);
   const ERROR = 'Ошибка';
   const [isRiskManagement, setRiskManagement] = useState([]);
   const [count, setCount] = useState(0);
@@ -104,11 +103,11 @@ function Form({ loggedIn, setModal, setChild }) {
 
   useEffect(() => {
     if (loggedIn) {
-      axios.get(`value/${id}/worker`).then((i) => console.log(i.data));
-      Promise.all([api.getCerrentEnterprise(id, key), api.getValue(id, key)])
-        .then(([current, count]) => {
+      Promise.all([api.getCerrentEnterprise(id, key), api.getValue(id, key), axios.get(`/value/${id}/last`)])
+        .then(([current, count, last]) => {
           setCurrentEnterprise(current);
           setCounter(count);
+          setNewValue(last.data.reverse())
         })
         .catch((e) => console.log(e));
     }
@@ -310,17 +309,12 @@ function Form({ loggedIn, setModal, setChild }) {
       });
     }
   };
-
+  console.log(newValue)
   const handleSubmit = (evt) => {
     evt.preventDefault();
     setCount(count + 1);
     value['enterpriseId'] = localStorage.getItem('id');
-    if (!requiredSIZ) {
-      delete value.proffSIZ;
       setFormValue([...formValue, value]);
-    } else {
-      setFormValue([...formValue, value]);
-    }
     if (checkboxSiz) {
       value['additionalMeans'] = selectedTipeSIZ.additionalMeans;
       value['AdditionalIssuanceRate'] = selectedTipeSIZ.AdditionalIssuanceRate;
@@ -370,7 +364,6 @@ function Form({ loggedIn, setModal, setChild }) {
     setAcceptability1(ERROR);
     setRiskAttitude1(ERROR);
     setSelectedTipeSIZ({});
-    setRequiredSIZ(false);
     setIpr(0);
     setIpr1(0);
     setInputValue({
@@ -552,10 +545,18 @@ function Form({ loggedIn, setModal, setChild }) {
           <button
             className='button button__table'
             type='button'
-            onClick={() => getTabel('base', 'Базовая таблица')}
+            onClick={() => getTabel('base-siz', 'Базовая таблица')}
             disabled={isDisabled}
           >
             Базовая таблица
+          </button>
+          <button
+            className='button button__table'
+            type='button'
+            onClick={() => getTabel('base', 'Базовая таблица')}
+            disabled={isDisabled}
+          >
+            Базовая таблица (Без СИЗ)
           </button>
           <button
             className='button button__table'
@@ -752,9 +753,9 @@ function Form({ loggedIn, setModal, setChild }) {
             <span>
               №р/м; Опасное событие (приказ 776/767); Источник; Тип СИЗ;
             </span>
-            {newValue.slice(-10).map((i) => {
+            {newValue.slice(-15).map((i) => {
               return (
-                <span className='history__span'>{`${i.num}; ${i.dangerEvent776Id}/${i.dangerEventID}; ${i.source}; ${i.typeSIZ}`}</span>
+                <span className='history__span'>{`${i.num}; ${i.dangerGroupId}/${i.dangerEventID}; ${i.source}; ${i.typeSIZ}`}</span>
               );
             })}
           </div>
@@ -794,16 +795,6 @@ function Form({ loggedIn, setModal, setChild }) {
                   setValue={setSelectedTipeSIZ}
                   value={selectedTipeSIZ}
                 />
-                <label className='checkbox__label'>
-                  <input
-                    type='checkbox'
-                    name='siz'
-                    className='form__checkbox visually-hidden'
-                    onClick={(evt) => setRequiredSIZ(evt.target.checked)}
-                  />
-                  <span className='form__pseudo-checkbox'></span>
-                  <span className='checkbox__label-text'>Обязательные СИЗ</span>
-                </label>
                 <label
                   htmlFor='additional-means'
                   className={

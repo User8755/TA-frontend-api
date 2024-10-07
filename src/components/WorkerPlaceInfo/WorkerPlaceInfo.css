@@ -4,6 +4,15 @@
   row-gap: 5px;
 }
 
+.siz__info {
+  font-size: 13px;
+}
+
+.detalis__container {
+  display: flex;
+  flex-direction: column;
+}
+
 .history__container {
   display: flex;
   flex-direction: column;
@@ -11,6 +20,9 @@
   max-height: 60vh;
   overflow: auto;
   margin: 15px;
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 5px;
 }
 
 .history__info {

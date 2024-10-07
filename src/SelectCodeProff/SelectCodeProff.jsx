@@ -40,6 +40,7 @@ function SelectCodeProff({ value, option, setValue }) {
         code: '',
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue, setValue]);
 
   useEffect(() => {
