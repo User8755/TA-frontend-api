@@ -1,3 +1,6 @@
+.worker-places {
+  margin: 10px;
+}
 .siz__container {
   display: flex;
   flex-direction: column;
@@ -8,7 +11,17 @@
   font-size: 13px;
 }
 
+.siz__title {
+  text-align: left;
+}
+
 .detalis__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.detalis__title {
   display: flex;
   flex-direction: column;
 }
@@ -17,12 +30,13 @@
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-  max-height: 60vh;
+  height: 60vh;
   overflow: auto;
-  margin: 15px;
   border-radius: 10px;
   border: 1px solid black;
   padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .history__info {
@@ -32,4 +46,8 @@
 
 .history__info:hover {
   scale: 0.95;
+}
+.button__new {
+  display: block;
+  margin: auto;
 }

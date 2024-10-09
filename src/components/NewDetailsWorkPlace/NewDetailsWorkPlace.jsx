@@ -36,7 +36,7 @@ function NewDetailsWorkPlace({ arr, setModal }) {
       [name]: value,
     });
   };
-  useEffect(()=>{
+  useEffect(() => {
     if (
       inputValue.num &&
       inputValue.numWorkers &&
@@ -46,7 +46,7 @@ function NewDetailsWorkPlace({ arr, setModal }) {
     } else {
       setDisabled(true);
     }
-  },[inputValue])
+  }, [inputValue]);
   useEffect(() => {
     setInputValue({
       ...inputValue,
@@ -57,7 +57,7 @@ function NewDetailsWorkPlace({ arr, setModal }) {
       proffSIZ: isProff.SIZ,
     });
   }, [a, isProff]);
-
+  console.log(isProff)
   const handlerSubmit = () => {
     const newDetalis = arr.map((i) => {
       delete i._id;
@@ -68,10 +68,10 @@ function NewDetailsWorkPlace({ arr, setModal }) {
       i.code = inputValue.code;
       i.proff = inputValue.proff;
       i.proffId = inputValue.proffId;
-      i.proffSIZ = inputValue.proffSIZ;
+      i.proffSIZ = inputValue.proffSIZ || [];
       return i;
     });
-
+    console.log(newDetalis)
     axios
       .post(`value/${id}/place/new`, { newDetalis })
       .then(() => {
@@ -81,7 +81,7 @@ function NewDetailsWorkPlace({ arr, setModal }) {
           code: '',
           proff: '',
           profId: '',
-          SIZ: [],
+          proffSIZ: [],
           num: '',
           numWorkers: 0,
           subdivision: '',

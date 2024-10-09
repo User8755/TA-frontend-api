@@ -46,7 +46,7 @@ function WorkerPlaceInfo({ loggedIn, setModal, setChild }) {
   };
 
   return (
-    <div>
+    <div className='worker-places'>
       <label>Выберите рабочее место:</label>
       <select
         type='text'
@@ -63,74 +63,83 @@ function WorkerPlaceInfo({ loggedIn, setModal, setChild }) {
         })}
       </select>
       <section className='detalis__container'>
-        <h2>Реквизиты:</h2>
-        <span>
-          Профессия (Приказ 767н):{' '}
-          {curentPlace.length > 0 ? curentPlace[0].proff : null}
-        </span>
-        <span>
-          ID профессии: {curentPlace.length > 0 ? curentPlace[0].proffid : null}
-        </span>
-        <span>
-          Номер Р/М: {curentPlace.length > 0 ? curentPlace[0].num : null}
-        </span>
-        <span>
-          Кол-во работников:{' '}
-          {curentPlace.length > 0 ? curentPlace[0].numWorkers : null}
-        </span>
-        <span>
-          Профессия: {curentPlace.length > 0 ? curentPlace[0].job : null}
-        </span>
-        <span>
-          Код ОК-016-94: {curentPlace.length > 0 ? curentPlace[0].code : null}
-        </span>
-        <span>
-          Подразделение:{' '}
-          {curentPlace.length > 0 ? curentPlace[0].subdivision : null}
-        </span>
+        <div className='detalis__title'>
+          <h2>Реквизиты:</h2>
+          <span className='siz__info'>
+            <b>Профессия (Приказ 767н): </b>
+            {curentPlace.length > 0 ? curentPlace[0].proff : null}
+          </span>
+          <span className='siz__info'>
+            <b>ID профессии: </b>
+            {curentPlace.length > 0 ? curentPlace[0].proffid : null}
+          </span>
+          <span className='siz__info'>
+            <b>Номер Р/М: </b>
+            {curentPlace.length > 0 ? curentPlace[0].num : null}
+          </span>
+          <span className='siz__info'>
+            <b>Кол-во работников: </b>
+            {curentPlace.length > 0 ? curentPlace[0].numWorkers : null}
+          </span>
+          <span className='siz__info'>
+            <b>Профессия: </b>
+            {curentPlace.length > 0 ? curentPlace[0].job : null}
+          </span>
+          <span className='siz__info'>
+            <b>Код ОК-016-94: </b>
+            {curentPlace.length > 0 ? curentPlace[0].code : null}
+          </span>
+          <span className='siz__info'>
+            <b>Подразделение: </b>
+            {curentPlace.length > 0 ? curentPlace[0].subdivision : null}
+          </span>
+          <datalist id='worker-places'>
+            {workPlaces.map((data) => {
+              return (
+                <option key={data._id}>
+                  № {data.num} {data.proff ? data.proff : data.job}
+                </option>
+              );
+            })}
+          </datalist>
+        </div>
+        <div>
+          {curentPlace[0] && curentPlace[0].proffSIZ.length > 0 ? (
+            <>
+              <h2 className='siz__title'>Обязательные СИЗ Приложения 1:</h2>
+              <div className='siz__container'>
+                {curentPlace[0] && curentPlace[0].proffSIZ
+                  ? curentPlace[0].proffSIZ.map((i, index) => {
+                      return (
+                        <span key={index} className='siz__info'>
+                          <b>Тип:</b> {i.type}; <b>Вид:</b> {i.vid};{' '}
+                          <b>Норма:</b>
+                          {i.norm};
+                        </span>
+                      );
+                    })
+                  : null}
+              </div>
+            </>
+          ) : null}
+        </div>
       </section>
-      <datalist id='worker-places'>
-        {workPlaces.map((data) => {
-          return (
-            <option key={data._id}>
-              № {data.num} {data.proff ? data.proff : data.job}
-            </option>
-          );
-        })}
-      </datalist>
-      {curentPlace[0] && curentPlace[0].proffSIZ.length > 0 ? (
-        <section>
-          <h2>Обязательные СИЗ Приложения 1:</h2>
-          <div className='siz__container'>
-            {curentPlace[0] && curentPlace[0].proffSIZ
-              ? curentPlace[0].proffSIZ.map((i, index) => {
-                  return (
-                    <span key={index} className='siz__info'>
-                      <b>Тип:</b> {i.type}; <b>Вид:</b> {i.vid}; <b>Норма:</b>
-                      {i.norm};
-                    </span>
-                  );
-                })
-              : null}
-          </div>
-        </section>
-      ) : null}
       <section>
-        <h2>Записи:</h2>
         <button
-        onClick={handlerClickButton}
-        className='button_default button_color-green'
-        disabled={disabled}
-      >
-        Новое РМ на основании текущего
-      </button>
+          onClick={handlerClickButton}
+          className='button_default button_color-green button__new'
+          disabled={disabled}
+        >
+          Новое РМ на основании текущего
+        </button>
+        <h2>Записи:</h2>
         <div className='history__container'>
           {curentPlace.map((i) => {
             return (
-              <span
-                className='history__info'
-                key={i._id}
-              >{`${i.dangerEvent776Id}/${i.dangerEventID}; ${i.source}; ${i.typeSIZ}`}</span>
+              <span className='history__info' key={i._id}>
+                {i.danger776Id || i.dangerGroupId}/
+                {i.dangerEventID || i.dangerEvent776Id}; {i.source}; {i.typeSIZ}
+              </span>
             );
           })}
         </div>

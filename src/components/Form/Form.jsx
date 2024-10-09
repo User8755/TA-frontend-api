@@ -93,7 +93,9 @@ function Form({ loggedIn, setModal, setChild }) {
       (value.proff || value.job) &&
       (value.riskManagement || value.typeSIZ) &&
       value.num &&
-      value.numWorkers
+      value.numWorkers &&
+      value.obj &&
+      value.source
     ) {
       setDisabledSubmit(false);
     } else {
@@ -103,11 +105,15 @@ function Form({ loggedIn, setModal, setChild }) {
 
   useEffect(() => {
     if (loggedIn) {
-      Promise.all([api.getCerrentEnterprise(id, key), api.getValue(id, key), axios.get(`/value/${id}/last`)])
+      Promise.all([
+        api.getCerrentEnterprise(id, key),
+        api.getValue(id, key),
+        axios.get(`/value/${id}/last`),
+      ])
         .then(([current, count, last]) => {
           setCurrentEnterprise(current);
           setCounter(count);
-          setNewValue(last.data.reverse())
+          setNewValue(last.data.reverse());
         })
         .catch((e) => console.log(e));
     }
@@ -309,12 +315,12 @@ function Form({ loggedIn, setModal, setChild }) {
       });
     }
   };
-  console.log(newValue)
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     setCount(count + 1);
     value['enterpriseId'] = localStorage.getItem('id');
-      setFormValue([...formValue, value]);
+    setFormValue([...formValue, value]);
     if (checkboxSiz) {
       value['additionalMeans'] = selectedTipeSIZ.additionalMeans;
       value['AdditionalIssuanceRate'] = selectedTipeSIZ.AdditionalIssuanceRate;
@@ -755,7 +761,10 @@ function Form({ loggedIn, setModal, setChild }) {
             </span>
             {newValue.slice(-15).map((i) => {
               return (
-                <span className='history__span'>{`${i.num}; ${i.dangerGroupId}/${i.dangerEventID}; ${i.source}; ${i.typeSIZ}`}</span>
+                <span
+                  className='history__span'
+                  key={i._id}
+                >{`${i.num}; ${i.dangerGroupId}/${i.dangerEventID}; ${i.source}; ${i.typeSIZ}`}</span>
               );
             })}
           </div>
