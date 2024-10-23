@@ -1,0 +1,27 @@
+.dropdown {
+  width: 100%;
+}
+
+.optins-list {
+  display: none;
+}
+
+.optins-list-active {
+  margin-top: 5px;
+  display: block;
+  position: absolute;
+  z-index: 2;
+  background-color: #fff;
+  width: 400px;
+  max-height: 300px;
+  overflow: auto;
+  border: 1px solid #000;
+  font-size: 15px;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.optins-list-element {
+  padding: 3px;
+  cursor: pointer;
+}

@@ -15,7 +15,7 @@ function WorkerPlaceInfo({ loggedIn, setModal, setChild }) {
   useEffect(() => {
     if (loggedIn)
       axios
-        .get(`value/${id}/worker`)
+        .get(`work-place/${id}/worker`)
         .then((i) => setWorkPlaces(i.data))
         .catch((e) => console.log(e));
   }, [id, loggedIn]);
@@ -23,7 +23,7 @@ function WorkerPlaceInfo({ loggedIn, setModal, setChild }) {
   useEffect(() => {
     if (loggedIn && curent !== '') {
       axios
-        .post(`value/${id}/worker/curent`, { curent })
+        .post(`work-place/${id}/worker/curent`, { curent })
         .then((i) => {
           setCurentPlace(i.data);
           setDisabled(false);

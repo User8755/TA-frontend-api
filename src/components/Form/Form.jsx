@@ -1,5 +1,4 @@
 import danger from '../../untils/danger';
-import prof from '../../untils/prof';
 import dangerEvent from '../../untils/dangerousEvent';
 import { useEffect, useState } from 'react';
 import typeSiz from '../../untils/typeSIZ';
@@ -11,13 +10,13 @@ import './Form.css';
 import SpoilerBox from '../SpoilerBox/SpoilerBox';
 import api from '../../untils/api';
 import ButtonGoBack from '../ButtonGoBack/ButtonGoBack';
-import SelectOne from '../Select/Select';
 import axios from 'axios';
 import SelectDefault from '../SelectDefault/SelectDefault';
 import code from '../../untils/code';
-import SelectCodeProff from '../../SelectCodeProff/SelectCodeProff';
 import SelectCoverct from '../SelectCoverct/SelectCoverct';
 import { NavLink } from 'react-router-dom';
+import CreateWorkPlace from '../CreateWorkPlace/CreateWorkPlace';
+import DropDownMenu from '../DropDownMenu/DropDownMenu';
 
 function Form({ loggedIn, setModal, setChild }) {
   const [isDangerGroup, setDangerGroup] = useState([]);
@@ -36,7 +35,6 @@ function Form({ loggedIn, setModal, setChild }) {
   const [acceptability1, setAcceptability1] = useState(''); // приемлемость
   const [riskAttitude1, setRiskAttitude1] = useState(''); // отношение к риску
   const [selectedTipeSIZ, setSelectedTipeSIZ] = useState([]);
-  const [isProff, setProff] = useState([]);
   const [checkboxSiz, setCheckboxSIZ] = useState(false); // чекбокс доп средства
   const [inputValue, setInputValue] = useState({
     probability: 1, //Вероятность
@@ -59,6 +57,13 @@ function Form({ loggedIn, setModal, setChild }) {
     materials: '', // Материалы
     equipment: '', // Оборудование
     num: '', // Номер Р/М
+    proff: '', // Профессия приложение 1
+    proffId: '', // ID профессии приложение 1
+    proffSIZ: [], // Сизы приложение 1
+    ipr: 0,
+    riskAttitude: '',
+    risk: '',
+    acceptability: '',
   });
   const [additionalMeans, setAdditionalMeans] = useState(false); // Доп сиз чек-бокс
   const ERROR = 'Ошибка';
@@ -70,16 +75,16 @@ function Form({ loggedIn, setModal, setChild }) {
 
   const [currentEnterprise, setCurrentEnterprise] = useState({ value: [] });
   const [counter, setCounter] = useState(0);
+  const [searchInput, setSearchInput] = useState('');
 
   const [isDisabled, setDisabled] = useState(false);
   const [newValue, setNewValue] = useState([]);
   const [isDisabledSubmit, setDisabledSubmit] = useState(true);
   const [optionState, setOptionState] = useState([]);
-
+  const [workPlaces, setWorkerPlace] = useState([]);
   const key = JSON.parse(localStorage.getItem('key')).key;
   const id = localStorage.getItem('id');
   const input = JSON.parse(localStorage.getItem('input'));
-
   const handleFocus = (e) => e.target.select();
 
   document.onkeydown = function (e) {
@@ -101,7 +106,7 @@ function Form({ loggedIn, setModal, setChild }) {
     } else {
       setDisabledSubmit(true);
     }
-  }, [value, inputValue]);
+  }, [value]);
 
   useEffect(() => {
     if (loggedIn) {
@@ -109,11 +114,13 @@ function Form({ loggedIn, setModal, setChild }) {
         api.getCerrentEnterprise(id, key),
         api.getValue(id, key),
         axios.get(`/value/${id}/last`),
+        axios.get(`work-place/${id}/worker`),
       ])
-        .then(([current, count, last]) => {
+        .then(([current, count, last, workerPlace]) => {
           setCurrentEnterprise(current);
           setCounter(count);
           setNewValue(last.data.reverse());
+          setWorkerPlace(workerPlace.data);
         })
         .catch((e) => console.log(e));
     }
@@ -209,8 +216,6 @@ function Form({ loggedIn, setModal, setChild }) {
   useEffect(() => {
     setValue({
       ...inputValue,
-      proff: isProff.label,
-      proffId: isProff.profId,
       danger: isDanger.dependence,
       dangerID: isDanger.dependenceID,
       dangerGroup: isDanger.label,
@@ -228,7 +233,6 @@ function Form({ loggedIn, setModal, setChild }) {
       typeSIZ: selectedTipeSIZ.label,
       speciesSIZ: selectedTipeSIZ.speciesSIZ,
       issuanceRate: selectedTipeSIZ.issuanceRate,
-      proffSIZ: isProff.SIZ,
       danger776: isDanger776.label,
       danger776Id: isDanger776.ID,
       dangerEvent776: isDangerEvent776.label,
@@ -236,7 +240,7 @@ function Form({ loggedIn, setModal, setChild }) {
       riskManagement: isRiskManagement.label,
       riskManagementID: isRiskManagement.ID,
       standart: selectedTipeSIZ.standart,
-      OperatingLevel: selectedTipeSIZ.OperatingLevel,
+      OperatingLevel: selectedTipeSIZ.OperatingLevel || '',
     });
   }, [
     acceptability,
@@ -250,7 +254,6 @@ function Form({ loggedIn, setModal, setChild }) {
     isDangerEvent,
     isDangerEvent776,
     isDangerGroup,
-    isProff,
     isRiskManagement,
     risk,
     risk1,
@@ -258,7 +261,7 @@ function Form({ loggedIn, setModal, setChild }) {
     riskAttitude1,
     selectedTipeSIZ,
   ]);
-
+  console.table(inputValue);
   const resDangerEvent = dangerEvent.filter(
     (item) => isDanger.label === item.dependence
   );
@@ -286,7 +289,6 @@ function Form({ loggedIn, setModal, setChild }) {
 
   const handleCopyData = () => {
     if (localStorage.getItem('input') || localStorage.getItem('proff')) {
-      setProff(JSON.parse(localStorage.getItem('proff')));
       setInputValue({
         ...inputValue,
         job: input.job,
@@ -325,7 +327,6 @@ function Form({ loggedIn, setModal, setChild }) {
       value['additionalMeans'] = selectedTipeSIZ.additionalMeans;
       value['AdditionalIssuanceRate'] = selectedTipeSIZ.AdditionalIssuanceRate;
     }
-    localStorage.setItem('proff', JSON.stringify(isProff));
     localStorage.setItem('input', JSON.stringify(inputValue));
     localStorage.setItem('Danger776', JSON.stringify(isDanger776));
     localStorage.setItem('DangerEvent776', JSON.stringify(isDangerEvent776));
@@ -362,7 +363,6 @@ function Form({ loggedIn, setModal, setChild }) {
     setDangerEvent({});
     setDangerGroup({});
     setisDanger({});
-    setProff({});
     setRisk(ERROR);
     setAcceptability(ERROR);
     setRiskAttitude(ERROR);
@@ -373,20 +373,31 @@ function Form({ loggedIn, setModal, setChild }) {
     setIpr(0);
     setIpr1(0);
     setInputValue({
-      num: '',
-      probability: 1,
-      heaviness: 1,
-      probability1: 1,
-      heaviness1: 1,
-      periodicity: '',
-      responsiblePerson: '',
-      completionMark: '',
-      existingRiskManagement: '',
-      enterpriseId: '',
-      numWorkers: '',
-      job: '',
-      proff: '',
+      probability: 1, //Вероятность
+      heaviness: 1, // Тяжесть
+      probability1: 1, // Вероятность1
+      heaviness1: 1, // Тяжесть1
+      periodicity: '', // Периодичность
+      responsiblePerson: '', // Ответственное лицо
+      completionMark: '', // Отметка о выполнении
+      existingRiskManagement: '', // Существующие меры упр-я рисками
+      obj: '', // объект
+      source: '', // источник
+      job: '', // Должность
+      subdivision: '', // Подразделение
+      commit: '', // Комментарий
+      enterpriseId: '', // id предприятия
+      numWorkers: '', // Кол-во работников
+      code: '', // Код ОК-016-94
+      laborFunction: '', // Функция
+      materials: '', // Материалы
+      equipment: '', // Оборудование
+      num: '', // Номер Р/М
+      proff: '', // Профессия приложение 1
+      proffId: '', // ID профессии приложение 1
+      proffSIZ: [], // Сизы приложение 1
     });
+    setSearchInput('');
     setCheckboxSIZ(false);
     setRiskManagement('');
     document.querySelector('.form').reset();
@@ -451,46 +462,39 @@ function Form({ loggedIn, setModal, setChild }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value.proff]);
 
+  const handlerOpenModal = () => {
+    setModal(true);
+    setChild(
+      <CreateWorkPlace
+        setWorkerPlace={setWorkerPlace}
+        workPlaces={workPlaces}
+      />
+    );
+  };
+  // console.table(value);
   return (
     <form className='form' onSubmit={handleSubmit} required>
-      <NavLink to='/worker-places-info'>Info</NavLink>
       <div className='form__block-left'>
         <div className='form__header left'>
           <h2 className='form__header-title'>Данные о предприятии</h2>
           <span>{currentEnterprise.enterprise}</span>
         </div>
         <section className='section profess'>
-          <label className='label'>Профессия (Приказ 767н приложения 1):</label>
-          <SelectOne
-            value={isProff}
-            option={prof}
-            setValue={setProff}
-          ></SelectOne>
-          <div className='form__block_job'>
-            <label className='label label__job'>
-              Номер Р/М&#42;:
-              <input
-                className='form__input form__input_small'
-                autoComplete='on'
-                onChange={handleChangeNum}
-                name='num'
-                value={inputValue.num}
-                type='number'
-                onFocus={handleFocus}
-              ></input>
-            </label>
-            <label className='label label__job'>
-              Кол-во работников&#42;:
-              <input
-                className='form__input form__input_small'
-                autoComplete='on'
-                onChange={handleChangeNum}
-                name='numWorkers'
-                value={inputValue.numWorkers}
-                onFocus={handleFocus}
-              ></input>
-            </label>
-          </div>
+          <label className='label'>Выберите рабочее место:</label>
+          <DropDownMenu
+            options={workPlaces}
+            onChange={setInputValue}
+            value={inputValue}
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
+          ></DropDownMenu>
+          <button
+            className='button copy'
+            type='button'
+            onClick={handlerOpenModal}
+          >
+            Создать рабочее место
+          </button>
           <label className='label'>
             Объект&#42;:
             <input
@@ -512,32 +516,6 @@ function Form({ loggedIn, setModal, setChild }) {
               name='source'
               value={inputValue.source}
             ></input>
-          </label>
-          <label className='label'>
-            Профессия:
-            <SelectCodeProff
-              option={sortedOption(code)}
-              setValue={setInputValue}
-              value={value}
-            />
-          </label>
-          <label className='label'>
-            Код ОК-016-94:
-            <input
-              className='form__input'
-              name='code'
-              onChange={handleChange}
-              value={inputValue.code}
-            />
-          </label>
-          <label className='label'>
-            Подразделение:
-            <input
-              className='form__input'
-              name='subdivision'
-              onChange={handleChange}
-              value={inputValue.subdivision}
-            />
           </label>
           <button
             className='button copy'
@@ -937,6 +915,14 @@ function Form({ loggedIn, setModal, setChild }) {
             value={inputValue.laborFunction}
           ></input>
         </label>
+        <nav className='nav-bar'>
+          <NavLink
+            to='/worker-places-info'
+            className='button_default button_color-green'
+          >
+            Рабочие места
+          </NavLink>
+        </nav>
       </div>
     </form>
   );

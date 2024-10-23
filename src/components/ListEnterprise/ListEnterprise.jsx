@@ -73,12 +73,14 @@ function ListEnterprise({
           <Link to='/profile' className='aside__link'>
             Профиль
           </Link>
-          <button
-            className='button_color-green button_default button_width-max'
-            onClick={hedlerOpenModal}
-          >
-            Создать предприятие
-          </button>
+          {!currentUser.role.includes('user') ? null : (
+            <button
+              className='button_color-green button_default button_width-max'
+              onClick={hedlerOpenModal}
+            >
+              Создать предприятие
+            </button>
+          )}
         </>
       }
     >

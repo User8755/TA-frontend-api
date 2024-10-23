@@ -56,6 +56,7 @@ function NewDetailsWorkPlace({ arr, setModal }) {
       proffId: isProff.profId,
       proffSIZ: isProff.SIZ,
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [a, isProff]);
   console.log(isProff)
   const handlerSubmit = () => {

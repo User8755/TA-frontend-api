@@ -1,10 +1,10 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
-import Login from '../Login/Login';
+import Login from '../Login/Login.jsx';
 import { useState, useEffect } from 'react';
-import api from '../../untils/api';
+import api from '../../untils/api.js';
 import Preloader from '../Preloader/Preloader.jsx';
-import { CurrentUserContext } from '../Contexts/CurrentUserContext';
+import { CurrentUserContext } from '../Contexts/CurrentUserContext.js';
 import ModalWindow from '../ModalWindow/ModalWindow.jsx';
 import ListEnterprise from '../ListEnterprise/ListEnterprise.jsx';
 import Form from '../Form/Form.jsx';
@@ -30,7 +30,6 @@ function App() {
   const [child, setChild] = useState(null);
   const [enterprise, setEnterprise] = useState([]);
   const [enterpriseAccess, setEnterpriseAccess] = useState([]);
-
   axios.defaults.baseURL = BASE_URL;
 
   useEffect(() => {

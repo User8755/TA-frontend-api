@@ -69,3 +69,8 @@ a {
 .main-menu {
   display: flex;
 }
+
+.nav-bar {
+  margin: 10px;
+  display: flex;
+}
