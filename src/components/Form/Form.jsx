@@ -604,6 +604,14 @@ function Form({ loggedIn, setModal, setChild }) {
           >
             Перечень СИЗ
           </button>
+          <button
+            className='button button__table'
+            type='button'
+            onClick={() => getTabel('correlation', 'Соотнесение опасностей')}
+            disabled={isDisabled}
+          >
+            Соотнесение опасностей
+          </button>
           <p className='total'>
             всего записей:
             {counter}

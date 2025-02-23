@@ -2,7 +2,7 @@
   "name": "techoavia-roman",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://tafontend.online/",
+  "homepage": "",
   "dependencies": {
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",

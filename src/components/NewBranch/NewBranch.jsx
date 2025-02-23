@@ -25,22 +25,6 @@ function NewBranch() {
     });
   };
 
-  const hendlerSendFile = (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    const fileField = document.querySelector('input[type="file"]');
-    const file = fileField.files[0];
-
-    formData.append('file', file);
-
-    axios
-      .post('/update/proff767', formData)
-      .then(() => {
-        console.log('Успех');
-      })
-      .catch((e) => console.log(e.response.data.message));
-  };
-
   return (
     <MainFrame childNavLink={<NavLinks />}>
       <div className='entry__container'>
@@ -65,8 +49,6 @@ function NewBranch() {
             Отправить
           </button>
         </form>
-        <input type='file' accept='.xlsx' />
-        <button onClick={hendlerSendFile}>Send</button>
       </div>
     </MainFrame>
   );

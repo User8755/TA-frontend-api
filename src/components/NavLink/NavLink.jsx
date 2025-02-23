@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import './NavLink.css'
+import './NavLink.css';
 function NavLinks() {
   return (
     <>
@@ -17,6 +17,9 @@ function NavLinks() {
       </NavLink>
       <NavLink to='/branch' className='aside__link'>
         Новый филиал
+      </NavLink>
+      <NavLink to='/update' className='aside__link'>
+        Обновление данных
       </NavLink>
     </>
   );

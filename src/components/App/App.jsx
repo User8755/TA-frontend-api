@@ -1,9 +1,9 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
-import Login from '../Login/Login.jsx';
+import Login from '../Login/Login';
 import { useState, useEffect } from 'react';
 import api from '../../untils/api.js';
-import Preloader from '../Preloader/Preloader.jsx';
+import Preloader from '../Preloader/Preloader';
 import { CurrentUserContext } from '../Contexts/CurrentUserContext.js';
 import ModalWindow from '../ModalWindow/ModalWindow.jsx';
 import ListEnterprise from '../ListEnterprise/ListEnterprise.jsx';
@@ -21,6 +21,7 @@ import Logs from '../Logs/Logs.jsx';
 import NewBranch from '../NewBranch/NewBranch.jsx';
 import ProtectedRouteRole from '../ProtectedRout/ProtectedRouteRole.jsx';
 import WorkerPlaceInfo from '../WorkerPlaceInfo/WorkerPlaceInfo.jsx';
+import Update from '../Update/Update.jsx';
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -178,6 +179,17 @@ function App() {
             element={
               <ProtectedRouteRole
                 element={WorkerPlaceInfo}
+                loggedIn={login}
+                setModal={setModal}
+                setChild={setChild}
+              />
+            }
+          />
+          <Route
+            path='/update'
+            element={
+              <ProtectedRouteRole
+                element={Update}
                 loggedIn={login}
                 setModal={setModal}
                 setChild={setChild}
