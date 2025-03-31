@@ -1,10 +1,11 @@
 import { Link, NavLink } from 'react-router-dom';
 import './ListEnterprise.css';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useMemo } from 'react';
 import api from '../../untils/api';
 import CreateEnterprise from '../CreateEnterprise/CreateEnterprise';
 import { CurrentUserContext } from '../Contexts/CurrentUserContext';
 import MainFrame from '../MainFrame/MainFrame';
+import React from 'react';
 
 function ListEnterprise({
   enterprise,
@@ -22,35 +23,27 @@ function ListEnterprise({
     myEnt: '',
     entAcc: '',
   });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (loggedIn) {
+      setIsLoading(true);
       Promise.all([api.getEnterpriseAccess(jwt), api.getEnterprise(jwt)])
         .then(([accessEnterprise, userEnterprise]) => {
           setEnterprise(userEnterprise);
           setEnterpriseAccess(accessEnterprise);
+          setIsLoading(false);
         })
-        .catch((e) => console.log(e));
+        .catch((err) => {
+          console.error(err);
+          setError('Ошибка при загрузке данных.');
+          setIsLoading(false);
+        });
     }
   }, [jwt, loggedIn, setEnterprise, setEnterpriseAccess]);
 
-  const hendleFilterEnt = enterprise.filter(
-    (i) => i.enterprise.toLowerCase().includes(inputSearch.myEnt) && !i.isHiden
-  );
-
-  const hendleFilterEntAcc = enterpriseAccess.filter((i) =>
-    i.enterprise.toLowerCase().includes(inputSearch.entAcc)
-  );
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInputSearch({
-      ...inputSearch,
-      [name]: value,
-    });
-  };
-
-  const hedlerOpenModal = () => {
+  const handleOpenModal = () => {
     setModal(true);
     setChild(
       <CreateEnterprise
@@ -61,27 +54,47 @@ function ListEnterprise({
     );
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputSearch({
+      ...inputSearch,
+      [name]: value,
+    });
+  };
+
+  const filteredEnterprises = useMemo(() => {
+    return enterprise.filter(
+      (i) => i.enterprise.toLowerCase().includes(inputSearch.myEnt) && !i.isHiden
+    );
+  }, [enterprise, inputSearch.myEnt]);
+
+  const filteredEnterpriseAccess = useMemo(() => {
+    return enterpriseAccess.filter((i) =>
+      i.enterprise.toLowerCase().includes(inputSearch.entAcc)
+    );
+  }, [enterpriseAccess, inputSearch.entAcc]);
+
   return (
     <MainFrame
       childNavLink={
-        <>
-          {!currentUser.role.includes('admin') ? null : (
+        <React.Fragment>
+          {currentUser.role.includes('admin') ? (
             <Link to='/users-list' className='aside__link'>
               Администрирование
             </Link>
-          )}
+          ) : null}
           <Link to='/profile' className='aside__link'>
             Профиль
           </Link>
-          {!currentUser.role.includes('user') ? null : (
+          {currentUser.role.includes('user') ? (
             <button
               className='button_color-green button_default button_width-max'
-              onClick={hedlerOpenModal}
+              onClick={handleOpenModal}
             >
               Создать предприятие
             </button>
-          )}
-        </>
+          ) : null}
+        </React.Fragment>
       }
     >
       <div className='list__main'>
@@ -94,29 +107,29 @@ function ListEnterprise({
           className='list__input-search'
           placeholder='Начните ввод'
         />
-        <div className='list__box'>
-          {hendleFilterEnt.length !== 0 ? (
-            hendleFilterEnt.reverse().map((i) => {
-              return (
+        {isLoading && <p>Загрузка...</p>}
+        {error && <p>{error}</p>}
+        {!isLoading && !error && (
+          <div className='list__box'>
+            {filteredEnterprises.length !== 0 ? (
+              filteredEnterprises.reverse().map((i) => (
                 <NavLink
                   to='/form'
                   key={i._id}
                   onClick={() => localStorage.setItem('id', i._id)}
-                  className={
-                    'button_default button_color-darck button_width-max'
-                  }
+                  className='button_default button_color-darck button_width-max'
                 >
                   {i.enterprise}
                 </NavLink>
-              );
-            })
-          ) : (
-            <>
-              <div></div>
-              <span className='list__span'>Тут пока ничего нет</span>
-            </>
-          )}
-        </div>
+              ))
+            ) : (
+              <>
+                <div></div>
+                <span className='list__span'>Тут пока ничего нет</span>
+              </>
+            )}
+          </div>
+        )}
         <h2 className='list__title'>Предприятия с доступом</h2>
         <input
           type='search'
@@ -126,29 +139,29 @@ function ListEnterprise({
           className='list__input-search'
           placeholder='Начните ввод'
         />
-        <div className='list__box'>
-          {hendleFilterEntAcc.length !== 0 ? (
-            hendleFilterEntAcc.map((i) => {
-              return (
+        {isLoading && <p>Загрузка...</p>}
+        {error && <p>{error}</p>}
+        {!isLoading && !error && (
+          <div className='list__box'>
+            {filteredEnterpriseAccess.length !== 0 ? (
+              filteredEnterpriseAccess.map((i) => (
                 <NavLink
                   to='/form'
                   key={i._id}
                   onClick={() => localStorage.setItem('id', i._id)}
-                  className={
-                    'button_default button_color-darck button_width-max'
-                  }
+                  className='button_default button_color-darck button_width-max'
                 >
                   {i.enterprise}
                 </NavLink>
-              );
-            })
-          ) : (
-            <>
-              <div></div>
-              <span className='list__span'>Тут пока ничего нет</span>
-            </>
-          )}
-        </div>
+              ))
+            ) : (
+              <>
+                <div></div>
+                <span className='list__span'>Тут пока ничего нет</span>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </MainFrame>
   );

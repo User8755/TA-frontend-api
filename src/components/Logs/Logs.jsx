@@ -20,11 +20,12 @@ function Logs({ loggedIn }) {
         <ul className='logs__container'>
           {isLogs.length > 0 ? (
             isLogs.map((i, index) => {
+              const formattedDate = new Date(i.date).toLocaleString();
               return (
                 <li
                   className='logs_event'
                   key={index}
-                >{`${i.action} ${i.date}`}</li>
+                >{`${i.action} ${formattedDate}`}</li>
               );
             })
           ) : (

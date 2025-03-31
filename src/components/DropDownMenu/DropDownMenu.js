@@ -1,8 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './DropDownMenu.css';
 
 function Dropdown({ options, onChange, value, searchInput, setSearchInput }) {
   const [isFocus, setFocus] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setFocus(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   options.forEach((element) => {
     const label = `№ ${element.num}; ${element.proff || element.job}`;
@@ -32,7 +47,7 @@ function Dropdown({ options, onChange, value, searchInput, setSearchInput }) {
   };
 
   return (
-    <div className='dropdown'>
+    <div className='dropdown' ref={dropdownRef}>
       <input
         type='search'
         placeholder='Поиск...'
